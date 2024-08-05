@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'screens/screens.dart';
 import 'themes/themes.dart';
+import 'utils/utils.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: main_theme,
-      home: const SplashscreenScreen(),
+      initialRoute: '/',
+      onGenerateRoute: mainRouter,
     );
   }
 }
