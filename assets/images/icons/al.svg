@@ -1,6 +1,13 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" version="1.1" width="343.04941" height="348.53809" id="svg2678" viewBox="0 0 343.04941 348.53809">
+<svg xmlns="http://www.w3.org/2000/svg"
+  xmlns:svg="http://www.w3.org/2000/svg"
+  version="1.1"
+  width="343.04941"
+  height="348.53809"
+  id="svg2678"
+  viewBox="0 0 343.04941 348.53809"
+>
   <defs id="defs2682"/>
   <g id="Layer1007-7" transform="translate(1033.8072,-1715.7121)">
     <path d="m -1024.3219,1828.9318 v -77.6999 l 2.5002,-0.2268 6.3796,53.5062 c 0,-21.107 0.3458,-73.7532 -11.0993,-82.1386 -1.1608,4.9782 -2.2204,5.1032 -2.2204,11.0993 l -0.6772,62.2335 z" style="fill:#000200;fill-rule:evenodd" id="path1990-2"/>
