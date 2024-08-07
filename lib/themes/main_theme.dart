@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 
 final ThemeData main_theme = ThemeData(
-  primaryColor: const Color(0xFF000000),
+  scaffoldBackgroundColor: const Color(0xFF242424),
+  primaryColor: const Color(0xFF545A70),
   textTheme: const TextTheme(
     headlineMedium: TextStyle(
       inherit: true,
-      color: Color(0xFFFFFFFF),
+      color: Color(0xFF1F1D2A),
     ),
   ),
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
-    primary: Color(0xFF000000),
-    onPrimary: Color(0xFF000000),
-    secondary: Color(0xFF000000),
-    onSecondary: Color(0xFF000000),
-    error: Color(0xFF000000),
-    onError: Color(0xFF000000),
-    surface: Color(0xFF000000),
-    onSurface: Color(0xFF000000),
+    primary: Color(0xFF555555),
+    onPrimary: Color(0xFFFFFFFF),
+    secondary: Color(0xFF545A70),
+    onSecondary: Color(0xFFDADADA),
+    error: Color(0xAAFA5A65),
+    onError: Color(0xFF1F1D2A),
+    surface: Color(0xFF555555),
+    onSurface: Color(0xFFFFEE66),
   ),
   useMaterial3: true,
 );

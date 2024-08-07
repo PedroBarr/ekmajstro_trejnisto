@@ -4,11 +4,11 @@ import 'themes/themes.dart';
 import 'utils/utils.dart';
 
 void main() {
-  runApp(const Trejnisto());
+  runApp(const EkmajstroTrejnisto());
 }
 
-class Trejnisto extends StatelessWidget {
-  const Trejnisto({super.key});
+class EkmajstroTrejnisto extends StatelessWidget {
+  const EkmajstroTrejnisto({super.key});
 
   @override
   Widget build(BuildContext context) {
