@@ -4,16 +4,16 @@ import 'themes/themes.dart';
 import 'utils/utils.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Trejnisto());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Trejnisto extends StatelessWidget {
+  const Trejnisto({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Ekmajstro - Trejnisto',
       theme: main_theme,
       home: ROUTER_INITIAL_PAGE,
       onGenerateRoute: mainRouter,
