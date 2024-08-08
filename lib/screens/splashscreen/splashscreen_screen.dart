@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:drop_shadow/drop_shadow.dart';
 
 import 'splashscreen_constants.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
-import 'package:ekmajstro_trejnisto/themes/themes.dart';
 
 class SplashscreenScreen extends StatefulWidget {
   const SplashscreenScreen({super.key});
@@ -15,22 +15,20 @@ class SplashscreenScreen extends StatefulWidget {
 
 class _SplashscreenScreen extends State<SplashscreenScreen>
     with SingleTickerProviderStateMixin {
+  // Timer timer;
+  late double _centered_point;
+
   @override
   void initState() {
     super.initState();
+    _centered_point = 1.0;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(const Duration(milliseconds: SPLASHSCREEN_REMAIN_MS), () {
-      Navigator.of(context).push(
-        PageRouteBuilder(
-          pageBuilder: (_, __, ___) => ROUTER_MAIN_PAGE,
-          transitionDuration:
-              const Duration(milliseconds: SPLASHSCREEN_TRANSITION_MS),
-          transitionsBuilder: fadeTransition,
-          maintainState: true,
-        ),
-      );
+      Navigator.of(context).pushNamed(ROUTER_MAIN_ROUTE);
     });
+
+    _add_offset(0.0);
   }
 
   @override
@@ -42,22 +40,149 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
     super.dispose();
   }
 
+  void _add_offset(double offset) {
+    setState(() {
+      _centered_point += offset;
+    });
+
+    if (_centered_point > -0.8) {
+      Future.delayed(const Duration(milliseconds: 10), () {
+        _add_offset(-0.1);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              SPLASHSCREEN_MAIN_ICON,
-              width: 100.0,
-              height: 100.0,
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                colors: [
+                  Colors.black,
+                  Theme.of(context).colorScheme.onError,
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).colorScheme.secondary,
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).colorScheme.onError,
+                  Colors.black,
+                  Theme.of(context).colorScheme.onError,
+                  Theme.of(context).primaryColor,
+                  Colors.black,
+                  Theme.of(context).colorScheme.onError,
+                  Colors.black,
+                ],
+                center: Alignment(-_centered_point / 3, _centered_point * 2),
+                radius: 2.5,
+                focal: Alignment.bottomCenter,
+                focalRadius: 1.0,
+                tileMode: TileMode.mirror,
+              ),
             ),
-          ],
-        ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      'Ekmajstro Pre Ĉion',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        fontSize: 19.0,
+                        letterSpacing: 2.0,
+                        fontWeight: FontWeight.w100,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 9,
+                    ),
+                    SvgPicture.asset(
+                      SPLASHSCREEN_SEPARATOR_ICON,
+                      width: 9.0,
+                      height: 9.0,
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      'Trejnisto',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        fontSize: 28.0,
+                        letterSpacing: 9.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 50.0,
+                ),
+                ColorFiltered(
+                  colorFilter: ColorFilter.matrix(<double>[
+                    0.2126 + (0.3937 - (0.3937 * _centered_point)),
+                    0.7152 - (0.3576 - (0.3576 * _centered_point)),
+                    0.0722 - (0.0361 - (0.0361 * _centered_point)),
+                    0.0,
+                    0.0,
+                    //
+                    0.2126 - (0.1063 - (0.1063 * _centered_point)),
+                    0.7152 + (0.1424 - (0.1424 * _centered_point)),
+                    0.0722 - (0.0361 - (0.0361 * _centered_point)),
+                    0.0,
+                    0.0,
+                    //
+                    0.2126 - (0.1063 - (0.1063 * _centered_point)),
+                    0.7152 - (0.3576 - (0.3576 * _centered_point)),
+                    0.0722 + (0.4639 - (0.4639 * _centered_point)),
+                    0.0,
+                    0.0,
+                    //
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                  ]),
+                  child: DropShadow(
+                    blurRadius: 5.0,
+                    offset: Offset(
+                        _centered_point - 1, 3 / 2 * (_centered_point - 1)),
+                    color: Theme.of(context).colorScheme.error,
+                    child: SvgPicture.asset(
+                      SPLASHSCREEN_MAIN_ICON,
+                      width: 150.0,
+                      height: 150.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 40.0 - (_centered_point * 24),
+            left: -24.0 - (_centered_point * 24),
+            child: Image.asset(
+              SPLASHSCREEN_BOTTOM_LEFT_IMAGE,
+              width: 150.0,
+              height: 150.0,
+              opacity: const AlwaysStoppedAnimation(0.3),
+            ),
+          ),
+          Positioned(
+            top: 40.0 + (_centered_point * 24),
+            right: -24.0 - (_centered_point * 24),
+            child: Image.asset(
+              SPLASHSCREEN_BOTTOM_RIGHT_IMAGE,
+              width: 150.0,
+              height: 150.0,
+              opacity: const AlwaysStoppedAnimation(0.3),
+            ),
+          ),
+        ],
       ),
     );
   }
