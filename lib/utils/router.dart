@@ -9,7 +9,7 @@ const String ROUTER_MAIN_ROUTE = '/app';
 Route<dynamic> mainRouter(RouteSettings settings) {
   if (settings.name == ROUTER_MAIN_ROUTE) {
     return PageRouteBuilder(
-      pageBuilder: (_, __, ___) => const Scaffold(),
+      pageBuilder: (_, __, ___) => const PostListScreen(),
       transitionDuration:
           const Duration(milliseconds: SPLASHSCREEN_TRANSITION_MS),
       transitionsBuilder: fadeTransition,
