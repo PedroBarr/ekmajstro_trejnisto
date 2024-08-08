@@ -166,7 +166,7 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
             top: 40.0 - (_centered_point * 24),
             left: -24.0 - (_centered_point * 24),
             child: Image.asset(
-              SPLASHSCREEN_BOTTOM_LEFT_IMAGE,
+              SPLASHSCREEN_TOP_LEFT_IMAGE,
               width: 150.0,
               height: 150.0,
               opacity: const AlwaysStoppedAnimation(0.3),
@@ -176,12 +176,31 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
             top: 40.0 + (_centered_point * 24),
             right: -24.0 - (_centered_point * 24),
             child: Image.asset(
-              SPLASHSCREEN_BOTTOM_RIGHT_IMAGE,
+              SPLASHSCREEN_TOP_RIGHT_IMAGE,
               width: 150.0,
               height: 150.0,
               opacity: const AlwaysStoppedAnimation(0.3),
             ),
           ),
+          Positioned(
+            bottom: 45.0,
+            left: 0,
+            child: Image.asset(
+              SPLASHSCREEN_BOTTOM_LEFT_IMAGE,
+              width: 150.0,
+              height: 150.0,
+              opacity: const AlwaysStoppedAnimation(0.5),
+            ),
+          ),
+          // Positioned(
+          //   bottom: 50.0,
+          //   right: 0,
+          //   child: Image.asset(
+          //     SPLASHSCREEN_BOTTOM_RIGHT_IMAGE,
+          //     width: 150.0,
+          //     height: 150.0,
+          //   ),
+          // ),
         ],
       ),
     );
