@@ -12,10 +12,16 @@ class _SearchBarComponent extends State<SearchBarComponent> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: 50.0,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: const Text('PLACEHOLDER_SEARCHBAR'),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: 'Buscar publicación',
+          prefixIcon: Icon(Icons.search, color: Theme.of(context).primaryColor),
+        ),
+        style: TextStyle(color: Theme.of(context).primaryColor),
+        onChanged: (event) {},
+      ),
     );
   }
 }

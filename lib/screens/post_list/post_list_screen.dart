@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:ekmajstro_trejnisto/components/components.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
@@ -49,25 +51,8 @@ class _PostListScreen extends State<PostListScreen> {
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
                                 snapshot.data!
-                                    .map((post) => Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                          padding: const EdgeInsets.all(10.0),
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width -
-                                              20.0,
-                                          child: Row(
-                                            children: [
-                                              Text(post.title),
-                                            ],
-                                          ),
-                                        ))
+                                    .map(
+                                        (post) => PostItemComponent(post: post))
                                     .toList(),
                                 [
                                   const AddPostItemComponent(),
@@ -85,6 +70,13 @@ class _PostListScreen extends State<PostListScreen> {
           ],
         ),
       ),
+      floatingActionButton: IconButton(
+          onPressed: () {},
+          icon: SvgPicture.asset(
+            'assets/images/icons/ekmajstro.svg',
+            width: 100.0,
+            height: 100.0,
+          )),
     );
   }
 }

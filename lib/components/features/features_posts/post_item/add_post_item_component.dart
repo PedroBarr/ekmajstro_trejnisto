@@ -11,11 +11,14 @@ class _AddPostItemComponent extends State<AddPostItemComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Colors.transparent,
       height: 50.0,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: const Text('PLACEHOLDER_ADDPOSTITEM'),
+      child: Icon(
+        Icons.add,
+        color: Theme.of(context).colorScheme.primary,
+      ),
     );
   }
 }
