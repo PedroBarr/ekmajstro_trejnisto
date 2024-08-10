@@ -3,27 +3,35 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'app.dart';
+import 'dtos.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
 
 const String PUBLICACIONES_ENDPOINT = '/publicaciones';
 
-Future<List<PostItem>> getPosts() async {
-  final response = await http.get(
-    Uri.parse(BACKEND_API + PUBLICACIONES_ENDPOINT),
-  );
-
-  if (response.statusCode == 200) {
-    late List<dynamic> body = jsonDecode(response.body);
-    late List<PostItem> posts = [];
-
-    for (final postResponse in body) {
-      PostItem post = PostItem.fromJson(postResponse);
-      posts.add(post);
+dynamic getBody(http.Response response) {
+  try {
+    if (response.statusCode == 200) {
+      dynamic body = jsonDecode(response.body);
+      return body;
     }
 
+    throw Exception('Fallo al recuperar el cuerpo');
+  } catch (e) {
+    throw Exception('Fallo al recuperar el cuerpo');
+  }
+}
+
+Future<List<PostItem>> getPosts() async {
+  try {
+    final response = await http.get(
+      Uri.parse(BACKEND_API + PUBLICACIONES_ENDPOINT),
+    );
+
+    late List<dynamic> body = getBody(response);
+    late List<PostItem> posts = dtoPostItemList(body);
     return posts;
-  } else {
+  } catch (e) {
     throw Exception('Fallo al cargar la lista de publicaciones');
   }
 }
