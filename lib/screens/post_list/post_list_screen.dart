@@ -28,54 +28,58 @@ class _PostListScreen extends State<PostListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Center(
-        child: Column(
-          children: [
-            const SearchBarComponent(
-              hint_text: HINT_SEARCH_POST,
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Flexible(
-              child: FutureBuilder(
-                future: _posts,
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<PostItem>> snapshot) {
-                  if (snapshot.hasData) {
-                    return Expanded(
-                      child: Column(children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Wrap(
-                              direction: Axis.vertical,
-                              spacing: 10.0,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                snapshot.data!
-                                    .map(
-                                        (post) => PostItemComponent(post: post))
-                                    .toList(),
-                                [
-                                  const AddPostItemComponent(),
-                                ]
-                              ].expand((x) => x).toList(),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              children: [
+                const SearchBarComponent(
+                  hint_text: HINT_SEARCH_POST,
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Flexible(
+                  child: FutureBuilder(
+                    future: _posts,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<PostItem>> snapshot) {
+                      if (snapshot.hasData) {
+                        return Expanded(
+                          child: Column(children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Wrap(
+                                  direction: Axis.vertical,
+                                  spacing: 10.0,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    snapshot.data!
+                                        .map((post) =>
+                                            PostItemComponent(post: post))
+                                        .toList(),
+                                    [
+                                      const AddPostItemComponent(),
+                                    ]
+                                  ].expand((x) => x).toList(),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ]),
-                    );
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
+                          ]),
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const FABEkmajstroComponent(),
+        ],
       ),
-      floatingActionButton: const FABEkmajstroComponent(),
     );
   }
 }
