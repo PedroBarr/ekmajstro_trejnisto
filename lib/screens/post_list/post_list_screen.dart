@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:ekmajstro_trejnisto/components/components.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
@@ -70,13 +69,7 @@ class _PostListScreen extends State<PostListScreen> {
           ],
         ),
       ),
-      floatingActionButton: IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            'assets/images/icons/ekmajstro.svg',
-            width: 100.0,
-            height: 100.0,
-          )),
+      floatingActionButton: const FABEkmajstroComponent(),
     );
   }
 }

@@ -8,6 +8,7 @@ final ThemeData main_theme = ThemeData(
       inherit: true,
       color: Color(0xFF1F1D2A),
     ),
+    headlineLarge: TextStyle(inherit: true, color: Color(0xFF1F1D2A)),
   ),
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
