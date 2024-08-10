@@ -1,11 +1,13 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+
+import 'package:http/http.dart' as http;
 
 import 'app.dart';
 import 'dtos.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:ekmajstro_trejnisto/config/config.dart';
 
 const String PUBLICACIONES_ENDPOINT = '/publicaciones';
 
@@ -16,9 +18,9 @@ dynamic getBody(http.Response response) {
       return body;
     }
 
-    throw Exception('Fallo al recuperar el cuerpo');
+    throw Exception(ERROR_BODY);
   } catch (e) {
-    throw Exception('Fallo al recuperar el cuerpo');
+    throw Exception(ERROR_BODY);
   }
 }
 
@@ -32,6 +34,6 @@ Future<List<PostItem>> getPosts() async {
     late List<PostItem> posts = dtoPostItemList(body);
     return posts;
   } catch (e) {
-    throw Exception('Fallo al cargar la lista de publicaciones');
+    throw Exception(ERROR_POST_ITEM_LIST);
   }
 }

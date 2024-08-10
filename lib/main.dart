@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'config/config.dart';
 import 'themes/themes.dart';
 import 'utils/utils.dart';
 
@@ -13,7 +14,7 @@ class EkmajstroTrejnisto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ekmajstro - Trejnisto',
+      title: APP_TITLE,
       theme: main_theme,
       home: ROUTER_INITIAL_PAGE,
       onGenerateRoute: mainRouter,

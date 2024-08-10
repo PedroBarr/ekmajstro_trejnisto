@@ -1,3 +1,5 @@
+import 'package:ekmajstro_trejnisto/config/config.dart';
+
 class PostItem {
   final int id;
   final String title;
@@ -23,13 +25,12 @@ class PostItem {
         'title': String title,
       } =>
         PostItem(id: id, title: title),
-      _ =>
-        throw const FormatException('Fallo al cargar el elemento publicación'),
+      _ => throw const FormatException(ERROR_POST_ITEM_PARSER),
     };
   }
 
   @override
   String toString() {
-    return '\n<Post> {\n\tid: $id\n\ttitle: $title\n}\n';
+    return '<Post> [$title]';
   }
 }

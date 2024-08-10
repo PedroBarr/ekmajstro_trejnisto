@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:drop_shadow/drop_shadow.dart';
 
-import 'splashscreen_constants.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
+import 'package:ekmajstro_trejnisto/config/config.dart';
+
+import 'splashscreen_constants.dart';
 
 class SplashscreenScreen extends StatefulWidget {
   const SplashscreenScreen({super.key});
@@ -28,7 +30,7 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
       Navigator.of(context).pushNamed(ROUTER_MAIN_ROUTE);
     });
 
-    _add_offset(0.0);
+    _addOffset(0.0);
   }
 
   @override
@@ -40,14 +42,14 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
     super.dispose();
   }
 
-  void _add_offset(double offset) {
+  void _addOffset(double offset) {
     setState(() {
       _centered_point += offset;
     });
 
     if (_centered_point > -0.8) {
       Future.delayed(const Duration(milliseconds: 10), () {
-        _add_offset(-0.1);
+        _addOffset(-0.1);
       });
     }
   }
@@ -88,7 +90,7 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
                 Column(
                   children: [
                     Text(
-                      'Ekmajstro Pre Ĉion',
+                      APP_PARENT,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSecondary,
                         fontSize: 19.0,
@@ -108,7 +110,7 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
                       height: 3,
                     ),
                     Text(
-                      'Trejnisto',
+                      APP_NAME,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSecondary,
                         fontSize: 28.0,

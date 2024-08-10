@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/components/components.dart';
+import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
@@ -30,7 +31,9 @@ class _PostListScreen extends State<PostListScreen> {
       body: Center(
         child: Column(
           children: [
-            const SearchBarComponent(),
+            const SearchBarComponent(
+              hint_text: HINT_SEARCH_POST,
+            ),
             const SizedBox(
               height: 10.0,
             ),

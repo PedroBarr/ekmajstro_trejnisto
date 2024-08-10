@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:ekmajstro_trejnisto/config/config.dart';
+
 class SearchBarComponent extends StatefulWidget {
-  const SearchBarComponent({super.key});
+  final String hint_text;
+
+  const SearchBarComponent({
+    super.key,
+    this.hint_text = HINT_SEARCH_DEFAULT,
+  });
 
   @override
   State<SearchBarComponent> createState() => _SearchBarComponent();
@@ -16,7 +23,7 @@ class _SearchBarComponent extends State<SearchBarComponent> {
       alignment: Alignment.center,
       child: TextField(
         decoration: InputDecoration(
-          hintText: 'Buscar publicación',
+          hintText: widget.hint_text,
           prefixIcon: Icon(Icons.search, color: Theme.of(context).primaryColor),
         ),
         style: TextStyle(color: Theme.of(context).primaryColor),
