@@ -37,7 +37,8 @@ class _PostListScreen extends State<PostListScreen> {
             const SizedBox(
               height: 10.0,
             ),
-            FutureBuilder(
+            Flexible(
+              child: FutureBuilder(
                 future: _posts,
                 builder: (BuildContext context,
                     AsyncSnapshot<List<PostItem>> snapshot) {
@@ -66,9 +67,11 @@ class _PostListScreen extends State<PostListScreen> {
                       ]),
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return const Center(child: CircularProgressIndicator());
                   }
-                }),
+                },
+              ),
+            ),
           ],
         ),
       ),

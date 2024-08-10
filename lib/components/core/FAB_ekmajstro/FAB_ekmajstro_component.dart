@@ -26,10 +26,37 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
         focusColor: Colors.transparent,
         highlightColor: Colors.transparent,
         onPressed: () {},
-        icon: SvgPicture.asset(
-          FAB_ICON,
-          width: 100.0,
-          height: 100.0,
+        icon: ColorFiltered(
+          colorFilter: const ColorFilter.matrix(<double>[
+            0.2126,
+            0.7152,
+            0.0722,
+            0.0,
+            0.0,
+            //
+            0.2126,
+            0.7152,
+            0.0722,
+            0.0,
+            0.0,
+            //
+            0.2126,
+            0.7152,
+            0.0722,
+            0.0,
+            0.0,
+            //
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+          ]),
+          child: SvgPicture.asset(
+            FAB_ICON,
+            width: 100.0,
+            height: 100.0,
+          ),
         ),
       ),
     );
