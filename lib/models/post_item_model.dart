@@ -38,8 +38,8 @@ class PostItem extends ModelItem {
 
 class Post extends PostItem {
   const Post({
-    required super.id,
-    required super.title,
+    super.id,
+    super.title = '',
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {

@@ -8,11 +8,11 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 class PostItemView extends StatefulWidget {
-  final int post_id;
+  final int? post_id;
 
   const PostItemView({
     super.key,
-    required this.post_id,
+    this.post_id,
   });
 
   @override
@@ -26,7 +26,11 @@ class _PostItemView extends State<PostItemView> {
   void initState() {
     super.initState();
 
-    _post = getPost(widget.post_id);
+    if (widget.post_id != null && isNumeric(widget.post_id!.toString())) {
+      _post = getPost(widget.post_id.toString());
+    } else {
+      _post = Future.value(const Post());
+    }
   }
 
   void navigateToPostList(BuildContext context) {
