@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'FAB_ekmajstro_constants.dart';
+import 'package:ekmajstro_trejnisto/components/core/navmenu/navmenu.dart';
 
 class FABEkmajstroComponent extends StatefulWidget {
   const FABEkmajstroComponent({super.key});
@@ -49,7 +50,10 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
                   height: MediaQuery.of(context).size.height,
                   color: Theme.of(context).dialogBackgroundColor,
                   child: Center(
-                    child: Container(),
+                    child: NavmenuComponent(
+                      width: MediaQuery.of(context).size.width * 3 / 5,
+                      height: MediaQuery.of(context).size.height * 7 / 10,
+                    ),
                   ),
                 ),
               );

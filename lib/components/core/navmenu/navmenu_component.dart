@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'package:ekmajstro_trejnisto/models/models.dart';
+
+import 'navmenu_constants.dart';
+import 'navitem_component.dart';
+
 class NavmenuComponent extends StatefulWidget {
-  const NavmenuComponent({super.key});
+  final double width;
+  final double height;
+
+  const NavmenuComponent({
+    super.key,
+    required this.width,
+    required this.height,
+  });
 
   @override
   State<NavmenuComponent> createState() => _NavmenuComponent();
@@ -10,6 +22,23 @@ class NavmenuComponent extends StatefulWidget {
 class _NavmenuComponent extends State<NavmenuComponent> {
   @override
   Widget build(BuildContext context) {
-    return const Wrap();
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      alignment: Alignment.center,
+      child: SingleChildScrollView(
+        child: Wrap(
+          direction: Axis.vertical,
+          spacing: 10.0,
+          alignment: WrapAlignment.center,
+          children: NAVMENU_ITEMS_LIST
+              .map((NavItemModel item) => NavitemComponent(
+                    nav_item: item,
+                    width: widget.width,
+                  ))
+              .toList(),
+        ),
+      ),
+    );
   }
 }

@@ -13,3 +13,6 @@ const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación'
 // VISTAS
 const String HINT_SEARCH_DEFAULT = 'Buscar';
 const String HINT_SEARCH_POST = 'Buscar publicación';
+
+// NAVEGATION
+const String NAV_ITEM_POSTS_LABEL = 'Publicaciones';
