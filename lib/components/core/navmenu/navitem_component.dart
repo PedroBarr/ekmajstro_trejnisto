@@ -1,3 +1,4 @@
+import 'package:ekmajstro_trejnisto/utils/router.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
@@ -17,41 +18,48 @@ class NavitemComponent extends StatefulWidget {
 }
 
 class _NavitemComponent extends State<NavitemComponent> {
+  void navigateToLocation(BuildContext context) {
+    Navigator.of(context).pushNamed(ROUTER_POST_LIST_ROUTE);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
-        border: Border.all(
-          style: BorderStyle.solid,
-          color: Theme.of(context).scaffoldBackgroundColor,
-          width: 1.0,
+    return GestureDetector(
+      onTap: () => navigateToLocation(context),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          border: Border.all(
+            style: BorderStyle.solid,
+            color: Theme.of(context).scaffoldBackgroundColor,
+            width: 1.0,
+          ),
+          color: Theme.of(context).primaryColor,
         ),
-        color: Theme.of(context).primaryColor,
-      ),
-      padding: const EdgeInsets.all(10.0),
-      width: widget.width,
-      child: Row(
-        children: [
-          const SizedBox(width: 10.0),
-          widget.nav_item.icon,
-          const SizedBox(width: 10.0),
-          Text(
-            (widget.nav_item.title).toUpperCase(),
-            style: TextStyle(
-              fontSize: 16.0,
-              letterSpacing: 2,
-              fontWeight: FontWeight.w700,
+        padding: const EdgeInsets.all(10.0),
+        width: widget.width,
+        child: Row(
+          children: [
+            const SizedBox(width: 10.0),
+            widget.nav_item.icon,
+            const SizedBox(width: 10.0),
+            Text(
+              (widget.nav_item.title).toUpperCase(),
+              style: TextStyle(
+                fontSize: 16.0,
+                letterSpacing: 2,
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            ),
+            const Spacer(),
+            Icon(
+              Icons.chevron_right_rounded,
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
-          ),
-          const Spacer(),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: Theme.of(context).scaffoldBackgroundColor,
-          ),
-          const SizedBox(width: 10.0),
-        ],
+            const SizedBox(width: 10.0),
+          ],
+        ),
       ),
     );
   }

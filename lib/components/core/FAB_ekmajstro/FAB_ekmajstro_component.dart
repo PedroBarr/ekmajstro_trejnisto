@@ -40,19 +40,22 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
         children: [
           Builder(builder: (context) {
             if (_menu_open) {
-              return BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 3.0,
-                  sigmaY: 3.0,
-                ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  color: Theme.of(context).dialogBackgroundColor,
-                  child: Center(
-                    child: NavmenuComponent(
-                      width: MediaQuery.of(context).size.width * 3 / 5,
-                      height: MediaQuery.of(context).size.height * 7 / 10,
+              return GestureDetector(
+                onTap: () => toggleMenuOpen(),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 3.0,
+                    sigmaY: 3.0,
+                  ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    color: Theme.of(context).dialogBackgroundColor,
+                    child: Center(
+                      child: NavmenuComponent(
+                        width: MediaQuery.of(context).size.width * 3 / 5,
+                        height: MediaQuery.of(context).size.height * 7 / 10,
+                      ),
                     ),
                   ),
                 ),
