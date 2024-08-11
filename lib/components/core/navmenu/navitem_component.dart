@@ -22,6 +22,11 @@ class _NavitemComponent extends State<NavitemComponent> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
+        border: Border.all(
+          style: BorderStyle.solid,
+          color: Theme.of(context).scaffoldBackgroundColor,
+          width: 1.0,
+        ),
         color: Theme.of(context).primaryColor,
       ),
       padding: const EdgeInsets.all(10.0),
