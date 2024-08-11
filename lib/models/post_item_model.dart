@@ -1,11 +1,12 @@
 import 'package:ekmajstro_trejnisto/config/config.dart';
 
-class PostItem {
-  final int id;
+import 'model_item.dart';
+
+class PostItem extends ModelItem {
   final String title;
 
   const PostItem({
-    required this.id,
+    required super.id,
     required this.title,
   });
 
