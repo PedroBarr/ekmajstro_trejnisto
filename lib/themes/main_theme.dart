@@ -22,5 +22,8 @@ final ThemeData main_theme = ThemeData(
     surface: Color(0xFF555555),
     onSurface: Color(0xFFFFEE66),
   ),
+  appBarTheme: const AppBarTheme(
+    centerTitle: true,
+  ),
   useMaterial3: true,
 );

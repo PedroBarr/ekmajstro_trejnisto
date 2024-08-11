@@ -35,3 +35,30 @@ class PostItem extends ModelItem {
     return '<Post> [$title]';
   }
 }
+
+class Post extends PostItem {
+  const Post({
+    required super.id,
+    required super.title,
+  });
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        'pblc_id': String id,
+        'pblc_titulo': String title,
+      } =>
+        Post(id: int.parse(id), title: title),
+      {
+        'pblc_id': int id,
+        'pblc_titulo': String title,
+      } ||
+      {
+        'id': int id,
+        'title': String title,
+      } =>
+        Post(id: id, title: title),
+      _ => throw const FormatException(ERROR_POST_ITEM_PARSER),
+    };
+  }
+}

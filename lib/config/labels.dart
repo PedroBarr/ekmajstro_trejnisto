@@ -5,10 +5,13 @@ const String APP_NAME = 'Trejnisto';
 
 // API
 const String ERROR_BODY = 'Fallo al recuperar el cuerpo';
-const String ERROR_POST_ITEM_LIST = 'Fallo al cargar la lista de publicaciones';
+const String ERROR_POST_ITEM_LIST =
+    'Fallo al recuperar la lista de publicaciones';
+const String ERROR_POST_ITEM = 'Fallo al recuperar la publicación';
 
 // MODELS
 const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación';
+const String ERROR_POST_PARSER = 'Fallo al cargar el elemento publicación';
 
 // VISTAS
 const String HINT_SEARCH_DEFAULT = 'Buscar';
