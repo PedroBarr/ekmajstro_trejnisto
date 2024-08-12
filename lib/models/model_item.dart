@@ -1,5 +1,5 @@
 abstract class ModelItem {
-  final int? id;
+  final String? id;
 
   const ModelItem({
     required this.id,

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/components/components.dart';

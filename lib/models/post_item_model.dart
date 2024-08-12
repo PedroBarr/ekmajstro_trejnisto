@@ -18,7 +18,7 @@ class PostItem extends ModelItem {
         'pblc_id': String id,
         'pblc_titulo': String title,
       } =>
-        PostItem(id: int.parse(id), title: title),
+        PostItem(id: id, title: title),
       {
         'pblc_id': int id,
         'pblc_titulo': String title,
@@ -27,7 +27,7 @@ class PostItem extends ModelItem {
         'id': int id,
         'title': String title,
       } =>
-        PostItem(id: id, title: title),
+        PostItem(id: id.toString(), title: title),
       _ => throw const FormatException(ERROR_POST_ITEM_PARSER),
     };
   }
