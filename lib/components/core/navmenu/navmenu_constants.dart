@@ -1,6 +1,5 @@
 import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
-import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/themes/main_theme.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 

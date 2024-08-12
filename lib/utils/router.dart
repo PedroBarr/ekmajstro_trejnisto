@@ -39,14 +39,15 @@ Route<dynamic> mainRouter(RouteSettings settings) {
     final int index_super_path = sub_path.indexOf('/', index_path);
     final String wildcard;
 
-    if ([-1, index_path].contains(index_super_path))
+    if ([-1, index_path].contains(index_super_path)) {
       wildcard = sub_path;
-    else
+    } else {
       wildcard = sub_path.substring(index_path, index_super_path);
+    }
 
     if (wildcard == ROUTE_ADD_WILDCARD) {
       return MaterialPageRoute(
-        builder: (_) => PostItemView(),
+        builder: (_) => const PostItemView(),
       );
     }
 

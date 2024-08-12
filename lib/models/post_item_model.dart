@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:ekmajstro_trejnisto/config/config.dart';
 
 import 'model_item.dart';
@@ -36,11 +38,23 @@ class PostItem extends ModelItem {
   }
 }
 
-class Post extends PostItem {
-  const Post({
-    super.id,
-    super.title = '',
-  });
+class Post {
+  // Attributtes to set
+  static const String POST_ATTR_TITTLE = 'title';
+  static const String POST_ATTR_IMAGE = 'image_url';
+
+  String id;
+  String title;
+  String image_url;
+  final DateTime publishDate;
+  final String user;
+
+  Post({
+    this.id = '',
+    this.title = '',
+    this.image_url = '',
+  })  : user = 'Aref VarOdal',
+        publishDate = DateTime.now();
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return switch (json) {
@@ -48,7 +62,7 @@ class Post extends PostItem {
         'pblc_id': String id,
         'pblc_titulo': String title,
       } =>
-        Post(id: int.parse(id), title: title),
+        Post(id: id, title: title),
       {
         'pblc_id': int id,
         'pblc_titulo': String title,
@@ -57,8 +71,25 @@ class Post extends PostItem {
         'id': int id,
         'title': String title,
       } =>
-        Post(id: id, title: title),
+        Post(id: id.toString(), title: title),
       _ => throw const FormatException(ERROR_POST_ITEM_PARSER),
     };
+  }
+
+  factory Post.fromPost(Post post) {
+    return post;
+  }
+
+  setPost(String attr, String value) {
+    switch (attr) {
+      case POST_ATTR_TITTLE:
+        title = value;
+        break;
+      case POST_ATTR_IMAGE:
+        image_url = value;
+        break;
+      default:
+        break;
+    }
   }
 }

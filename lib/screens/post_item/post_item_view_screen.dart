@@ -20,17 +20,33 @@ class PostItemView extends StatefulWidget {
 }
 
 class _PostItemView extends State<PostItemView> {
-  late Future<Post> _post;
+  Post _post = Post();
+  bool _is_loading = false;
 
   @override
   void initState() {
     super.initState();
 
     if (widget.post_id != null && isNumeric(widget.post_id!.toString())) {
-      _post = getPost(widget.post_id.toString());
-    } else {
-      _post = Future.value(const Post());
+      setState(() {
+        _is_loading = true;
+      });
+      getPost(widget.post_id.toString()).then((Post post) {
+        setState(() {
+          _post = Post.fromPost(post);
+        });
+      }).whenComplete(() {
+        setState(() {
+          _is_loading = false;
+        });
+      });
     }
+  }
+
+  void setPost(String attr, String value) {
+    setState(() {
+      _post.setPost(attr, value);
+    });
   }
 
   void navigateToPostList(BuildContext context) {
@@ -47,11 +63,10 @@ class _PostItemView extends State<PostItemView> {
               onTap: () => navigateToPostList(context),
               child: iconNavPostList(Theme.of(context).colorScheme.onSurface),
             ),
-            title: FutureBuilder(
-              future: _post,
-              builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
-                if (snapshot.hasData) {
-                  return Text(snapshot.data!.title);
+            title: Builder(
+              builder: (context) {
+                if (!_is_loading) {
+                  return Text(_post.title);
                 } else {
                   return const CircularProgressIndicator();
                 }
