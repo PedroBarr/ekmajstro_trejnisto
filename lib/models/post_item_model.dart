@@ -46,32 +46,35 @@ class Post {
   String id;
   String title;
   String image_url;
-  final DateTime publishDate;
-  final String user;
+  DateTime publish_date;
+  String user;
 
   Post({
     this.id = '',
     this.title = '',
     this.image_url = '',
   })  : user = 'Aref VarOdal',
-        publishDate = DateTime.now();
+        publish_date = DateTime.now();
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
         'pblc_id': String id,
         'pblc_titulo': String title,
+        'pblc_img_portada_uri': String image_url,
       } =>
-        Post(id: id, title: title),
+        Post(id: id, title: title, image_url: image_url),
       {
         'pblc_id': int id,
         'pblc_titulo': String title,
+        'pblc_img_portada_uri': String image_url,
       } ||
       {
         'id': int id,
         'title': String title,
+        'image_url': String image_url,
       } =>
-        Post(id: id.toString(), title: title),
+        Post(id: id.toString(), title: title, image_url: image_url),
       _ => throw const FormatException(ERROR_POST_ITEM_PARSER),
     };
   }
@@ -80,7 +83,15 @@ class Post {
     return post;
   }
 
-  setPost(String attr, String value) {
+  void copyPost(Post post) {
+    id = post.id;
+    title = post.title;
+    image_url = post.image_url;
+    user = post.user;
+    publish_date = post.publish_date;
+  }
+
+  void setPost(String attr, String value) {
     switch (attr) {
       case POST_ATTR_TITTLE:
         title = value;
@@ -91,5 +102,9 @@ class Post {
       default:
         break;
     }
+  }
+
+  String getDateFormatted() {
+    return '${publish_date.year}-${publish_date.month}-${publish_date.day}';
   }
 }
