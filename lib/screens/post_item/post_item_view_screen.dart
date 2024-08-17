@@ -4,6 +4,7 @@ import 'package:ekmajstro_trejnisto/components/components.dart';
 import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
+import 'package:flutter/widgets.dart';
 
 class PostItemView extends StatefulWidget {
   final int? post_id;
@@ -131,22 +132,73 @@ class _PostItemView extends State<PostItemView> {
                                 flex: 1,
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
-                                  child: Wrap(
-                                    direction: Axis.vertical,
-                                    runAlignment: WrapAlignment.start,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Builder(
-                                        builder: (context) {
-                                          if (_post.image_url.isEmpty) {
-                                            return Container();
-                                          } else {
-                                            return Image.network(
-                                              _post.image_url,
-                                              height: 200.0,
-                                              fit: BoxFit.fitHeight,
-                                            );
-                                          }
-                                        },
+                                      Stack(
+                                        children: [
+                                          Container(
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            padding: const EdgeInsets.all(5.0),
+                                            height: 210.0,
+                                            child: Builder(
+                                              builder: (context) {
+                                                if (_post.image_url.isEmpty) {
+                                                  return Icon(
+                                                    Icons.library_add,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSurface,
+                                                  );
+                                                } else {
+                                                  return Image.network(
+                                                    _post.image_url,
+                                                    height: 200.0,
+                                                    fit: BoxFit.fitHeight,
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.topRight,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Wrap(
+                                                direction: Axis.horizontal,
+                                                spacing: 5.0,
+                                                children: [
+                                                  Builder(
+                                                    builder: (context) {
+                                                      if (_post
+                                                          .image_url.isEmpty) {
+                                                        return Container();
+                                                      } else {
+                                                        return Icon(
+                                                          Icons.edit_square,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .onSurface,
+                                                        );
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const Text(
                                         'IMAGEN DE PORTADA',
