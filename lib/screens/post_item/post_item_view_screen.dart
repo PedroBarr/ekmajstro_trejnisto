@@ -97,14 +97,13 @@ class _PostItemView extends State<PostItemView> {
             title: Builder(
               builder: (context) {
                 if (!_is_loading) {
-                  return Center(
-                    child: Row(
-                      children: [
-                        Text(_post.title),
-                        const SizedBox(width: 10.0),
-                        const Icon(Icons.edit_square),
-                      ],
-                    ),
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(_post.title),
+                      const SizedBox(width: 10.0),
+                      const Icon(Icons.edit_square),
+                    ],
                   );
                 } else {
                   return const CircularProgressIndicator();

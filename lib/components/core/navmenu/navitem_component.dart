@@ -50,6 +50,7 @@ class _NavitemComponent extends State<NavitemComponent> {
                 letterSpacing: 2,
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).scaffoldBackgroundColor,
+                decoration: TextDecoration.none,
               ),
             ),
             const Spacer(),

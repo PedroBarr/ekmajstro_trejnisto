@@ -32,6 +32,7 @@ class _AddPostItemComponent extends State<AddPostItemComponent> {
               color: Theme.of(context).colorScheme.surface,
               width: 1.0,
             ),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           child: Icon(
             Icons.add,
