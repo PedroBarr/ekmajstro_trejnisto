@@ -107,4 +107,9 @@ class Post {
   String getDateFormatted() {
     return '${publish_date.year}-${publish_date.month}-${publish_date.day}';
   }
+
+  @override
+  String toString() {
+    return '<Post> [$title]';
+  }
 }

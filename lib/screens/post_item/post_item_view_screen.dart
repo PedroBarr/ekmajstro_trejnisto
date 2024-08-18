@@ -4,7 +4,6 @@ import 'package:ekmajstro_trejnisto/components/components.dart';
 import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
-import 'package:flutter/widgets.dart';
 
 class PostItemView extends StatefulWidget {
   final int? post_id;
@@ -87,8 +86,14 @@ class _PostItemView extends State<PostItemView> {
             actions: [
               Builder(builder: (context) {
                 if (_is_modified) {
-                  return const Icon(
-                    Icons.save_as_rounded,
+                  return const Padding(
+                    padding: EdgeInsets.only(
+                      right: 10.0,
+                      left: 10.0,
+                    ),
+                    child: Icon(
+                      Icons.save_as_rounded,
+                    ),
                   );
                 }
                 return Container();
@@ -97,13 +102,11 @@ class _PostItemView extends State<PostItemView> {
             title: Builder(
               builder: (context) {
                 if (!_is_loading) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(_post.title),
-                      const SizedBox(width: 10.0),
-                      const Icon(Icons.edit_square),
-                    ],
+                  return CustomTextFieldComponent(
+                    value: _post.title,
+                    spacing: 10.0,
+                    font_size: 16,
+                    onConfirm: (value) => setPost(Post.POST_ATTR_TITTLE, value),
                   );
                 } else {
                   return const CircularProgressIndicator();
@@ -222,23 +225,12 @@ class _PostItemView extends State<PostItemView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  _post.user,
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 17,
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                Icon(
-                                                  Icons.edit_square,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onSurface,
-                                                ),
-                                              ],
+                                            Text(
+                                              _post.user,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 17,
+                                              ),
                                             ),
                                             const Text(
                                               'USUARIO',
@@ -258,23 +250,12 @@ class _PostItemView extends State<PostItemView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  _post.getDateFormatted(),
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 17,
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                Icon(
-                                                  Icons.edit_square,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onSurface,
-                                                ),
-                                              ],
+                                            Text(
+                                              _post.getDateFormatted(),
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 17,
+                                              ),
                                             ),
                                             const Text(
                                               'FECHA DE PUBLICACIÓN',
@@ -285,22 +266,6 @@ class _PostItemView extends State<PostItemView> {
                                           ],
                                         ),
                                       ),
-                                      //       Row(
-                                      //         children: [
-                                      //           Text(_post.user),
-                                      //           const Spacer(),
-                                      //           Icon(
-                                      //             Icons.edit_square,
-                                      //             color: Theme.of(context)
-                                      //                 .colorScheme
-                                      //                 .onSurface,
-                                      //           )
-                                      //         ],
-                                      //       ),
-                                      //       const Text('Usuario'),
-                                      //     ],
-                                      //   ),
-                                      //   Text('adsa'),
                                     ],
                                   ),
                                 ),
