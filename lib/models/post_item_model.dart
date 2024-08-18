@@ -80,7 +80,9 @@ class Post {
   }
 
   factory Post.fromPost(Post post) {
-    return post;
+    Post new_post = Post();
+    new_post.copyPost(post);
+    return new_post;
   }
 
   void copyPost(Post post) {
@@ -111,5 +113,17 @@ class Post {
   @override
   String toString() {
     return '<Post> [$title]';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return (identical(this, other) ||
+        (other is Post &&
+            runtimeType == other.runtimeType &&
+            (id == other.id &&
+                title == other.title &&
+                image_url == other.image_url &&
+                publish_date == other.publish_date &&
+                user == other.user)));
   }
 }

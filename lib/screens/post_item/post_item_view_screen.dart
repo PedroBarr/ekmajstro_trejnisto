@@ -35,17 +35,19 @@ class _PostItemView extends State<PostItemView> {
         });
       }).whenComplete(() {
         toggleLoading(false);
-        toggleModified(false);
       });
-    } else {
-      toggleModified(true);
     }
+    toggleModified(false);
   }
 
   void setPost(String attr, String value) {
     setState(() {
-      toggleModified(true);
+      Post post = Post.fromPost(_post);
       _post.setPost(attr, value);
+
+      if (!(post == _post)) {
+        toggleModified(true);
+      }
     });
   }
 
