@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'FAB_ekmajstro_constants.dart';
 import 'package:ekmajstro_trejnisto/components/core/navmenu/navmenu.dart';
+import 'package:ekmajstro_trejnisto/components/core/backdrop/backdrop.dart';
 
 class FABEkmajstroComponent extends StatefulWidget {
   const FABEkmajstroComponent({super.key});
@@ -38,31 +37,14 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
       height: MediaQuery.of(context).size.height,
       child: Stack(
         children: [
-          Builder(builder: (context) {
-            if (_menu_open) {
-              return GestureDetector(
-                onTap: () => toggleMenuOpen(),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: 3.0,
-                    sigmaY: 3.0,
-                  ),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    color: Theme.of(context).dialogBackgroundColor,
-                    child: Center(
-                      child: NavmenuComponent(
-                        width: MediaQuery.of(context).size.width * 3 / 5,
-                        height: MediaQuery.of(context).size.height * 7 / 10,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }
-            return Container();
-          }),
+          BackdropComponent(
+            is_showing: _menu_open,
+            onBackdropTap: () => toggleMenuOpen(),
+            child: NavmenuComponent(
+              width: MediaQuery.of(context).size.width * 3 / 5,
+              height: MediaQuery.of(context).size.height * 7 / 10,
+            ),
+          ),
           Positioned(
             right: 10.0,
             bottom: 10.0,
