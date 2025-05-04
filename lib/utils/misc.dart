@@ -20,8 +20,8 @@ dynamic getBody(http.Response response) {
   }
 }
 
-String buildIdRoute(String route_base, ModelItem item) {
-  return route_base.replaceAll(ROUTE_ID_WILDCARD, item.id!.toString());
+String buildIdRoute(String routeBase, ModelItem item) {
+  return routeBase.replaceAll(ROUTE_ID_WILDCARD, item.id!.toString());
 }
 
 bool isNumeric(String str) {

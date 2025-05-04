@@ -34,15 +34,15 @@ Route<dynamic> mainRouter(RouteSettings settings) {
 
   if (settings.name!.contains(ROUTER_POST_ITEM_ROUTE)) {
     final String path = settings.name ?? '';
-    final int index_path = path.indexOf('$ROUTER_POST_ITEM_ROUTE/');
-    final String sub_path = path.replaceAll('$ROUTER_POST_ITEM_ROUTE/', '');
-    final int index_super_path = sub_path.indexOf('/', index_path);
+    final int indexPath = path.indexOf('$ROUTER_POST_ITEM_ROUTE/');
+    final String subPath = path.replaceAll('$ROUTER_POST_ITEM_ROUTE/', '');
+    final int indexSuperPath = subPath.indexOf('/', indexPath);
     final String wildcard;
 
-    if ([-1, index_path].contains(index_super_path)) {
-      wildcard = sub_path;
+    if ([-1, indexPath].contains(indexSuperPath)) {
+      wildcard = subPath;
     } else {
-      wildcard = sub_path.substring(index_path, index_super_path);
+      wildcard = subPath.substring(indexPath, indexSuperPath);
     }
 
     if (wildcard == ROUTE_ADD_WILDCARD) {

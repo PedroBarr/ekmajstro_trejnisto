@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomImageFieldDialog extends StatefulWidget {
-  CustomImageFieldDialog({
+  const CustomImageFieldDialog({
     super.key,
   });
 

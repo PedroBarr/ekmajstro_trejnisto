@@ -80,9 +80,9 @@ class Post {
   }
 
   factory Post.fromPost(Post post) {
-    Post new_post = Post();
-    new_post.copyPost(post);
-    return new_post;
+    Post newPost = Post();
+    newPost.copyPost(post);
+    return newPost;
   }
 
   void copyPost(Post post) {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 final ThemeData main_theme = ThemeData(
   scaffoldBackgroundColor: const Color(0xFF242424),
   primaryColor: const Color(0xFF545A70),
-  dialogBackgroundColor: const Color(0x99545A70),
   textTheme: const TextTheme(
     headlineMedium: TextStyle(
       inherit: true,
@@ -26,4 +25,5 @@ final ThemeData main_theme = ThemeData(
     centerTitle: true,
   ),
   useMaterial3: true,
+  dialogTheme: const DialogThemeData(backgroundColor: Color(0x99545A70)),
 );

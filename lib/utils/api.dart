@@ -29,11 +29,11 @@ Future<List<PostItem>> getPosts() async {
 
 Future<Post> getPost(String id) async {
   try {
-    String sub_path =
+    String subPath =
         PUBLICACION_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, id.toString());
 
     final response = await http.get(
-      Uri.parse(BACKEND_API + sub_path),
+      Uri.parse(BACKEND_API + subPath),
     );
 
     late dynamic body = getBody(response);

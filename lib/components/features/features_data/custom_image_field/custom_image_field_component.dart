@@ -23,7 +23,7 @@ class CustomImageFieldComponent extends StatefulWidget {
 class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
   bool _is_dialog_open = false;
 
-  double _padding = 5.0;
+  final double _padding = 5.0;
 
   @override
   void initState() {
@@ -105,7 +105,7 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
         ),
         BackdropComponent(
           is_showing: _is_dialog_open,
-          child: CustomImageFieldDialog(),
+          child: const CustomImageFieldDialog(),
           onBackdropTap: () => toggleMenuOpen(false),
         ),
       ],
