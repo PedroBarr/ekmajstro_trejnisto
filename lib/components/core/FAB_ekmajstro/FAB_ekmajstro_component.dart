@@ -22,17 +22,25 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
     _menu_open = false;
   }
 
-  void toggleMenuOpen() {
+  void toggleMenuOpen(dynamic value) {
     setState(() {
-      _menu_open = !_menu_open;
+      if ([true, false].contains(value)) {
+        _menu_open = value;
+      } else {
+        _menu_open = !_menu_open;
+      }
+
       if (_menu_open) {
         BackdropComponent.showDialog(
           context: context,
           child: NavmenuComponent(
-            width: MediaQuery.of(context).size.width * 3 / 5,
+            width: MediaQuery.of(context).size.width * 9 / 10,
             height: MediaQuery.of(context).size.height * 7 / 10,
+            onNavItemTap: () {
+              toggleMenuOpen(false);
+            },
           ),
-          onBackdropTap: () => toggleMenuOpen(),
+          onBackdropTap: () => toggleMenuOpen(null),
         );
       } else {
         BackdropComponent.hideDialog();
@@ -64,7 +72,7 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
                 hoverColor: Colors.transparent,
                 focusColor: Colors.transparent,
                 highlightColor: Colors.transparent,
-                onPressed: () => toggleMenuOpen(),
+                onPressed: () => toggleMenuOpen(null),
                 icon: switch (_menu_open) {
                   true => SvgPicture.asset(
                       FAB_ICON,

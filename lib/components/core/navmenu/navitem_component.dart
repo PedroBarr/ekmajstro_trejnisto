@@ -6,11 +6,13 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 class NavitemComponent extends StatefulWidget {
   final NavItemModel nav_item;
   final double width;
+  final VoidCallback? onNavItemTap;
 
   const NavitemComponent({
     super.key,
     required this.nav_item,
     required this.width,
+    this.onNavItemTap,
   });
 
   @override
@@ -20,6 +22,10 @@ class NavitemComponent extends StatefulWidget {
 class _NavitemComponent extends State<NavitemComponent> {
   void navigateToLocation(BuildContext context) {
     Navigator.of(context).pushNamed(ROUTER_POST_LIST_ROUTE);
+
+    if (widget.onNavItemTap != null) {
+      widget.onNavItemTap!();
+    }
   }
 
   @override
@@ -40,9 +46,8 @@ class _NavitemComponent extends State<NavitemComponent> {
         width: widget.width,
         child: Row(
           children: [
-            const SizedBox(width: 10.0),
             widget.nav_item.icon,
-            const SizedBox(width: 10.0),
+            const SizedBox(width: 20.0),
             Text(
               (widget.nav_item.title).toUpperCase(),
               style: TextStyle(
@@ -58,7 +63,6 @@ class _NavitemComponent extends State<NavitemComponent> {
               Icons.chevron_right_rounded,
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
-            const SizedBox(width: 10.0),
           ],
         ),
       ),
