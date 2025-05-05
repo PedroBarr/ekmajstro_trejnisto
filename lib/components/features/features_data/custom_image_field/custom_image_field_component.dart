@@ -50,7 +50,7 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
             mode: 'edit',
             value: widget.value,
             title: widget.title,
-            titleEditable: widget.is_title_editable,
+            is_title_editable: widget.is_title_editable,
           ),
           onBackdropTap: () => toggleEditOpen(false),
         );

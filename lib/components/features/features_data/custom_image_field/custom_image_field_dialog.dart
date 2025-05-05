@@ -6,7 +6,7 @@ class CustomImageFieldDialog extends StatefulWidget {
   final String mode;
   final String? value;
   final String? title;
-  final bool titleEditable;
+  final bool is_title_editable;
   final Function? onEditTitle;
   final Function? onEditImage;
 
@@ -15,7 +15,7 @@ class CustomImageFieldDialog extends StatefulWidget {
     this.mode = 'edit',
     this.value,
     this.title,
-    this.titleEditable = false,
+    this.is_title_editable = false,
     this.onEditTitle,
     this.onEditImage,
   })  : assert(
@@ -91,6 +91,7 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                       widget.onEditTitle!(value);
                     }
                   },
+                  is_editable: widget.is_title_editable,
                 );
               }
               return const SizedBox.shrink();

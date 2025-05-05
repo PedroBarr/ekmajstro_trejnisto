@@ -6,6 +6,7 @@ class CustomTextFieldComponent extends StatefulWidget {
   final double spacing;
   final double font_size;
   final bool bold_text;
+  final bool is_editable;
 
   const CustomTextFieldComponent({
     super.key,
@@ -14,6 +15,7 @@ class CustomTextFieldComponent extends StatefulWidget {
     this.spacing = double.infinity,
     this.font_size = 17.0,
     this.bold_text = true,
+    this.is_editable = true,
   });
 
   @override
@@ -152,15 +154,23 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
                   : SizedBox(
                       width: widget.spacing,
                     ),
-              GestureDetector(
-                onTap: () {
-                  toggleEditMode(null);
-                  refreshValue();
+              Builder(
+                builder: (context) {
+                  if (!widget.is_editable) {
+                    return SizedBox.shrink();
+                  } else {
+                    return GestureDetector(
+                      onTap: () {
+                        toggleEditMode(null);
+                        refreshValue();
+                      },
+                      child: Icon(
+                        Icons.edit_square,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    );
+                  }
                 },
-                child: Icon(
-                  Icons.edit_square,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
               ),
             ],
           );
