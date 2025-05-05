@@ -25,6 +25,18 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
   void toggleMenuOpen() {
     setState(() {
       _menu_open = !_menu_open;
+      if (_menu_open) {
+        BackdropComponent.showDialog(
+          context: context,
+          child: NavmenuComponent(
+            width: MediaQuery.of(context).size.width * 3 / 5,
+            height: MediaQuery.of(context).size.height * 7 / 10,
+          ),
+          onBackdropTap: () => toggleMenuOpen(),
+        );
+      } else {
+        BackdropComponent.hideDialog();
+      }
     });
   }
 
@@ -37,14 +49,6 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
       height: MediaQuery.of(context).size.height,
       child: Stack(
         children: [
-          BackdropComponent(
-            is_showing: _menu_open,
-            onBackdropTap: () => toggleMenuOpen(),
-            child: NavmenuComponent(
-              width: MediaQuery.of(context).size.width * 3 / 5,
-              height: MediaQuery.of(context).size.height * 7 / 10,
-            ),
-          ),
           Positioned(
             right: 10.0,
             bottom: 10.0,

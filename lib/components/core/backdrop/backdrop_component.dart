@@ -1,89 +1,56 @@
 import 'package:flutter/material.dart';
 
-class BackdropComponent extends StatefulWidget {
-  bool is_showing;
-  final Function? onBackdropTap;
-  final Widget child;
+import 'dart:ui' as ui show ImageFilter;
 
-  BackdropComponent({
-    super.key,
-    required this.is_showing,
-    required this.child,
-    this.onBackdropTap,
-  });
+class BackdropComponent {
+  static OverlayEntry? _overlayEntry;
+  static bool _is_showing = false;
 
-  @override
-  State<BackdropComponent> createState() => _BackdropComponent();
-}
-
-class _BackdropComponent extends State<BackdropComponent> {
-  void confirmBackdroptap() {
-    widget.onBackdropTap!();
-  }
-
-  @override
-  void didUpdateWidget(BackdropComponent oldWidget) {
-    if (widget.is_showing) {
-      // _showDialog();
+  static void showDialog({
+    required BuildContext context,
+    required Widget child,
+    VoidCallback? onBackdropTap,
+  }) {
+    if (_is_showing) {
+      return;
     }
-
-    super.didUpdateWidget(oldWidget);
+    _is_showing = true;
+    final OverlayState? overlayState = Overlay.of(context);
+    if (overlayState != null) {
+      _overlayEntry = OverlayEntry(builder: (BuildContext context) {
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: onBackdropTap,
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(
+                    sigmaX: 3.0,
+                    sigmaY: 3.0,
+                  ),
+                  child: Container(
+                    color: Theme.of(context)
+                        .dialogBackgroundColor
+                        .withOpacity(0.4),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: child,
+            )
+          ],
+        );
+      });
+      overlayState.insert(_overlayEntry!);
+    }
   }
 
-  void _showDialog() {
-    Navigator.of(context).push(
-      MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return Container(
-            width: 200,
-            height: 200,
-            color: Colors.amber,
-          );
-        },
-        fullscreenDialog: true,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-    // return Builder(
-    //   builder: (context) {
-    //     if (widget.is_showing) {
-    //       return Dialog.fullscreen(
-    //         backgroundColor: Colors.transparent,
-    //         child: Positioned(
-    //           top: 0,
-    //           left: 0,
-    //           width: MediaQuery.of(context).size.width,
-    //           height: MediaQuery.of(context).size.height,
-    //           child: Stack(
-    //             children: [
-    //               GestureDetector(
-    //                 onTap: () => confirmBackdroptap(),
-    //                 child: BackdropFilter(
-    //                   filter: ImageFilter.blur(
-    //                     sigmaX: 3.0,
-    //                     sigmaY: 3.0,
-    //                   ),
-    //                   child: Container(
-    //                     width: MediaQuery.of(context).size.width,
-    //                     height: MediaQuery.of(context).size.height,
-    //                     color: Theme.of(context).dialogBackgroundColor,
-    //                     child: Center(
-    //                       child: widget.child,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       );
-    //     }
-    //     return Container();
-    //   },
-    // );
+  static void hideDialog() {
+    if (_overlayEntry != null) {
+      _overlayEntry?.remove();
+      _overlayEntry = null;
+      _is_showing = false;
+    }
   }
 }

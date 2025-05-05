@@ -37,6 +37,16 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
       } else {
         _is_dialog_open = !_is_dialog_open;
       }
+
+      if (_is_dialog_open) {
+        BackdropComponent.showDialog(
+          context: context,
+          child: CustomImageFieldDialog(),
+          onBackdropTap: () => toggleMenuOpen(false),
+        );
+      } else {
+        BackdropComponent.hideDialog();
+      }
     });
   }
 
@@ -102,11 +112,6 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
               ),
             ),
           ],
-        ),
-        BackdropComponent(
-          is_showing: _is_dialog_open,
-          child: const CustomImageFieldDialog(),
-          onBackdropTap: () => toggleMenuOpen(false),
         ),
       ],
     );
