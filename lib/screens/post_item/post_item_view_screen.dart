@@ -146,6 +146,7 @@ class _PostItemView extends State<PostItemView> {
                                         value: _post.image_url,
                                         onConfirm: (value) => setPost(
                                             Post.POST_ATTR_IMAGE, value),
+                                        title: 'IMAGEN DE PORTADA',
                                       ),
                                       const Text(
                                         'IMAGEN DE PORTADA',

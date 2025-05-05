@@ -4,15 +4,17 @@ import 'custom_image_field_dialog.dart';
 import 'package:ekmajstro_trejnisto/components/core/backdrop/backdrop.dart';
 
 class CustomImageFieldComponent extends StatefulWidget {
-  double height;
-  String value;
+  final double height;
+  final String value;
   final Function? onConfirm;
+  final String? title;
 
-  CustomImageFieldComponent({
+  const CustomImageFieldComponent({
     super.key,
     required this.height,
     this.value = '',
     this.onConfirm,
+    this.title,
   });
 
   @override
@@ -21,7 +23,8 @@ class CustomImageFieldComponent extends StatefulWidget {
 }
 
 class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
-  bool _is_dialog_open = false;
+  bool _is_edit_dialog_open = false;
+  bool _is_detail_dialog_open = false;
 
   final double _padding = 5.0;
 
@@ -30,19 +33,43 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
     super.initState();
   }
 
-  void toggleMenuOpen(dynamic value) {
+  void toggleEditOpen(dynamic value) {
     setState(() {
       if ([true, false].contains(value)) {
-        _is_dialog_open = value;
+        _is_edit_dialog_open = value;
       } else {
-        _is_dialog_open = !_is_dialog_open;
+        _is_edit_dialog_open = !_is_edit_dialog_open;
       }
 
-      if (_is_dialog_open) {
+      if (_is_edit_dialog_open) {
         BackdropComponent.showDialog(
           context: context,
           child: CustomImageFieldDialog(),
-          onBackdropTap: () => toggleMenuOpen(false),
+          onBackdropTap: () => toggleEditOpen(false),
+        );
+      } else {
+        BackdropComponent.hideDialog();
+      }
+    });
+  }
+
+  void toggleDetailOpen(dynamic value) {
+    setState(() {
+      if ([true, false].contains(value)) {
+        _is_detail_dialog_open = value;
+      } else {
+        _is_detail_dialog_open = !_is_detail_dialog_open;
+      }
+
+      if (_is_detail_dialog_open) {
+        BackdropComponent.showDialog(
+          context: context,
+          child: CustomImageFieldDialog(
+            mode: 'detail',
+            value: widget.value,
+            title: widget.title,
+          ),
+          onBackdropTap: () => toggleDetailOpen(false),
         );
       } else {
         BackdropComponent.hideDialog();
@@ -68,17 +95,20 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
                 builder: (context) {
                   if (widget.value.isEmpty) {
                     return GestureDetector(
-                      onTap: () => toggleMenuOpen(null),
+                      onTap: () => toggleEditOpen(null),
                       child: Icon(
                         Icons.library_add,
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                     );
                   } else {
-                    return Image.network(
-                      widget.value,
-                      height: widget.height - 2 * _padding,
-                      fit: BoxFit.fitHeight,
+                    return GestureDetector(
+                      onTap: () => toggleDetailOpen(null),
+                      child: Image.network(
+                        widget.value,
+                        height: widget.height - 2 * _padding,
+                        fit: BoxFit.fitHeight,
+                      ),
                     );
                   }
                 },
@@ -98,7 +128,7 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
                           return Container();
                         } else {
                           return GestureDetector(
-                            onTap: () => toggleMenuOpen(null),
+                            onTap: () => toggleEditOpen(null),
                             child: Icon(
                               Icons.edit_square,
                               color: Theme.of(context).colorScheme.onSurface,
