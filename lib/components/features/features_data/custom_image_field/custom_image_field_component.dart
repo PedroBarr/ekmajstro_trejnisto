@@ -8,6 +8,7 @@ class CustomImageFieldComponent extends StatefulWidget {
   final String value;
   final Function? onConfirm;
   final String? title;
+  final bool is_title_editable;
 
   const CustomImageFieldComponent({
     super.key,
@@ -15,6 +16,7 @@ class CustomImageFieldComponent extends StatefulWidget {
     this.value = '',
     this.onConfirm,
     this.title,
+    this.is_title_editable = false,
   });
 
   @override
@@ -44,7 +46,12 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
       if (_is_edit_dialog_open) {
         BackdropComponent.showDialog(
           context: context,
-          child: CustomImageFieldDialog(),
+          child: CustomImageFieldDialog(
+            mode: 'edit',
+            value: widget.value,
+            title: widget.title,
+            titleEditable: widget.is_title_editable,
+          ),
           onBackdropTap: () => toggleEditOpen(false),
         );
       } else {

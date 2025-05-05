@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFieldComponent extends StatefulWidget {
-  String value;
+  final String value;
   final Function? onConfirm;
-  double spacing;
-  double font_size;
-  bool bold_text;
+  final double spacing;
+  final double font_size;
+  final bool bold_text;
 
-  CustomTextFieldComponent({
+  const CustomTextFieldComponent({
     super.key,
     this.value = '',
     this.onConfirm,
@@ -107,26 +107,29 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
               maxWidth:
                   widget.spacing == double.infinity ? double.infinity : 500,
             ),
-            child: TextField(
-              decoration: InputDecoration(
-                suffixIcon: Builder(
-                  builder: (context) {
-                    if (!_is_save_able) {
-                      return Container();
-                    }
+            child: Material(
+              color: Colors.transparent,
+              child: TextField(
+                decoration: InputDecoration(
+                  suffixIcon: Builder(
+                    builder: (context) {
+                      if (!_is_save_able) {
+                        return Container();
+                      }
 
-                    return GestureDetector(
-                      onTap: () => submit(),
-                      child: const Icon(
-                        Icons.save_as_rounded,
-                      ),
-                    );
-                  },
+                      return GestureDetector(
+                        onTap: () => submit(),
+                        child: const Icon(
+                          Icons.save_as_rounded,
+                        ),
+                      );
+                    },
+                  ),
                 ),
+                cursorColor: Theme.of(context).colorScheme.onSurface,
+                controller: _controller,
+                onSubmitted: (value) => submit(),
               ),
-              cursorColor: Theme.of(context).colorScheme.onSurface,
-              controller: _controller,
-              onSubmitted: (value) => submit(),
             ),
           );
         } else {
@@ -139,6 +142,9 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
                   fontWeight:
                       widget.bold_text ? FontWeight.bold : FontWeight.normal,
                   fontSize: widget.font_size,
+                  decoration: TextDecoration.none,
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontFamily: 'Roboto',
                 ),
               ),
               widget.spacing == double.infinity

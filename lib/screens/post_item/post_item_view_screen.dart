@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'post_item_view_constants.dart';
+
 import 'package:ekmajstro_trejnisto/components/components.dart';
 import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
@@ -146,10 +148,11 @@ class _PostItemView extends State<PostItemView> {
                                         value: _post.image_url,
                                         onConfirm: (value) => setPost(
                                             Post.POST_ATTR_IMAGE, value),
-                                        title: 'IMAGEN DE PORTADA',
+                                        title: post_cover_image_title,
+                                        is_title_editable: false,
                                       ),
                                       const Text(
-                                        'IMAGEN DE PORTADA',
+                                        post_cover_image_title,
                                         style: TextStyle(
                                           fontSize: 11,
                                         ),
