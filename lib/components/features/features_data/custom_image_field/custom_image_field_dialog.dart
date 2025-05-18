@@ -138,6 +138,71 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                   },
                 ),
               ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.8,
+                      maxHeight: 50,
+                    ),
+                    height: 50,
+                    // width: MediaQuery.of(context).size.width * 0.7,
+                    child: Material(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Image URL',
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          if (widget.onEditImage != null) {
+                            // widget.onEditImage!(value);
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.check,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    onPressed: () {
+                      if (widget.onEditImage != null) {
+                        // widget.onEditImage!(null);
+                      }
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  if (widget.onEditImage != null) {
+                    widget.onEditImage!();
+                  }
+                },
+                child: Text(
+                  'Update Image',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
