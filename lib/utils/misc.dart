@@ -10,7 +10,7 @@ import 'router.dart';
 
 dynamic getBody(http.Response response) {
   try {
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       dynamic body = jsonDecode(response.body);
       return body;
     }

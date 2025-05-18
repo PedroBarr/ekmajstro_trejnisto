@@ -80,7 +80,11 @@ class _PostItemView extends State<PostItemView> {
   void onSave() {
     String message = '';
     try {
-      updatePost(_post);
+      savePost(_post).then((value) {
+        setState(() {
+          _post = Post.fromPost(value);
+        });
+      });
       message = 'Guardado exitoso';
     } catch (e) {
       Navigator.of(context).pop();
