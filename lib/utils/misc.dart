@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:ekmajstro_trejnisto/config/config.dart';
@@ -26,4 +27,14 @@ String buildIdRoute(String routeBase, ModelItem item) {
 
 bool isNumeric(String str) {
   return int.tryParse(str) != null;
+}
+
+void showMessage(String message, BuildContext context) {
+  if (message.isNotEmpty) {
+    final snack = SnackBar(
+      content: Text(message),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snack);
+  }
 }
