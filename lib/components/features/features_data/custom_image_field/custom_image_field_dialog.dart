@@ -181,17 +181,13 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
                     constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.8,
                       maxHeight: 50,
                     ),
                     height: 50,
                     child: Material(
+                      borderRadius: BorderRadius.circular(10.0),
                       child: TextField(
                         decoration: InputDecoration(
                           labelText: 'URL de la imagen',
@@ -213,26 +209,50 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.check,
-                      color: Theme.of(context).colorScheme.onSurface,
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
-                    onPressed: () {
-                      updateImageUrl(_url_controller.text);
-                      _url_controller.clear();
-                      FocusScope.of(context).unfocus();
-                    },
+                    padding: const EdgeInsets.all(2.0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.check,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                      onPressed: () {
+                        updateImageUrl(_url_controller.text);
+                        _url_controller.clear();
+                        FocusScope.of(context).unfocus();
+                      },
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
-              TextButton(
-                onPressed: onSave,
-                child: Text(
-                  'Actualizar imagen',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
+              GestureDetector(
+                onTap: onSave,
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 20,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Actualizar imagen',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 14,
+                      decoration: TextDecoration.none,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
