@@ -51,6 +51,14 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
             value: widget.value,
             title: widget.title,
             is_title_editable: widget.is_title_editable,
+            onEditImage: (widget.onConfirm != null)
+                ? (String value) {
+                    widget.onConfirm!(value);
+                  }
+                : null,
+            closeDialog: () {
+              toggleEditOpen(false);
+            },
           ),
           onBackdropTap: () => toggleEditOpen(false),
         );

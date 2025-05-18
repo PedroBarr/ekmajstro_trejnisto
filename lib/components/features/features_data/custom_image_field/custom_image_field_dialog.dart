@@ -9,6 +9,8 @@ class CustomImageFieldDialog extends StatefulWidget {
   final bool is_title_editable;
   final Function? onEditTitle;
   final Function? onEditImage;
+  final bool? close_on_save;
+  final Function? closeDialog;
 
   const CustomImageFieldDialog({
     super.key,
@@ -18,6 +20,8 @@ class CustomImageFieldDialog extends StatefulWidget {
     this.is_title_editable = false,
     this.onEditTitle,
     this.onEditImage,
+    this.close_on_save = true,
+    this.closeDialog,
   })  : assert(
           mode == 'edit' || mode == 'detail',
           'mode must be either "edit" or "detail"',
@@ -32,6 +36,40 @@ class CustomImageFieldDialog extends StatefulWidget {
 }
 
 class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
+  String _image_url = '';
+  final TextEditingController _url_controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.value != null) {
+      _image_url = widget.value!;
+    }
+  }
+
+  void updateImageUrl(String value) {
+    setState(() {
+      if (value.isEmpty) {
+        _image_url = widget.value!;
+      } else {
+        _image_url = value;
+      }
+    });
+  }
+
+  void onSave() {
+    if (widget.onEditImage != null) {
+      widget.onEditImage!(_image_url);
+    }
+
+    if (widget.close_on_save == true) {
+      if (widget.closeDialog != null) {
+        widget.closeDialog!();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.mode == 'detail') {
@@ -124,9 +162,9 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                 padding: const EdgeInsets.all(10.0),
                 child: Builder(
                   builder: (context) {
-                    if (widget.value != null) {
+                    if (_image_url.isNotEmpty) {
                       return Image.network(
-                        widget.value!,
+                        _image_url,
                         fit: BoxFit.cover,
                       );
                     } else {
@@ -153,13 +191,13 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                       maxHeight: 50,
                     ),
                     height: 50,
-                    // width: MediaQuery.of(context).size.width * 0.7,
                     child: Material(
                       child: TextField(
                         decoration: InputDecoration(
-                          labelText: 'Image URL',
+                          labelText: 'URL de la imagen',
                           labelStyle: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 12,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -168,11 +206,10 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                             ),
                           ),
                         ),
-                        onChanged: (value) {
-                          if (widget.onEditImage != null) {
-                            // widget.onEditImage!(value);
-                          }
+                        onSubmitted: (value) {
+                          updateImageUrl(_url_controller.text);
                         },
+                        controller: _url_controller,
                       ),
                     ),
                   ),
@@ -182,22 +219,18 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
                     onPressed: () {
-                      if (widget.onEditImage != null) {
-                        // widget.onEditImage!(null);
-                      }
+                      updateImageUrl(_url_controller.text);
+                      _url_controller.clear();
+                      FocusScope.of(context).unfocus();
                     },
                   ),
                 ],
               ),
               const SizedBox(height: 10),
               TextButton(
-                onPressed: () {
-                  if (widget.onEditImage != null) {
-                    widget.onEditImage!();
-                  }
-                },
+                onPressed: onSave,
                 child: Text(
-                  'Update Image',
+                  'Actualizar imagen',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
@@ -208,5 +241,11 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
         ),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    _url_controller.dispose();
+    super.dispose();
   }
 }
