@@ -126,4 +126,26 @@ class Post {
                 publish_date == other.publish_date &&
                 user == other.user)));
   }
+
+  Map<String, dynamic> toMap(bool? forBack) {
+    forBack ??= false;
+
+    if (forBack) {
+      return {
+        'id': id,
+        'titulo': title,
+        'imagen': image_url,
+        'fecha': publish_date.toString(),
+        'usuario': user,
+      };
+    }
+
+    return {
+      'id': id,
+      'title': title,
+      'image_url': image_url,
+      'publish_date': publish_date,
+      'user': user,
+    };
+  }
 }
