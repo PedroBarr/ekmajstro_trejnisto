@@ -77,6 +77,14 @@ class _PostItemView extends State<PostItemView> {
     });
   }
 
+  void onSave() {
+    try {
+      updatePost(_post);
+    } catch (e) {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -90,13 +98,16 @@ class _PostItemView extends State<PostItemView> {
             actions: [
               Builder(builder: (context) {
                 if (_is_modified) {
-                  return const Padding(
-                    padding: EdgeInsets.only(
-                      right: 10.0,
-                      left: 10.0,
-                    ),
-                    child: Icon(
-                      Icons.save_as_rounded,
+                  return GestureDetector(
+                    onTap: onSave,
+                    child: const Padding(
+                      padding: EdgeInsets.only(
+                        right: 10.0,
+                        left: 10.0,
+                      ),
+                      child: Icon(
+                        Icons.save_as_rounded,
+                      ),
                     ),
                   );
                 }

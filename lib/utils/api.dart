@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
@@ -39,6 +40,28 @@ Future<Post> getPost(String id) async {
     late dynamic body = getBody(response);
     late Post post = Post.fromJson(body);
     return post;
+  } catch (e) {
+    throw Exception(ERROR_POST_ITEM);
+  }
+}
+
+Future<Post> updatePost(Post post) async {
+  try {
+    String subPath =
+        PUBLICACION_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, post.id);
+
+    final response = await http.put(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(post.toMap(true)),
+    );
+
+    late dynamic body = getBody(response);
+    late Post new_post = Post.fromJson(body);
+
+    return new_post;
   } catch (e) {
     throw Exception(ERROR_POST_ITEM);
   }
