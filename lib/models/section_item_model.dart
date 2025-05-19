@@ -34,4 +34,9 @@ class SectionItem extends ModelItem {
       _ => throw const FormatException(ERROR_SECTION_ITEM_PARSER),
     };
   }
+
+  @override
+  String toString() {
+    return '<Section> [$name] ${is_mark_one ? '<marcada>' : ''}';
+  }
 }

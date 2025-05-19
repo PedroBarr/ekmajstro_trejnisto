@@ -10,3 +10,14 @@ List<PostItem> dtoPostItemList(List<dynamic> list) {
 
   return posts;
 }
+
+List<SectionItem> dtoSectionItemList(List<dynamic> list) {
+  List<SectionItem> sections = [];
+
+  for (final sectionResponse in list) {
+    SectionItem section = SectionItem.fromJson(sectionResponse);
+    sections.add(section);
+  }
+
+  return sections;
+}
