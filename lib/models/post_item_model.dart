@@ -42,6 +42,14 @@ class PostItem extends ModelItem {
   String toString() {
     return '<Post> [$title]';
   }
+
+  String trimTitle({int? max_length}) {
+    int max_length_inner = max_length ?? 10;
+
+    return title.length > max_length_inner
+        ? "${title.substring(0, max_length_inner)}..."
+        : title;
+  }
 }
 
 class Post {

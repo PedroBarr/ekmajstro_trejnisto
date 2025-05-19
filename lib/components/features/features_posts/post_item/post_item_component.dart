@@ -37,7 +37,7 @@ class _PostItemComponent extends State<PostItemComponent> {
           children: [
             const SizedBox(width: 10.0),
             Text(
-              (widget.post!.title).toUpperCase(),
+              (widget.post!.trimTitle(max_length: 23)).toUpperCase(),
               style: const TextStyle(
                 fontSize: 16.0,
                 letterSpacing: 2,
@@ -54,6 +54,19 @@ class _PostItemComponent extends State<PostItemComponent> {
               hoverColor: Colors.transparent,
               focusColor: Colors.transparent,
             ),
+            const SizedBox(width: 10.0),
+            Builder(builder: (context) {
+              if (widget.post!.with_preview) {
+                return Icon(
+                  Icons.public_sharp,
+                  color: Theme.of(context).colorScheme.onSurface,
+                );
+              }
+              return Icon(
+                Icons.public_off_sharp,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              );
+            }),
             const SizedBox(width: 10.0),
           ],
         ),
