@@ -18,9 +18,25 @@ class _SectionItemListComponent extends State<SectionItemListComponent> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
+      child: Wrap(
+        direction: Axis.vertical,
+        spacing: 10.0,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: widget.sections.map<Widget>((section) {
-          return Text(section.name);
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            padding: const EdgeInsets.all(10.0),
+            width: MediaQuery.of(context).size.width - 20.0,
+            child: Text(
+              section.name,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          );
         }).toList(),
       ),
     );

@@ -42,7 +42,10 @@ class _AccordionComponent extends State<AccordionComponent> {
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool is_expand) {
                 return ListTile(
-                  title: Text(element.name),
+                  title: Text(
+                    element.name,
+                    textAlign: TextAlign.center,
+                  ),
                 );
               },
               body: Builder(
@@ -51,8 +54,11 @@ class _AccordionComponent extends State<AccordionComponent> {
                 },
               ),
               isExpanded: element.is_expanded,
+              canTapOnHeader: true,
             );
           }).toList(),
+          expandIconColor: Theme.of(context).colorScheme.onSurface,
+          expandedHeaderPadding: EdgeInsets.all(0),
         ),
       ),
     );
