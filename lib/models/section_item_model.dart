@@ -37,6 +37,6 @@ class SectionItem extends ModelItem {
 
   @override
   String toString() {
-    return '<Section> [$name] ${is_mark_one ? '<marcada>' : ''}';
+    return '<Section> [$name]${is_mark_one ? ' <marcada>' : ''}';
   }
 }
