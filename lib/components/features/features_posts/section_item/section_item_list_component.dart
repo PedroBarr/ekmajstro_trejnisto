@@ -4,10 +4,12 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 
 class SectionItemListComponent extends StatefulWidget {
   final List<SectionItem> sections;
+  final bool include_add;
 
   const SectionItemListComponent({
     super.key,
     required this.sections,
+    this.include_add = false,
   });
 
   @override
@@ -64,6 +66,39 @@ class _SectionItemListComponent extends State<SectionItemListComponent> {
               );
             }).toList(),
             [
+              Builder(
+                builder: (context) {
+                  return widget.include_add
+                      ? GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                              left: 10.0,
+                              right: 10.0,
+                            ),
+                            width: MediaQuery.of(context).size.width,
+                            child: Container(
+                              height: 40.0,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  style: BorderStyle.solid,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Icon(
+                                Icons.add,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox.shrink();
+                },
+              ),
               const SizedBox(
                 height: 5,
               ),

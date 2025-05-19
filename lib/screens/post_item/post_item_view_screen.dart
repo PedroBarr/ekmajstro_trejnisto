@@ -253,6 +253,7 @@ class _PostItemView extends State<PostItemView> {
                             AccordionElement(
                               name: 'Secciones',
                               content: SectionItemListComponent(
+                                include_add: _post.id.isNotEmpty,
                                 sections: _sections,
                               ),
                             ),
