@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
 
@@ -43,14 +44,39 @@ class _ResourceItemListComponent extends State<ResourceItemListComponent> {
                   alignment: WrapAlignment.spaceBetween,
                   direction: Axis.horizontal,
                   children: [
-                    Text(
-                      resource.name,
-                      style: TextStyle(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          resource.name,
+                          style: TextStyle(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.8,
+                          ),
+                          child: Text(
+                            resource.description,
+                            style: TextStyle(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const Spacer(),
+                    SvgPicture.network(
+                      resource.parseTypeIcon(),
+                      width: 35.0,
+                      height: 35.0,
+                    ),
                   ],
                 ),
               );
