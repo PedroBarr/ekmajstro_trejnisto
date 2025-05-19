@@ -21,7 +21,7 @@ class _PostListScreen extends State<PostListScreen> {
   void initState() {
     super.initState();
 
-    _posts = getPosts();
+    _posts = getPosts(with_preview: true);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 import 'app.dart';
@@ -15,10 +16,15 @@ const String PUBLICACIONES_ENDPOINT = '/publicaciones';
 const String PUBLICACION_ENDPOINT = '/publicacion/$ROUTE_ID_WILDCARD';
 const String PUBLICACION_NUEVA_ENDPOINT = '/publicacion';
 
-Future<List<PostItem>> getPosts() async {
+Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
+    final query_params = {
+      'con_previsualizacion': (with_preview ?? false).toString(),
+    };
+
     final response = await http.get(
-      Uri.parse(BACKEND_API + PUBLICACIONES_ENDPOINT),
+      Uri.parse(BACKEND_API + PUBLICACIONES_ENDPOINT)
+          .replace(queryParameters: query_params),
     );
 
     late List<dynamic> body = getBody(response);

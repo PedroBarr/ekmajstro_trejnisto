@@ -6,10 +6,12 @@ import 'model_item.dart';
 
 class PostItem extends ModelItem {
   final String title;
+  final bool with_preview;
 
   const PostItem({
     required super.id,
     required this.title,
+    this.with_preview = false,
   });
 
   factory PostItem.fromJson(Map<String, dynamic> json) {
@@ -17,12 +19,16 @@ class PostItem extends ModelItem {
       {
         'pblc_id': String id,
         'pblc_titulo': String title,
+        'con_previsualizacion': int with_preview,
       } =>
-        PostItem(id: id, title: title),
+        PostItem(id: id, title: title, with_preview: with_preview == 1),
       {
         'pblc_id': int id,
         'pblc_titulo': String title,
-      } ||
+        'con_previsualizacion': int with_preview,
+      } =>
+        PostItem(
+            id: id.toString(), title: title, with_preview: with_preview == 1),
       {
         'id': int id,
         'title': String title,
