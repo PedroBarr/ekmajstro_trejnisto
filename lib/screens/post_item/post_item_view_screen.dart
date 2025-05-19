@@ -22,6 +22,7 @@ class PostItemView extends StatefulWidget {
 class _PostItemView extends State<PostItemView> {
   Post _post = Post();
   List<SectionItem> _sections = [];
+  List<ResourceItem> _resources = [];
   bool _is_loading = false;
   bool _is_modified = false;
 
@@ -40,7 +41,11 @@ class _PostItemView extends State<PostItemView> {
         getPostSections(_post).then((List<SectionItem> sections) {
           _sections = sections;
         }).whenComplete(() {
-          toggleLoading(false);
+          getPostResources(_post).then((List<ResourceItem> resources) {
+            _resources = resources;
+          }).whenComplete(() {
+            toggleLoading(false);
+          });
         });
       });
     }
@@ -259,7 +264,10 @@ class _PostItemView extends State<PostItemView> {
                             ),
                             AccordionElement(
                               name: post_resources_title,
-                              content: SizedBox.shrink(),
+                              content: ResourceItemListComponent(
+                                include_add: _post.id.isNotEmpty,
+                                resources: _resources,
+                              ),
                             ),
                             AccordionElement(
                               name: post_tags_title,
