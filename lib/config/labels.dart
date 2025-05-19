@@ -13,6 +13,7 @@ const String ERROR_POST_ITEM = 'Fallo al recuperar la publicación';
 const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación';
 const String ERROR_POST_PARSER = 'Fallo al cargar el elemento publicación';
 const String ERROR_SECTION_ITEM_PARSER = 'Fallo al cargar el elemento sección';
+const String ERROR_RESOURCE_ITEM_PARSER = 'Fallo al cargar el elemento recurso';
 
 // VISTAS
 const String HINT_SEARCH_DEFAULT = 'Buscar';
