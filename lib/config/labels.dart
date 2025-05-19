@@ -21,3 +21,6 @@ const String HINT_SEARCH_POST = 'Buscar publicación';
 
 // NAVEGATION
 const String NAV_ITEM_POSTS_LABEL = 'Publicaciones';
+
+// SUB PATHS ASSETS
+const String SUB_PATH_ASSETS_TYPE_RESOURCE = '/img/icons/core/tipo_recurso/';

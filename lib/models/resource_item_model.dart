@@ -1,4 +1,5 @@
 import 'package:ekmajstro_trejnisto/config/config.dart';
+import 'package:ekmajstro_trejnisto/utils/app.dart';
 
 import 'models.dart';
 
@@ -84,5 +85,9 @@ class ResourceItem extends ModelItem {
     }
 
     return '<Resource> [$name]$type_line';
+  }
+
+  String parseTypeIcon() {
+    return "$BACKEND_ASSETS$SUB_PATH_ASSETS_TYPE_RESOURCE$type_icon.svg";
   }
 }
