@@ -207,7 +207,7 @@ class _PostItemView extends State<PostItemView> {
                                               ),
                                             ),
                                             const Text(
-                                              'USUARIO',
+                                              post_user_title,
                                               style: TextStyle(
                                                 fontSize: 11,
                                               ),
@@ -232,7 +232,7 @@ class _PostItemView extends State<PostItemView> {
                                               ),
                                             ),
                                             const Text(
-                                              'FECHA DE PUBLICACIÓN',
+                                              post_publish_date_title,
                                               style: TextStyle(
                                                 fontSize: 11,
                                               ),
@@ -251,11 +251,23 @@ class _PostItemView extends State<PostItemView> {
                         AccordionComponent(
                           elements: <AccordionElement>[
                             AccordionElement(
-                              name: 'Secciones',
+                              name: post_sections_title,
                               content: SectionItemListComponent(
                                 include_add: _post.id.isNotEmpty,
                                 sections: _sections,
                               ),
+                            ),
+                            AccordionElement(
+                              name: post_resources_title,
+                              content: SizedBox.shrink(),
+                            ),
+                            AccordionElement(
+                              name: post_tags_title,
+                              content: SizedBox.shrink(),
+                            ),
+                            AccordionElement(
+                              name: post_preview_title,
+                              content: SizedBox.shrink(),
                             ),
                           ],
                         )

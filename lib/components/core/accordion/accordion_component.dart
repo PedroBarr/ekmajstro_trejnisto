@@ -59,6 +59,7 @@ class _AccordionComponent extends State<AccordionComponent> {
           }).toList(),
           expandIconColor: Theme.of(context).colorScheme.onSurface,
           expandedHeaderPadding: EdgeInsets.all(0),
+          materialGapSize: 10,
         ),
       ),
     );
