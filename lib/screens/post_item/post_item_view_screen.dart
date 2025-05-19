@@ -247,6 +247,17 @@ class _PostItemView extends State<PostItemView> {
                             ],
                           ),
                         ),
+                        const SizedBox(height: 10),
+                        AccordionComponent(
+                          elements: <AccordionElement>[
+                            AccordionElement(
+                              name: 'Secciones',
+                              content: SectionItemListComponent(
+                                sections: _sections,
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   );
