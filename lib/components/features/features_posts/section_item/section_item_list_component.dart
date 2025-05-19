@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 
 class SectionItemListComponent extends StatefulWidget {
-  List<SectionItem> sections;
+  final List<SectionItem> sections;
 
-  SectionItemListComponent({
+  const SectionItemListComponent({
     super.key,
     required this.sections,
   });

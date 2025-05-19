@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'accordion_utils.dart';
 
 class AccordionComponent extends StatefulWidget {
-  List<AccordionElement> elements;
+  final List<AccordionElement> elements;
 
-  AccordionComponent({
+  const AccordionComponent({
     super.key,
     required this.elements,
   });
