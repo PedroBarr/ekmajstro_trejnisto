@@ -21,6 +21,7 @@ class PostItemView extends StatefulWidget {
 
 class _PostItemView extends State<PostItemView> {
   Post _post = Post();
+  List<SectionItem> _sections = [];
   bool _is_loading = false;
   bool _is_modified = false;
 
@@ -36,7 +37,11 @@ class _PostItemView extends State<PostItemView> {
           _post = Post.fromPost(post);
         });
       }).whenComplete(() {
-        toggleLoading(false);
+        getPostSections(_post).then((List<SectionItem> sections) {
+          _sections = sections;
+        }).whenComplete(() {
+          toggleLoading(false);
+        });
       });
     }
     toggleModified(false);
