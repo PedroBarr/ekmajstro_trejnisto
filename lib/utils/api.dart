@@ -18,6 +18,9 @@ const String PUBLICACION_NUEVA_ENDPOINT = '/publicacion';
 const String SECCIONES_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/secciones';
 
+const String RECURSOS_PUBLICACION_ENDPOINT =
+    '/publicacion/$ROUTE_ID_WILDCARD/recursos';
+
 Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
     final query_params = {
@@ -118,6 +121,24 @@ Future<List<SectionItem>> getPostSections(Post post) async {
     late List<SectionItem> sections = dtoSectionItemList(body);
 
     return sections;
+  } catch (e) {
+    throw Exception(ERROR_POST_ITEM_LIST);
+  }
+}
+
+Future<List<ResourceItem>> getPostResources(Post post) async {
+  try {
+    String subPath =
+        RECURSOS_PUBLICACION_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, post.id);
+
+    final response = await http.get(
+      Uri.parse(BACKEND_API + subPath),
+    );
+
+    late List<dynamic> body = getBody(response);
+    late List<ResourceItem> resources = dtoResourceItemList(body);
+
+    return resources;
   } catch (e) {
     throw Exception(ERROR_POST_ITEM_LIST);
   }

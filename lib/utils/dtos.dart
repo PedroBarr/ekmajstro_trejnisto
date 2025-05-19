@@ -21,3 +21,14 @@ List<SectionItem> dtoSectionItemList(List<dynamic> list) {
 
   return sections;
 }
+
+List<ResourceItem> dtoResourceItemList(List<dynamic> list) {
+  List<ResourceItem> resources = [];
+
+  for (final resourceResponse in list) {
+    ResourceItem resource = ResourceItem.fromJson(resourceResponse);
+    resources.add(resource);
+  }
+
+  return resources;
+}
