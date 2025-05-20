@@ -33,3 +33,6 @@ const String NAV_ITEM_POSTS_LABEL = 'Publicaciones';
 
 // SUB PATHS ASSETS
 const String SUB_PATH_ASSETS_TYPE_RESOURCE = '/img/icons/core/tipo_recurso/';
+
+// SUB PATHS FRONTEND APP
+const String SUB_PATH_FRONTEND_PUBLICATION = '/publicacion/';

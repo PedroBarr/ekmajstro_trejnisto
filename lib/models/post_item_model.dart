@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:ekmajstro_trejnisto/config/config.dart';
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 import 'model_item.dart';
 
@@ -161,5 +162,9 @@ class Post {
       'publish_date': publish_date,
       'user': user,
     };
+  }
+
+  String getAppLink() {
+    return FRONTEND_APP + SUB_PATH_FRONTEND_PUBLICATION + id;
   }
 }
