@@ -32,3 +32,14 @@ List<ResourceItem> dtoResourceItemList(List<dynamic> list) {
 
   return resources;
 }
+
+List<TagItem> dtoTagItemList(List<dynamic> list) {
+  List<TagItem> tags = [];
+
+  for (final tagResponse in list) {
+    TagItem tag = TagItem.fromJson(tagResponse);
+    tags.add(tag);
+  }
+
+  return tags;
+}
