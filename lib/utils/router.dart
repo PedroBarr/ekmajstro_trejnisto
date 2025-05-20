@@ -84,11 +84,24 @@ Route<dynamic> mainRouter(RouteSettings settings) {
             subPathWithWildCard2.substring(0, indexEndWildCard2);
 
         if (wildCard2 == ROUTE_ADD_WILDCARD) {
-          debugPrint('Add section');
+          return MaterialPageRoute(
+            builder: (_) => SectionItemView(
+              post_id: int.parse(wildCard),
+            ),
+          );
         }
 
         if (isNumeric(wildCard2)) {
-          debugPrint('View section');
+          String subPath2 = subPathWithWildCard2.substring(indexEndWildCard2);
+
+          if (['', '/'].contains(subPath2)) {
+            return MaterialPageRoute(
+              builder: (_) => SectionItemView(
+                post_id: int.parse(wildCard),
+                section_id: int.parse(wildCard2),
+              ),
+            );
+          }
         }
       }
     }
