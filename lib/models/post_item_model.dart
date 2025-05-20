@@ -35,6 +35,11 @@ class PostItem extends ModelItem {
         'title': String title,
       } =>
         PostItem(id: id.toString(), title: title),
+      {
+        'id': String id,
+        'title': String title,
+      } =>
+        PostItem(id: id, title: title),
       _ => throw const FormatException(ERROR_POST_ITEM_PARSER),
     };
   }
