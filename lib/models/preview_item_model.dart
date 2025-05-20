@@ -8,10 +8,10 @@ class PreviewItem extends ModelItem {
   final String image_url;
 
   const PreviewItem({
-    required super.id,
-    required this.short_text,
-    required this.long_text,
-    required this.image_url,
+    super.id = '',
+    this.short_text = '',
+    this.long_text = '',
+    this.image_url = '',
   });
 
   factory PreviewItem.fromJson(Map<String, dynamic> json) {
