@@ -23,6 +23,7 @@ class _PostItemView extends State<PostItemView> {
   Post _post = Post();
   List<SectionItem> _sections = [];
   List<ResourceItem> _resources = [];
+  List<TagItem> _tags = [];
   bool _is_loading = false;
   bool _is_modified = false;
 
@@ -44,7 +45,11 @@ class _PostItemView extends State<PostItemView> {
           getPostResources(_post).then((List<ResourceItem> resources) {
             _resources = resources;
           }).whenComplete(() {
-            toggleLoading(false);
+            getPostTags(_post).then((List<TagItem> tags) {
+              _tags = tags;
+            }).whenComplete(() {
+              toggleLoading(false);
+            });
           });
         });
       });
@@ -271,7 +276,10 @@ class _PostItemView extends State<PostItemView> {
                             ),
                             AccordionElement(
                               name: post_tags_title,
-                              content: SizedBox.shrink(),
+                              content: TagItemListComponent(
+                                include_add: _post.id.isNotEmpty,
+                                tags: _tags,
+                              ),
                             ),
                             AccordionElement(
                               name: post_preview_title,
