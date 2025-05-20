@@ -176,6 +176,9 @@ Future<PreviewItem> getPostPreview(Post post) async {
     final response = await http.get(
       Uri.parse(BACKEND_API + subPath),
     );
+    if (response.statusCode == 404) {
+      return PreviewItem();
+    }
 
     late dynamic body = getBody(response);
     late PreviewItem preview = PreviewItem.fromJson(body);
