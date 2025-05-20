@@ -125,7 +125,7 @@ Future<List<SectionItem>> getPostSections(Post post) async {
 
     return sections;
   } catch (e) {
-    throw Exception(ERROR_POST_ITEM_LIST);
+    throw Exception(ERROR_SECTION_ITEM_LIST);
   }
 }
 
@@ -143,7 +143,7 @@ Future<List<ResourceItem>> getPostResources(Post post) async {
 
     return resources;
   } catch (e) {
-    throw Exception(ERROR_POST_ITEM_LIST);
+    throw Exception(ERROR_RESOURCE_ITEM_LIST);
   }
 }
 
@@ -161,6 +161,6 @@ Future<List<TagItem>> getPostTags(Post post) async {
 
     return tags;
   } catch (e) {
-    throw Exception(ERROR_POST_ITEM_LIST);
+    throw Exception(ERROR_TAG_ITEM_LIST);
   }
 }

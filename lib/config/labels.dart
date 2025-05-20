@@ -8,6 +8,11 @@ const String ERROR_BODY = 'Fallo al recuperar el cuerpo';
 const String ERROR_POST_ITEM_LIST =
     'Fallo al recuperar la lista de publicaciones';
 const String ERROR_POST_ITEM = 'Fallo al recuperar la publicación';
+const String ERROR_SECTION_ITEM_LIST =
+    'Fallo al recuperar la lista de secciones';
+const String ERROR_RESOURCE_ITEM_LIST =
+    'Fallo al recuperar la lista de recursos';
+const String ERROR_TAG_ITEM_LIST = 'Fallo al recuperar la lista de etiquetas';
 
 // MODELS
 const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación';
