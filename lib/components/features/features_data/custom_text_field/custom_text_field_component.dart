@@ -7,6 +7,7 @@ class CustomTextFieldComponent extends StatefulWidget {
   final double font_size;
   final bool bold_text;
   final bool is_editable;
+  final int max_length;
 
   const CustomTextFieldComponent({
     super.key,
@@ -16,6 +17,7 @@ class CustomTextFieldComponent extends StatefulWidget {
     this.font_size = 17.0,
     this.bold_text = true,
     this.is_editable = true,
+    this.max_length = 0,
   });
 
   @override
@@ -99,6 +101,18 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
     return false;
   }
 
+  String getParsedText(String text) {
+    if (widget.max_length == 0) {
+      return text;
+    }
+
+    if (text.length > widget.max_length) {
+      return "${text.substring(0, widget.max_length)}...";
+    }
+
+    return text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -139,7 +153,7 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                widget.value,
+                getParsedText(widget.value),
                 style: TextStyle(
                   fontWeight:
                       widget.bold_text ? FontWeight.bold : FontWeight.normal,
