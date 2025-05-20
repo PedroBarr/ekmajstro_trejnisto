@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'post_item_view_constants.dart';
+import 'package:flutter/services.dart';
 
 import 'package:ekmajstro_trejnisto/components/components.dart';
 import 'package:ekmajstro_trejnisto/config/config.dart';
@@ -277,6 +278,48 @@ class _PostItemView extends State<PostItemView> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
+                                                Builder(
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return _preview
+                                                            .id!.isNotEmpty
+                                                        ? Center(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                final Uri uri =
+                                                                    Uri.parse(_post
+                                                                        .getAppLink());
+
+                                                                Clipboard.setData(
+                                                                        ClipboardData(
+                                                                            text:
+                                                                                uri.toString()))
+                                                                    .then((_) {
+                                                                  showMessage(
+                                                                      'Enlace copiado al portapapeles',
+                                                                      context);
+                                                                });
+                                                              },
+                                                              child: Icon(
+                                                                Icons
+                                                                    .gesture_outlined,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .onSurface,
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : SizedBox.shrink();
+                                                  },
+                                                ),
+                                                SizedBox(
+                                                  height:
+                                                      _preview.id!.isNotEmpty
+                                                          ? 30.0
+                                                          : 0,
+                                                ),
                                                 Text(
                                                   _post.user,
                                                   style: const TextStyle(
