@@ -24,6 +24,9 @@ const String RECURSOS_PUBLICACION_ENDPOINT =
 const String ETIQUETAS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/etiquetas';
 
+const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
+    '/publicacion/$ROUTE_ID_WILDCARD/previsualizacion';
+
 Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
     final query_params = {
@@ -162,5 +165,23 @@ Future<List<TagItem>> getPostTags(Post post) async {
     return tags;
   } catch (e) {
     throw Exception(ERROR_TAG_ITEM_LIST);
+  }
+}
+
+Future<PreviewItem> getPostPreview(Post post) async {
+  try {
+    String subPath = PREVISUALIZACION_PUBLICACION_ENDPOINT.replaceAll(
+        ROUTE_ID_WILDCARD, post.id);
+
+    final response = await http.get(
+      Uri.parse(BACKEND_API + subPath),
+    );
+
+    late dynamic body = getBody(response);
+    late PreviewItem preview = PreviewItem.fromJson(body);
+
+    return preview;
+  } catch (e) {
+    throw Exception(ERROR_PREVIEW_ITEM);
   }
 }
