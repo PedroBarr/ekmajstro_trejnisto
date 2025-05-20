@@ -38,9 +38,8 @@ class _SectionItemListComponent extends State<SectionItemListComponent> {
                 ),
                 padding: const EdgeInsets.all(10.0),
                 width: MediaQuery.of(context).size.width - 20.0,
-                child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  direction: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       section.name,
