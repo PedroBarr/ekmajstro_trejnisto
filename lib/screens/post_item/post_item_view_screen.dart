@@ -24,6 +24,7 @@ class _PostItemView extends State<PostItemView> {
   List<SectionItem> _sections = [];
   List<ResourceItem> _resources = [];
   List<TagItem> _tags = [];
+  PreviewItem _preview = PreviewItem();
   bool _is_loading = false;
   bool _is_modified = false;
 
@@ -48,7 +49,13 @@ class _PostItemView extends State<PostItemView> {
             getPostTags(_post).then((List<TagItem> tags) {
               _tags = tags;
             }).whenComplete(() {
-              toggleLoading(false);
+              getPostPreview(_post).then((PreviewItem preview) {
+                setState(() {
+                  _preview = preview;
+                });
+              }).whenComplete(() {
+                toggleLoading(false);
+              });
             });
           });
         });
@@ -283,7 +290,10 @@ class _PostItemView extends State<PostItemView> {
                             ),
                             AccordionElement(
                               name: post_preview_title,
-                              content: SizedBox.shrink(),
+                              content: PreviewItemComponent(
+                                is_publishable: _post.id.isNotEmpty,
+                                preview: _preview,
+                              ),
                             ),
                           ],
                         ),
