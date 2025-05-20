@@ -25,6 +25,10 @@ String buildIdRoute(String routeBase, ModelItem item) {
   return routeBase.replaceAll(ROUTE_ID_WILDCARD, item.id!.toString());
 }
 
+String buildSubRoute(List<String> subRoutes) {
+  return subRoutes.join('');
+}
+
 bool isNumeric(String str) {
   return int.tryParse(str) != null;
 }
