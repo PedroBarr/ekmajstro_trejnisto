@@ -286,7 +286,10 @@ class _PostItemView extends State<PostItemView> {
                               content: SizedBox.shrink(),
                             ),
                           ],
-                        )
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                       ],
                     ),
                   );
