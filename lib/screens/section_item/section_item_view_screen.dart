@@ -35,8 +35,7 @@ class _SectionItemView extends State<SectionItemView> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       double screen_height = MediaQuery.of(context).size.height;
-      double app_bar_height = 0;
-      // double app_bar_height = AppBar().preferredSize.height;
+      double app_bar_height = AppBar().preferredSize.height;
 
       double segment_height = 50;
       double segment_spacing = 5;
@@ -48,6 +47,8 @@ class _SectionItemView extends State<SectionItemView> {
     });
 
     if (widget.section_id != null && isNumeric(widget.section_id!.toString())) {
+      toggleLoading(true);
+
       getSection(widget.section_id!.toString()).then((section) {
         setState(() {
           _section = section;
@@ -122,20 +123,29 @@ class _SectionItemView extends State<SectionItemView> {
           ),
           body: Builder(
             builder: (context) {
-              return !_is_loading && _segment_lines_pages.isNotEmpty
-                  ? FlexGrid(
-                      children: getSegmentCurrentPage()
-                          .map(
-                            (segment) => FlexGridItem(
-                              size: getFlexGridSize(segment.measure),
-                              child: getContainer(segment),
-                            ),
-                          )
-                          .toList())
-                  : const Center(
+              return _is_loading
+                  ? const Center(
                       child: CircularProgressIndicator(),
-                    );
-              ;
+                    )
+                  : (_segment_lines_pages.isNotEmpty
+                      ? FlexGrid(
+                          children: getSegmentCurrentPage()
+                              .map(
+                                (segment) => FlexGridItem(
+                                  size: getFlexGridSize(segment.measure),
+                                  child: getContainer(segment),
+                                ),
+                              )
+                              .toList())
+                      : const Center(
+                          child: Text(
+                            section_segments_empty,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ));
             },
           ),
           bottomNavigationBar: BottomAppBar(
