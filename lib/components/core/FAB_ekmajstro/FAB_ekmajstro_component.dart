@@ -59,7 +59,7 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
         children: [
           Positioned(
             right: 10.0,
-            bottom: 10.0,
+            bottom: 60.0,
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
