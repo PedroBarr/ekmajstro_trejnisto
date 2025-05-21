@@ -24,9 +24,27 @@ class _SectionItemView extends State<SectionItemView> {
 
   bool _is_loading = false;
 
+  int _MAX_SEGMENT_LINES = 5;
+  List<List<SegmentItem>> _segment_lines_pages = [];
+  int _segment_lines_page = 0;
+
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      double screen_height = MediaQuery.of(context).size.height;
+      double app_bar_height = 0;
+      // double app_bar_height = AppBar().preferredSize.height;
+
+      double segment_height = 50;
+      double segment_spacing = 5;
+
+      double canvas_height = screen_height - app_bar_height;
+      double segment_lines = (canvas_height - segment_spacing) /
+          (segment_height + segment_spacing);
+      _MAX_SEGMENT_LINES = segment_lines.toInt();
+    });
 
     if (widget.section_id != null && isNumeric(widget.section_id!.toString())) {
       getSection(widget.section_id!.toString()).then((section) {
@@ -40,6 +58,10 @@ class _SectionItemView extends State<SectionItemView> {
           setState(() {
             _segments = segments;
           });
+
+          return segments;
+        }).then((segments) {
+          initSegmentLinesPages(segments);
         }).whenComplete(() {
           toggleLoading(false);
         });
@@ -80,9 +102,9 @@ class _SectionItemView extends State<SectionItemView> {
           ),
           body: Builder(
             builder: (context) {
-              return !_is_loading && _segments.isNotEmpty
+              return !_is_loading && _segment_lines_pages.isNotEmpty
                   ? FlexGrid(
-                      children: _segments
+                      children: getSegmentCurrentPage()
                           .map(
                             (segment) => FlexGridItem(
                               size: getFlexGridSize(segment.measure),
@@ -95,6 +117,39 @@ class _SectionItemView extends State<SectionItemView> {
                     );
               ;
             },
+          ),
+          bottomNavigationBar: BottomAppBar(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                IconButton(
+                  icon: Icon(isFirstPage()
+                      ? Icons.arrow_circle_left_outlined
+                      : Icons.arrow_circle_left_sharp),
+                  color: isFirstPage()
+                      ? Colors.grey
+                      : Theme.of(context).colorScheme.onSurface,
+                  iconSize: 30,
+                  onPressed: () {
+                    previousPage();
+                  },
+                ),
+                IconButton(
+                  icon: Icon(isLastPage()
+                      ? Icons.arrow_circle_right_outlined
+                      : Icons.arrow_circle_right_sharp),
+                  color: isLastPage()
+                      ? Colors.grey
+                      : Theme.of(context).colorScheme.onSurface,
+                  iconSize: 30,
+                  onPressed: () {
+                    nextPage();
+                  },
+                ),
+                const Spacer(),
+              ],
+            ),
           ),
         ),
         const FABEkmajstroComponent(),
@@ -149,5 +204,78 @@ class _SectionItemView extends State<SectionItemView> {
       SegmentMeasure.half => FlexGridSize.half,
       SegmentMeasure.third => FlexGridSize.third,
     };
+  }
+
+  List<SegmentItem> getSegmentCurrentPage() {
+    return _segment_lines_pages[_segment_lines_page];
+  }
+
+  bool isLastPage() {
+    return _segment_lines_page == _segment_lines_pages.length - 1;
+  }
+
+  bool isFirstPage() {
+    return _segment_lines_page == 0;
+  }
+
+  void nextPage() {
+    if (!isLastPage()) {
+      setState(() {
+        _segment_lines_page++;
+      });
+    }
+  }
+
+  void previousPage() {
+    if (!isFirstPage()) {
+      setState(() {
+        _segment_lines_page--;
+      });
+    }
+  }
+
+  void initSegmentLinesPages(List<SegmentItem> segments) {
+    Map<SegmentMeasure, double> widthDict = {
+      SegmentMeasure.full: 1,
+      SegmentMeasure.half: 0.5,
+      SegmentMeasure.third: 0.33,
+    };
+
+    double current_width = 0;
+    List<SegmentItem> current_page = [];
+    List<List<SegmentItem>> pages = [];
+    int current_line = 0;
+
+    for (var segment in segments) {
+      double width = widthDict[segment.measure]!;
+      current_width += width;
+
+      if (current_width >= 1) {
+        current_line++;
+        current_width = current_width == 1 ? 0 : width;
+      }
+
+      if (current_line >= _MAX_SEGMENT_LINES) {
+        pages.add(current_page);
+        current_page = [];
+        current_line = 0;
+      }
+
+      current_page.add(segment);
+    }
+
+    if (current_page.isNotEmpty) {
+      pages.add(current_page);
+    }
+
+    setState(() {
+      _segment_lines_pages = pages;
+    });
+
+    if (pages.isNotEmpty) {
+      setState(() {
+        _segment_lines_page = 0;
+      });
+    }
   }
 }
