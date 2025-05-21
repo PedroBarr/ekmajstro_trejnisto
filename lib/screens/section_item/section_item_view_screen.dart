@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
 
 class SectionItemView extends StatefulWidget {
@@ -17,6 +19,21 @@ class SectionItemView extends StatefulWidget {
 }
 
 class _SectionItemView extends State<SectionItemView> {
+  Section _section = Section();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.section_id != null && isNumeric(widget.section_id!.toString())) {
+      getSection(widget.section_id!.toString()).then((section) {
+        setState(() {
+          _section = section;
+        });
+      }).catchError((error) {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
