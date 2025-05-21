@@ -77,7 +77,10 @@ class _PostItemView extends State<PostItemView> {
   }
 
   void navigateToPostList(BuildContext context) {
-    Navigator.of(context).pushNamed(ROUTER_POST_LIST_ROUTE);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      ROUTER_POST_LIST_ROUTE,
+      (Route<dynamic> route) => route.settings.name == ROUTER_POST_LIST_ROUTE,
+    );
   }
 
   void toggleLoading(dynamic value) {
@@ -123,10 +126,15 @@ class _PostItemView extends State<PostItemView> {
       children: [
         Scaffold(
           appBar: AppBar(
-            leading: GestureDetector(
-              onTap: () => navigateToPostList(context),
-              child: iconNavPostList(Theme.of(context).colorScheme.onSurface),
-            ),
+            leading: Builder(builder: (context) {
+              return _is_loading
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () => navigateToPostList(context),
+                      child: iconNavPostList(
+                          Theme.of(context).colorScheme.onSurface),
+                    );
+            }),
             actions: [
               Builder(builder: (context) {
                 if (_is_modified) {
