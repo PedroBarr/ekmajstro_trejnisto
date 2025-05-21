@@ -21,7 +21,10 @@ class NavitemComponent extends StatefulWidget {
 
 class _NavitemComponent extends State<NavitemComponent> {
   void navigateToLocation(BuildContext context) {
-    Navigator.of(context).pushNamed(ROUTER_POST_LIST_ROUTE);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      widget.nav_item.location,
+      (Route<dynamic> route) => route.settings.name == widget.nav_item.location,
+    );
 
     if (widget.onNavItemTap != null) {
       widget.onNavItemTap!();
