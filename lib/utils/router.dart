@@ -37,7 +37,9 @@ Route<dynamic> mainRouter(RouteSettings settings) {
 
   if (settings.name == ROUTER_POST_LIST_ROUTE) {
     return PageRouteBuilder(
-      pageBuilder: (_, __, ___) => const PostListScreen(),
+      pageBuilder: (_, __, ___) => const SafeArea(
+        child: PostListScreen(),
+      ),
       transitionDuration:
           const Duration(milliseconds: SPLASHSCREEN_TRANSITION_MS),
       transitionsBuilder: fadeTransition,
@@ -59,7 +61,9 @@ Route<dynamic> mainRouter(RouteSettings settings) {
 
     if (wildCard == ROUTE_ADD_WILDCARD) {
       return MaterialPageRoute(
-        builder: (_) => const PostItemView(),
+        builder: (_) => const SafeArea(
+          child: PostItemView(),
+        ),
       );
     }
 
@@ -68,7 +72,11 @@ Route<dynamic> mainRouter(RouteSettings settings) {
 
       if (['', '/'].contains(subPath)) {
         return MaterialPageRoute(
-          builder: (_) => PostItemView(post_id: int.parse(wildCard)),
+          builder: (_) => SafeArea(
+            child: PostItemView(
+              post_id: int.parse(wildCard),
+            ),
+          ),
         );
       }
 
@@ -85,8 +93,10 @@ Route<dynamic> mainRouter(RouteSettings settings) {
 
         if (wildCard2 == ROUTE_ADD_WILDCARD) {
           return MaterialPageRoute(
-            builder: (_) => SectionItemView(
-              post_id: int.parse(wildCard),
+            builder: (_) => SafeArea(
+              child: SectionItemView(
+                post_id: int.parse(wildCard),
+              ),
             ),
           );
         }
@@ -96,9 +106,11 @@ Route<dynamic> mainRouter(RouteSettings settings) {
 
           if (['', '/'].contains(subPath2)) {
             return MaterialPageRoute(
-              builder: (_) => SectionItemView(
-                post_id: int.parse(wildCard),
-                section_id: int.parse(wildCard2),
+              builder: (_) => SafeArea(
+                child: SectionItemView(
+                  post_id: int.parse(wildCard),
+                  section_id: int.parse(wildCard2),
+                ),
               ),
             );
           }
