@@ -17,6 +17,7 @@ const String PUBLICACION_NUEVA_ENDPOINT = '/publicacion';
 
 const String SECCIONES_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/secciones';
+const String SECCION_ENDPOINT = '/seccion/$ROUTE_ID_WILDCARD';
 
 const String RECURSOS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/recursos';
@@ -186,5 +187,28 @@ Future<PreviewItem> getPostPreview(Post post) async {
     return preview;
   } catch (e) {
     throw Exception(ERROR_PREVIEW_ITEM);
+  }
+}
+
+Future<Section> getSection(String id) async {
+  try {
+    final query_params = {
+      'con_es_marcada': true.toString(),
+    };
+
+    String subPath =
+        SECCION_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, id.toString());
+
+    final response = await http.get(
+      Uri.parse(BACKEND_API + subPath).replace(
+        queryParameters: query_params,
+      ),
+    );
+
+    late dynamic body = getBody(response);
+    late Section section = Section.fromJson(body);
+    return section;
+  } catch (e) {
+    throw Exception(ERROR_POST_ITEM);
   }
 }
