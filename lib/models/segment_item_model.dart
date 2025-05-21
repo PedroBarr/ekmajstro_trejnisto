@@ -65,4 +65,9 @@ class SegmentItem extends ModelItem {
       throw const FormatException(ERROR_SEGMENT_ITEM_PARSER);
     }
   }
+
+  @override
+  String toString() {
+    return '<Segment> [$id] [${measure.name}] [${type.name}] ($order)';
+  }
 }

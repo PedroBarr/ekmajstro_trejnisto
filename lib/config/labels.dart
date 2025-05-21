@@ -15,6 +15,8 @@ const String ERROR_RESOURCE_ITEM_LIST =
 const String ERROR_TAG_ITEM_LIST = 'Fallo al recuperar la lista de etiquetas';
 const String ERROR_PREVIEW_ITEM =
     'Fallo al recuperar la lista de previsualización';
+const String ERROR_SEGMENT_ITEM_LIST =
+    'Fallo al recuperar la lista de segmentos';
 
 // MODELS
 const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación';
