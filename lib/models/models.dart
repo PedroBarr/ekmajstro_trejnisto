@@ -1,5 +1,6 @@
 export 'post_item_model.dart';
 export 'section_item_model.dart';
+export 'segment_item_model.dart';
 export 'resource_item_model.dart';
 export 'tag_item_model.dart';
 export 'preview_item_model.dart';
