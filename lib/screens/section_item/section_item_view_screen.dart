@@ -175,6 +175,14 @@ class _SectionItemView extends State<SectionItemView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  '${_segments.length}',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontFamily: 'Roboto',
+                  ),
+                ),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15),
@@ -218,6 +226,14 @@ class _SectionItemView extends State<SectionItemView> {
                   ),
                 ),
                 const Spacer(),
+                Text(
+                  '${_segments.length}',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.transparent,
+                    fontFamily: 'Roboto',
+                  ),
+                ),
               ],
             ),
           ),
