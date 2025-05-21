@@ -39,7 +39,7 @@ class _SectionItemView extends State<SectionItemView> {
       double app_bar_height = AppBar().preferredSize.height;
 
       double segment_height = 50;
-      double segment_spacing = 5;
+      double segment_spacing = 8;
 
       double canvas_height = screen_height - app_bar_height;
       double segment_lines = (canvas_height - segment_spacing) /
