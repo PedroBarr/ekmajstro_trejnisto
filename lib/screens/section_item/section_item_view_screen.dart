@@ -1,3 +1,4 @@
+import 'package:ekmajstro_trejnisto/screens/section_item/section_item_view_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
@@ -123,34 +124,64 @@ class _SectionItemView extends State<SectionItemView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                IconButton(
-                  icon: Icon(isFirstPage()
-                      ? Icons.arrow_circle_left_outlined
-                      : Icons.arrow_circle_left_sharp),
-                  color: isFirstPage()
-                      ? Colors.grey
-                      : Theme.of(context).colorScheme.onSurface,
-                  iconSize: 30,
-                  onPressed: () {
-                    previousPage();
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: IconButton(
+                    icon: Icon(isFirstPage()
+                        ? Icons.arrow_circle_left_outlined
+                        : Icons.arrow_circle_left_sharp),
+                    color: isFirstPage()
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.onSurface,
+                    iconSize: 30,
+                    onPressed: () {
+                      previousPage();
+                    },
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(isLastPage()
-                      ? Icons.arrow_circle_right_outlined
-                      : Icons.arrow_circle_right_sharp),
-                  color: isLastPage()
-                      ? Colors.grey
-                      : Theme.of(context).colorScheme.onSurface,
-                  iconSize: 30,
-                  onPressed: () {
-                    nextPage();
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: IconButton(
+                    icon: const Icon(Icons.stars),
+                    color: _section.is_mark_one
+                        ? Theme.of(context).colorScheme.onSurface
+                        : Colors.grey,
+                    iconSize: 40,
+                    onPressed: () {},
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: IconButton(
+                    icon: Icon(isLastPage()
+                        ? Icons.arrow_circle_right_outlined
+                        : Icons.arrow_circle_right_sharp),
+                    color: isLastPage()
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.onSurface,
+                    iconSize: 30,
+                    onPressed: () {
+                      nextPage();
+                    },
+                  ),
                 ),
                 const Spacer(),
               ],
             ),
           ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: Theme.of(context).colorScheme.onSurface,
+            tooltip: section_segments_add,
+            mini: true,
+            shape: const CircleBorder(),
+            child: Icon(
+              Icons.add,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.miniCenterDocked,
         ),
         const FABEkmajstroComponent(),
       ],
