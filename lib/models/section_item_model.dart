@@ -40,3 +40,43 @@ class SectionItem extends ModelItem {
     return '<Section> [$name]${is_mark_one ? ' <marcada>' : ''}';
   }
 }
+
+class Section {
+  final String id;
+  final String name;
+  final bool is_mark_one;
+
+  const Section({
+    this.id = '',
+    this.name = '',
+    this.is_mark_one = false,
+  });
+
+  factory Section.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        'secc_id': String id,
+        'secc_nombre': String name,
+        'con_seccion_marcada': int is_mark,
+      } =>
+        Section(id: id, name: name, is_mark_one: is_mark == 1),
+      {
+        'secc_id': int id,
+        'secc_nombre': String name,
+        'con_seccion_marcada': int is_mark,
+      } =>
+        Section(id: id.toString(), name: name, is_mark_one: is_mark == 1),
+      {
+        'id': int id,
+        'name': String name,
+      } =>
+        Section(id: id.toString(), name: name),
+      _ => throw const FormatException(ERROR_SECTION_ITEM_PARSER),
+    };
+  }
+
+  @override
+  String toString() {
+    return '<Section> [$name]${is_mark_one ? ' <marcada>' : ''}';
+  }
+}
