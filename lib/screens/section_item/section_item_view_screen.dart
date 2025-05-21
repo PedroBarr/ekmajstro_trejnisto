@@ -261,7 +261,8 @@ class _SectionItemView extends State<SectionItemView> {
   }
 
   bool isLastPage() {
-    return _segment_lines_page == _segment_lines_pages.length - 1;
+    return _segment_lines_pages.isEmpty ||
+        _segment_lines_page == _segment_lines_pages.length - 1;
   }
 
   bool isFirstPage() {
