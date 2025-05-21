@@ -86,6 +86,24 @@ class _SectionItemView extends State<SectionItemView> {
       children: [
         Scaffold(
           appBar: AppBar(
+            leading: GestureDetector(
+              onTap: () {},
+              child: Icon(Icons.keyboard_backspace),
+            ),
+            actions: [
+              GestureDetector(
+                onTap: () {},
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                    right: 10.0,
+                    left: 10.0,
+                  ),
+                  child: Icon(
+                    Icons.save_as_rounded,
+                  ),
+                ),
+              ),
+            ],
             title: Builder(
               builder: (context) {
                 if (_section.name.isNotEmpty) {
@@ -93,6 +111,7 @@ class _SectionItemView extends State<SectionItemView> {
                     value: _section.name,
                     spacing: 10.0,
                     font_size: 16,
+                    max_length: 30,
                     onConfirm: (value) {},
                   );
                 } else {
