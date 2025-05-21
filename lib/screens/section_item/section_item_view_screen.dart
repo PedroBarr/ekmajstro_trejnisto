@@ -48,49 +48,84 @@ class _SectionItemView extends State<SectionItemView> {
     return Stack(
       children: [
         Scaffold(
-          // appBar: AppBar(
-          // leading: GestureDetector(
-          //   onTap: () => navigateToPostList(context),
-          //   child: iconNavPostList(Theme.of(context).colorScheme.onSurface),
-          // ),
-          // actions: [
-          //   Builder(builder: (context) {
-          //     if (_is_modified) {
-          //       return GestureDetector(
-          //         onTap: onSave,
-          //         child: const Padding(
-          //           padding: EdgeInsets.only(
-          //             right: 10.0,
-          //             left: 10.0,
-          //           ),
-          //           child: Icon(
-          //             Icons.save_as_rounded,
-          //           ),
-          //         ),
-          //       );
-          //     }
-          //     return Container();
-          //   }),
-          // ],
-          // title: Builder(
-          //   builder: (context) {
-          //     if (!_is_loading) {
-          //       return CustomTextFieldComponent(
-          //         value: _post.title,
-          //         spacing: 10.0,
-          //         font_size: 16,
-          //         onConfirm: (value) => setPost(Post.POST_ATTR_TITTLE, value),
-          //       );
-          //     } else {
-          //       return const CircularProgressIndicator();
-          //     }
-          //   },
-          // ),
-          // ),
-          body: SizedBox.shrink(),
+          appBar: AppBar(
+            title: Builder(
+              builder: (context) {
+                if (_section.name.isNotEmpty) {
+                  return CustomTextFieldComponent(
+                    value: _section.name,
+                    spacing: 10.0,
+                    font_size: 16,
+                    onConfirm: (value) {},
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
+          ),
+          body: FlexGrid(
+            children: _segments
+                .map(
+                  (segment) => FlexGridItem(
+                    size: getFlexGridSize(segment.measure),
+                    child: getContainer(segment),
+                  ),
+                )
+                .toList(),
+          ),
         ),
         const FABEkmajstroComponent(),
       ],
     );
+  }
+
+  Widget getContainer(SegmentItem segment) {
+    return Container(
+      height: 50,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 5,
+          right: 5,
+          top: 5,
+          bottom: 5,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: getColor(segment.type),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: const EdgeInsets.all(8),
+          child: Center(
+            child: getIcon(segment.type),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Color getColor(SegmentType type) {
+    return switch (type) {
+      SegmentType.text => Color.fromARGB(255, 207, 194, 152),
+      SegmentType.image => const Color.fromARGB(255, 51, 46, 100),
+    };
+  }
+
+  Icon getIcon(SegmentType type) {
+    return switch (type) {
+      SegmentType.text => const Icon(Icons.text_fields),
+      SegmentType.image => const Icon(
+          Icons.image,
+          color: Colors.white,
+        ),
+    };
+  }
+
+  FlexGridSize getFlexGridSize(SegmentMeasure measure) {
+    return switch (measure) {
+      SegmentMeasure.full => FlexGridSize.full,
+      SegmentMeasure.half => FlexGridSize.half,
+      SegmentMeasure.third => FlexGridSize.third,
+    };
   }
 }
