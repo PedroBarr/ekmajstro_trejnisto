@@ -24,6 +24,7 @@ class _SectionItemView extends State<SectionItemView> {
   List<SegmentItem> _segments = [];
 
   bool _is_loading = false;
+  bool _is_modified = false;
 
   int _MAX_SEGMENT_LINES = 5;
   List<List<SegmentItem>> _segment_lines_pages = [];
@@ -69,6 +70,23 @@ class _SectionItemView extends State<SectionItemView> {
         });
       });
     }
+    toggleModified(false);
+  }
+
+  void setSection(String attr, dynamic value) {
+    setState(() {
+      toggleModified(true);
+    });
+  }
+
+  void toggleModified(dynamic value) {
+    setState(() {
+      if ([true, false].contains(value)) {
+        _is_modified = value;
+      } else {
+        _is_modified = !_is_modified;
+      }
+    });
   }
 
   void toggleLoading(dynamic value) {
@@ -92,18 +110,23 @@ class _SectionItemView extends State<SectionItemView> {
               child: Icon(Icons.keyboard_backspace),
             ),
             actions: [
-              GestureDetector(
-                onTap: () {},
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    right: 10.0,
-                    left: 10.0,
-                  ),
-                  child: Icon(
-                    Icons.save_as_rounded,
-                  ),
-                ),
-              ),
+              Builder(builder: (context) {
+                if (_is_modified) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: const Padding(
+                      padding: EdgeInsets.only(
+                        right: 10.0,
+                        left: 10.0,
+                      ),
+                      child: Icon(
+                        Icons.save_as_rounded,
+                      ),
+                    ),
+                  );
+                }
+                return Container();
+              }),
             ],
             title: Builder(
               builder: (context) {
