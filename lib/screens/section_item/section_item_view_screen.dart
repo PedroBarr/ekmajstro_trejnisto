@@ -20,6 +20,7 @@ class SectionItemView extends StatefulWidget {
 
 class _SectionItemView extends State<SectionItemView> {
   Section _section = Section();
+  List<SegmentItem> _segments = [];
 
   @override
   void initState() {
@@ -30,7 +31,15 @@ class _SectionItemView extends State<SectionItemView> {
         setState(() {
           _section = section;
         });
-      }).catchError((error) {});
+      }).whenComplete(() {
+        getSectionSegments(_section).then((segments) {
+          segments.sort((a, b) => a.order.compareTo(b.order));
+
+          setState(() {
+            _segments = segments;
+          });
+        });
+      });
     }
   }
 
