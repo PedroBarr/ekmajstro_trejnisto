@@ -22,6 +22,8 @@ class _SectionItemView extends State<SectionItemView> {
   Section _section = Section();
   List<SegmentItem> _segments = [];
 
+  bool _is_loading = false;
+
   @override
   void initState() {
     super.initState();
@@ -38,9 +40,21 @@ class _SectionItemView extends State<SectionItemView> {
           setState(() {
             _segments = segments;
           });
+        }).whenComplete(() {
+          toggleLoading(false);
         });
       });
     }
+  }
+
+  void toggleLoading(dynamic value) {
+    setState(() {
+      if ([true, false].contains(value)) {
+        _is_loading = value;
+      } else {
+        _is_loading = !_is_loading;
+      }
+    });
   }
 
   @override
@@ -64,15 +78,23 @@ class _SectionItemView extends State<SectionItemView> {
               },
             ),
           ),
-          body: FlexGrid(
-            children: _segments
-                .map(
-                  (segment) => FlexGridItem(
-                    size: getFlexGridSize(segment.measure),
-                    child: getContainer(segment),
-                  ),
-                )
-                .toList(),
+          body: Builder(
+            builder: (context) {
+              return !_is_loading && _segments.isNotEmpty
+                  ? FlexGrid(
+                      children: _segments
+                          .map(
+                            (segment) => FlexGridItem(
+                              size: getFlexGridSize(segment.measure),
+                              child: getContainer(segment),
+                            ),
+                          )
+                          .toList())
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    );
+              ;
+            },
           ),
         ),
         const FABEkmajstroComponent(),
