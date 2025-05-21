@@ -27,7 +27,10 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(const Duration(milliseconds: SPLASHSCREEN_REMAIN_MS), () {
-      Navigator.of(context).pushNamed(ROUTER_MAIN_ROUTE);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        ROUTER_MAIN_ROUTE,
+        (Route<dynamic> route) => false,
+      );
     });
 
     _addOffset(0.0);
