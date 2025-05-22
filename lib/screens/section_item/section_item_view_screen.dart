@@ -36,13 +36,17 @@ class _SectionItemView extends State<SectionItemView> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      double screen_height = MediaQuery.of(context).size.height;
-      double app_bar_height = AppBar().preferredSize.height;
+      double screen_height = MediaQuery.of(context).size.height -
+          MediaQuery.of(context).padding.vertical;
+      double app_bar_height =
+          AppBar().preferredSize.height + MediaQuery.of(context).padding.top;
+      double navigation_bar_height = MediaQuery.of(context).padding.bottom + 70;
 
       double segment_height = 50;
-      double segment_spacing = 8;
+      double segment_spacing = 10;
 
-      double canvas_height = screen_height - app_bar_height;
+      double canvas_height =
+          screen_height - app_bar_height - navigation_bar_height;
       double segment_lines = (canvas_height - segment_spacing) /
           (segment_height + segment_spacing);
       _MAX_SEGMENT_LINES = segment_lines.toInt();
