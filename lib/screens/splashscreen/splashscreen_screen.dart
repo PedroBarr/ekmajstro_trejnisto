@@ -19,11 +19,19 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
     with SingleTickerProviderStateMixin {
   // Timer timer;
   late double _centered_point;
+  late double _centered_point_x;
+  late double _centered_point_y;
+  late double _centered_point_r;
+  late double _centered_point_f;
 
   @override
   void initState() {
     super.initState();
     _centered_point = 1.0;
+    _centered_point_x = 0.0;
+    _centered_point_y = 1.0;
+    _centered_point_r = 1.0;
+    _centered_point_f = 2.0;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(const Duration(milliseconds: SPLASHSCREEN_REMAIN_MS), () {
@@ -48,6 +56,10 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
   void _addOffset(double offset) {
     setState(() {
       _centered_point += offset;
+      _centered_point_x += 4 / 18 * offset;
+      _centered_point_y += 45 / 120 * offset;
+      _centered_point_r += offset / 5;
+      _centered_point_f -= offset * 1.5;
     });
 
     if (_centered_point > -0.8) {
@@ -77,13 +89,17 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
                   Theme.of(context).colorScheme.onError,
                   Theme.of(context).primaryColor,
                   Colors.black,
+                  Theme.of(context).colorScheme.secondary,
                   Theme.of(context).colorScheme.onError,
                   Colors.black,
                 ],
-                center: Alignment(-_centered_point / 3, _centered_point * 2),
-                radius: 2.5,
-                focal: Alignment.bottomCenter,
-                focalRadius: 1.0,
+                center: Alignment(
+                  _centered_point_x,
+                  _centered_point_y,
+                ),
+                radius: _centered_point_r,
+                focal: Alignment.bottomLeft,
+                focalRadius: _centered_point_f,
                 tileMode: TileMode.mirror,
               ),
             ),
