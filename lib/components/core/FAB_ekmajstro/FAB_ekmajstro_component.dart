@@ -54,13 +54,15 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
       top: 0,
       left: 0,
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height -
+          MediaQuery.of(context).padding.vertical -
+          30,
       child: SafeArea(
         child: Stack(
           children: [
             Positioned(
               right: 10.0,
-              top: MediaQuery.of(context).size.height - 120.0,
+              bottom: 60.0 + MediaQuery.of(context).padding.bottom,
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,

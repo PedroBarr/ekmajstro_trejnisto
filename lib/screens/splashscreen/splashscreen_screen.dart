@@ -184,7 +184,9 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
             ),
           ),
           Positioned(
-            top: 40.0 - (_centered_point * 24),
+            top: 40.0 -
+                (_centered_point * 24) +
+                MediaQuery.of(context).padding.top,
             left: -24.0 - (_centered_point * 24),
             child: Image.asset(
               SPLASHSCREEN_TOP_LEFT_IMAGE,
@@ -194,7 +196,9 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
             ),
           ),
           Positioned(
-            top: 40.0 + (_centered_point * 24),
+            top: 40.0 +
+                (_centered_point * 24) +
+                MediaQuery.of(context).padding.top,
             right: -24.0 - (_centered_point * 24),
             child: Image.asset(
               SPLASHSCREEN_TOP_RIGHT_IMAGE,
@@ -204,7 +208,7 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
             ),
           ),
           Positioned(
-            bottom: 45.0,
+            bottom: 45.0 + MediaQuery.of(context).padding.bottom,
             left: 0,
             child: Image.asset(
               SPLASHSCREEN_BOTTOM_LEFT_IMAGE,
