@@ -23,6 +23,7 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
   }
 
   void toggleMenuOpen(dynamic value) {
+    if (!mounted) return;
     setState(() {
       if ([true, false].contains(value)) {
         _menu_open = value;

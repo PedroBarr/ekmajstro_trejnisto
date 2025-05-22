@@ -36,6 +36,8 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
   }
 
   void toggleEditOpen(dynamic value) {
+    if (!mounted) return;
+
     setState(() {
       if ([true, false].contains(value)) {
         _is_edit_dialog_open = value;
@@ -69,6 +71,8 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
   }
 
   void toggleDetailOpen(dynamic value) {
+    if (!mounted) return;
+
     setState(() {
       if ([true, false].contains(value)) {
         _is_detail_dialog_open = value;

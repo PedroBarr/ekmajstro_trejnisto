@@ -37,20 +37,32 @@ class _PostItemView extends State<PostItemView> {
       toggleLoading(true);
 
       getPost(widget.post_id.toString()).then((Post post) {
+        if (!mounted) return;
+
         setState(() {
           _post = Post.fromPost(post);
         });
       }).whenComplete(() {
+        if (!mounted) return;
+
         getPostSections(_post).then((List<SectionItem> sections) {
           _sections = sections;
         }).whenComplete(() {
+          if (!mounted) return;
+
           getPostResources(_post).then((List<ResourceItem> resources) {
             _resources = resources;
           }).whenComplete(() {
+            if (!mounted) return;
+
             getPostTags(_post).then((List<TagItem> tags) {
               _tags = tags;
             }).whenComplete(() {
+              if (!mounted) return;
+
               getPostPreview(_post).then((PreviewItem preview) {
+                if (!mounted) return;
+
                 setState(() {
                   _preview = preview;
                 });
@@ -66,6 +78,8 @@ class _PostItemView extends State<PostItemView> {
   }
 
   void setPost(String attr, String value) {
+    if (!mounted) return;
+
     setState(() {
       Post post = Post.fromPost(_post);
       _post.setPost(attr, value);
@@ -84,6 +98,8 @@ class _PostItemView extends State<PostItemView> {
   }
 
   void toggleLoading(dynamic value) {
+    if (!mounted) return;
+
     setState(() {
       if ([true, false].contains(value)) {
         _is_loading = value;
@@ -94,6 +110,8 @@ class _PostItemView extends State<PostItemView> {
   }
 
   void toggleModified(dynamic value) {
+    if (!mounted) return;
+
     setState(() {
       if ([true, false].contains(value)) {
         _is_modified = value;
@@ -107,6 +125,8 @@ class _PostItemView extends State<PostItemView> {
     String message = '';
     try {
       savePost(_post).then((value) {
+        if (!mounted) return;
+
         setState(() {
           _post = Post.fromPost(value);
         });

@@ -52,21 +52,31 @@ class _SectionItemView extends State<SectionItemView> {
       toggleLoading(true);
 
       getSection(widget.section_id!.toString()).then((section) {
+        if (!mounted) return;
+
         setState(() {
           _section = section;
         });
       }).whenComplete(() {
+        if (!mounted) return;
+
         getSectionSegments(_section).then((segments) {
           segments.sort((a, b) => a.order.compareTo(b.order));
 
-          setState(() {
-            _segments = segments;
-          });
+          if (mounted) {
+            setState(() {
+              _segments = segments;
+            });
+          }
 
           return segments;
         }).then((segments) {
+          if (!mounted) return;
+
           initSegmentLinesPages(segments);
         }).whenComplete(() {
+          if (!mounted) return;
+
           toggleLoading(false);
         });
       });
@@ -75,12 +85,16 @@ class _SectionItemView extends State<SectionItemView> {
   }
 
   void setSection(String attr, dynamic value) {
+    if (!mounted) return;
+
     setState(() {
       toggleModified(true);
     });
   }
 
   void toggleModified(dynamic value) {
+    if (!mounted) return;
+
     setState(() {
       if ([true, false].contains(value)) {
         _is_modified = value;
@@ -91,6 +105,8 @@ class _SectionItemView extends State<SectionItemView> {
   }
 
   void toggleLoading(dynamic value) {
+    if (!mounted) return;
+
     setState(() {
       if ([true, false].contains(value)) {
         _is_loading = value;
@@ -334,6 +350,8 @@ class _SectionItemView extends State<SectionItemView> {
 
   void nextPage() {
     if (!isLastPage()) {
+      if (!mounted) return;
+
       setState(() {
         _segment_lines_page++;
       });
@@ -342,6 +360,8 @@ class _SectionItemView extends State<SectionItemView> {
 
   void previousPage() {
     if (!isFirstPage()) {
+      if (!mounted) return;
+
       setState(() {
         _segment_lines_page--;
       });
@@ -382,11 +402,13 @@ class _SectionItemView extends State<SectionItemView> {
       pages.add(current_page);
     }
 
+    if (!mounted) return;
+
     setState(() {
       _segment_lines_pages = pages;
     });
 
-    if (pages.isNotEmpty) {
+    if (pages.isNotEmpty && mounted) {
       setState(() {
         _segment_lines_page = 0;
       });

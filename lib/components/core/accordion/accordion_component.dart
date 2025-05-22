@@ -22,9 +22,11 @@ class _AccordionComponent extends State<AccordionComponent> {
     super.initState();
 
     if (widget.elements.isNotEmpty) {
-      setState(() {
-        _elements = widget.elements;
-      });
+      if (mounted) {
+        setState(() {
+          _elements = widget.elements;
+        });
+      }
     }
   }
 
@@ -34,6 +36,8 @@ class _AccordionComponent extends State<AccordionComponent> {
       child: Container(
         child: ExpansionPanelList(
           expansionCallback: (int index, bool is_expand) {
+            if (!mounted) return;
+
             setState(() {
               _elements[index].is_expanded = is_expand;
             });

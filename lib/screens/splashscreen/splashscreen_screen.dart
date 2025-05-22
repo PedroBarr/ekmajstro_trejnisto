@@ -54,6 +54,8 @@ class _SplashscreenScreen extends State<SplashscreenScreen>
   }
 
   void _addOffset(double offset) {
+    if (!mounted) return;
+
     setState(() {
       _centered_point += offset;
       _centered_point_x += 4 / 18 * offset;

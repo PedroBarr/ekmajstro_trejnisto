@@ -52,6 +52,8 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
   }
 
   void toggleEditMode(dynamic value) {
+    if (!mounted) return;
+
     setState(() {
       if ([false, true].contains(value)) {
         _is_edit_mode = value;
@@ -62,6 +64,8 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
   }
 
   void refreshValue() {
+    if (!mounted) return;
+
     setState(() {
       _controller.text = widget.value;
     });
@@ -76,6 +80,8 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
   }
 
   void recalcSaveAble() {
+    if (!mounted) return;
+
     final String text = _controller.text;
 
     setState(() {

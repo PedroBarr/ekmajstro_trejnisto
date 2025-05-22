@@ -49,6 +49,8 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
   }
 
   void updateImageUrl(String value) {
+    if (!mounted) return;
+
     setState(() {
       if (value.isEmpty) {
         _image_url = widget.value!;
