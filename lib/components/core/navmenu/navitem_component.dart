@@ -1,4 +1,3 @@
-import 'package:ekmajstro_trejnisto/utils/router.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';

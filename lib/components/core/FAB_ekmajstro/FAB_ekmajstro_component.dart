@@ -55,67 +55,69 @@ class _FABEkmajstroComponent extends State<FABEkmajstroComponent> {
       left: 0,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      child: Stack(
-        children: [
-          Positioned(
-            right: 10.0,
-            bottom: 60.0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              width: 60.0,
-              height: 60.0,
-              padding: const EdgeInsets.all(2.0),
-              child: IconButton(
-                hoverColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: () => toggleMenuOpen(null),
-                icon: switch (_menu_open) {
-                  true => SvgPicture.asset(
-                      FAB_ICON,
-                      width: 150.0,
-                      height: 150.0,
-                    ),
-                  _ => ColorFiltered(
-                      colorFilter: const ColorFilter.matrix(<double>[
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0.0,
-                        0.0,
-                        //
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0.0,
-                        0.0,
-                        //
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0.0,
-                        0.0,
-                        //
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0,
-                        0.0,
-                      ]),
-                      child: SvgPicture.asset(
+      child: SafeArea(
+        child: Stack(
+          children: [
+            Positioned(
+              right: 10.0,
+              top: MediaQuery.of(context).size.height - 120.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                width: 60.0,
+                height: 60.0,
+                padding: const EdgeInsets.all(2.0),
+                child: IconButton(
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onPressed: () => toggleMenuOpen(null),
+                  icon: switch (_menu_open) {
+                    true => SvgPicture.asset(
                         FAB_ICON,
-                        width: 100.0,
-                        height: 100.0,
+                        width: 150.0,
+                        height: 150.0,
                       ),
-                    ),
-                },
+                    _ => ColorFiltered(
+                        colorFilter: const ColorFilter.matrix(<double>[
+                          0.2126,
+                          0.7152,
+                          0.0722,
+                          0.0,
+                          0.0,
+                          //
+                          0.2126,
+                          0.7152,
+                          0.0722,
+                          0.0,
+                          0.0,
+                          //
+                          0.2126,
+                          0.7152,
+                          0.0722,
+                          0.0,
+                          0.0,
+                          //
+                          0.0,
+                          0.0,
+                          0.0,
+                          1.0,
+                          0.0,
+                        ]),
+                        child: SvgPicture.asset(
+                          FAB_ICON,
+                          width: 100.0,
+                          height: 100.0,
+                        ),
+                      ),
+                  },
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
