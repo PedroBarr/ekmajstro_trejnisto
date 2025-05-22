@@ -227,6 +227,11 @@ class _SectionItemView extends State<SectionItemView> {
                     color: isFirstPage()
                         ? Colors.grey
                         : Theme.of(context).colorScheme.onSurface,
+                    style: ButtonStyle(
+                      overlayColor: WidgetStateProperty.all(
+                        Colors.transparent,
+                      ),
+                    ),
                     iconSize: 30,
                     onPressed: () {
                       previousPage();
@@ -240,6 +245,11 @@ class _SectionItemView extends State<SectionItemView> {
                     color: _section.is_mark_one
                         ? Theme.of(context).colorScheme.onSurface
                         : Colors.grey,
+                    style: ButtonStyle(
+                      overlayColor: WidgetStateProperty.all(
+                        Colors.transparent,
+                      ),
+                    ),
                     iconSize: 40,
                     onPressed: () {},
                   ),
@@ -253,6 +263,11 @@ class _SectionItemView extends State<SectionItemView> {
                     color: isLastPage()
                         ? Colors.grey
                         : Theme.of(context).colorScheme.onSurface,
+                    style: ButtonStyle(
+                      overlayColor: WidgetStateProperty.all(
+                        Colors.transparent,
+                      ),
+                    ),
                     iconSize: 30,
                     onPressed: () {
                       nextPage();
