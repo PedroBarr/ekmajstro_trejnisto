@@ -71,3 +71,19 @@ class SegmentItem extends ModelItem {
     return '<Segment> [$id] [${measure.name}] [${type.name}] ($order)';
   }
 }
+
+class Segment {
+  String id;
+  SegmentMeasure measure;
+  int order;
+  SegmentType type;
+  Map<String, dynamic> content;
+
+  Segment({
+    this.id = '',
+    this.measure = SegmentMeasure.full,
+    this.order = 0,
+    this.type = SegmentType.text,
+    this.content = const {},
+  });
+}
