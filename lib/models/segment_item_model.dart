@@ -82,7 +82,7 @@ class Segment {
   Segment({
     this.id = '',
     this.measure = SegmentMeasure.full,
-    this.order = 0,
+    this.order = -1,
     this.type = SegmentType.text,
     this.content = const {},
   });

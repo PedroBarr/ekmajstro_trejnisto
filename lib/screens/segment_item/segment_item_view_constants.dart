@@ -25,3 +25,28 @@ enum IconSegmentType {
     ),
   );
 }
+
+typedef IconSegmentMeasureEntry = DropdownMenuEntry<IconSegmentMeasure>;
+
+enum IconSegmentMeasure {
+  full('Full', Icons.looks_one, SegmentMeasure.full),
+  half('Half', Icons.looks_two, SegmentMeasure.half),
+  third('Third', Icons.looks_3, SegmentMeasure.third);
+
+  const IconSegmentMeasure(
+    this.label,
+    this.icon,
+    this.measure,
+  );
+  final String label;
+  final IconData icon;
+  final SegmentMeasure measure;
+
+  static final List<IconSegmentMeasureEntry> entries =
+      UnmodifiableListView<IconSegmentMeasureEntry>(
+    values.map<IconSegmentMeasureEntry>(
+      (IconSegmentMeasure icon) => IconSegmentMeasureEntry(
+          value: icon, label: icon.label, leadingIcon: Icon(icon.icon)),
+    ),
+  );
+}
