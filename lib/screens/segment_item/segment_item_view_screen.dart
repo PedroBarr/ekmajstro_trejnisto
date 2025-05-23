@@ -1,4 +1,5 @@
-import 'package:ekmajstro_trejnisto/components/core/FAB_ekmajstro/FAB_ekmajstro_component.dart';
+import 'package:ekmajstro_trejnisto/components/components.dart';
+import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/screens/segment_item/segment_item_view_constants.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,38 @@ class _SegmentItemView extends State<SegmentItemView> {
       children: [
         Scaffold(
           appBar: AppBar(
+            leading: Builder(
+              builder: (context) {
+                return _segment.id.isEmpty
+                    ? Container()
+                    : GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: iconNavSection(
+                            Theme.of(context).colorScheme.onSurface),
+                      );
+              },
+            ),
+            actions: [
+              Builder(builder: (context) {
+                if (_segment.id.isNotEmpty) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: const Padding(
+                      padding: EdgeInsets.only(
+                        right: 10.0,
+                        left: 10.0,
+                      ),
+                      child: Icon(
+                        Icons.save_as_rounded,
+                      ),
+                    ),
+                  );
+                }
+                return Container();
+              }),
+            ],
             title: Builder(
               builder: (context) {
                 if (_segment.id.isNotEmpty) {
@@ -60,15 +93,80 @@ class _SegmentItemView extends State<SegmentItemView> {
               },
             ),
           ),
-          body: Builder(
-            builder: (context) {
-              return _segment.id.isNotEmpty
-                  ? switch (_segment.type) {
-                      SegmentType.text => _buildTextSegment(),
-                      SegmentType.image => _buildImageSegment(),
-                    }
-                  : SizedBox.shrink();
-            },
+          body: Container(
+            padding: const EdgeInsets.only(
+              top: 10.0,
+              left: 10.0,
+              bottom: 10.0,
+            ),
+            width: MediaQuery.of(context).size.width - 20,
+            height: MediaQuery.of(context).size.height - 20,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Posición'),
+                      Text(
+                        _segment.order == -1
+                            ? 'Sin asignar'
+                            : _segment.order.toString(),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Medida'),
+                      DropdownMenu<IconSegmentMeasure>(
+                        initialSelection: IconSegmentMeasure.values.firstWhere(
+                          (entry) => entry.measure == _segment.measure,
+                          orElse: () => IconSegmentMeasure.full,
+                        ),
+                        onSelected: (_) {},
+                        dropdownMenuEntries: IconSegmentMeasure.entries,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Clase'),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2,
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width / 2,
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Clase',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
+                  Builder(
+                    builder: (context) {
+                      return _segment.id.isNotEmpty
+                          ? switch (_segment.type) {
+                              SegmentType.text => _buildTextSegment(),
+                              SegmentType.image => _buildImageSegment(),
+                            }
+                          : SizedBox.shrink();
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
         const FABEkmajstroComponent(),
@@ -77,10 +175,53 @@ class _SegmentItemView extends State<SegmentItemView> {
   }
 
   Widget _buildTextSegment() {
-    return const Text('Text Segment');
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Contenido',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const Spacer(),
+            Container(
+              width: MediaQuery.of(context).size.width / 2,
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width / 2,
+              ),
+              child: TextField(
+                maxLines: 10,
+                minLines: 5,
+                decoration: InputDecoration(
+                  hintText: 'Texto',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildImageSegment() {
-    return const Text('Image Segment');
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Imagen',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const Spacer(),
+            CustomImageFieldComponent(
+              height: 200,
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
