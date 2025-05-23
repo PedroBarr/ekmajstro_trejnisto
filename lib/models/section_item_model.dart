@@ -31,6 +31,11 @@ class SectionItem extends ModelItem {
         'name': String name,
       } =>
         SectionItem(id: id.toString(), name: name),
+      {
+        'id': String id,
+        'name': String name,
+      } =>
+        SectionItem(id: id, name: name),
       _ => throw const FormatException(ERROR_SECTION_ITEM_PARSER),
     };
   }
