@@ -17,6 +17,7 @@ const String PUBLICACION_NUEVA_ENDPOINT = '/publicacion';
 
 const String SECCIONES_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/secciones';
+const String SECCION_NUEVA_ENDPOINT = '/seccion';
 const String SECCION_ENDPOINT = '/seccion/$ROUTE_ID_WILDCARD';
 
 const String RECURSOS_PUBLICACION_ENDPOINT =
@@ -231,5 +232,37 @@ Future<List<SegmentItem>> getSectionSegments(Section section) async {
     return segments;
   } catch (e) {
     throw Exception(ERROR_SEGMENT_ITEM_LIST);
+  }
+}
+
+Future<Section> saveSection(Section section, int? postId) async {
+  if (postId != null) {
+    return createSection(section, postId);
+  } else {
+    return Future.value(section);
+  }
+}
+
+Future<Section> createSection(Section section, int postId) async {
+  try {
+    String subPath = SECCION_NUEVA_ENDPOINT;
+
+    Map<String, dynamic> sectionMap = section.toMap(true, true);
+    sectionMap['publicacion'] = postId;
+
+    final response = await http.post(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(sectionMap),
+    );
+
+    late dynamic body = getBody(response);
+    late Section new_section = Section.fromJson(body);
+
+    return new_section;
+  } catch (e) {
+    throw Exception(ERROR_SECTION_ITEM);
   }
 }

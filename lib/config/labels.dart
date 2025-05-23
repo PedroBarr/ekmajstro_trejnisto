@@ -17,6 +17,7 @@ const String ERROR_PREVIEW_ITEM =
     'Fallo al recuperar la lista de previsualización';
 const String ERROR_SEGMENT_ITEM_LIST =
     'Fallo al recuperar la lista de segmentos';
+const String ERROR_SECTION_ITEM = 'Fallo al recuperar la sección';
 
 // MODELS
 const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación';
