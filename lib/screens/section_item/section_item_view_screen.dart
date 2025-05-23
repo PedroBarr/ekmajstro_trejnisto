@@ -399,15 +399,15 @@ class _SectionItemView extends State<SectionItemView> {
       double width = widthDict[segment.measure]!;
       current_width += width;
 
-      if (current_width >= 1) {
-        current_line++;
-        current_width = current_width == 1 ? 0 : width;
-      }
-
       if (current_line >= _MAX_SEGMENT_LINES) {
         pages.add(current_page);
         current_page = [];
         current_line = 0;
+      }
+
+      if (current_width >= 1) {
+        current_line++;
+        current_width = current_width == 1 ? 0 : width;
       }
 
       current_page.add(segment);
