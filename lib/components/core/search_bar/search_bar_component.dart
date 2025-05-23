@@ -4,10 +4,12 @@ import 'package:ekmajstro_trejnisto/config/config.dart';
 
 class SearchBarComponent extends StatefulWidget {
   final String hint_text;
+  final Function? onChanged;
 
   const SearchBarComponent({
     super.key,
     this.hint_text = HINT_SEARCH_DEFAULT,
+    this.onChanged,
   });
 
   @override
@@ -27,7 +29,11 @@ class _SearchBarComponent extends State<SearchBarComponent> {
           prefixIcon: Icon(Icons.search, color: Theme.of(context).primaryColor),
         ),
         style: TextStyle(color: Theme.of(context).primaryColor),
-        onChanged: (event) {},
+        onChanged: (event) {
+          if (widget.onChanged != null) {
+            widget.onChanged!(event);
+          }
+        },
       ),
     );
   }

@@ -16,6 +16,7 @@ class PostListScreen extends StatefulWidget {
 
 class _PostListScreen extends State<PostListScreen> {
   late Future<List<PostItem>> _posts;
+  String _searchText = '';
 
   @override
   void initState() {
@@ -33,9 +34,13 @@ class _PostListScreen extends State<PostListScreen> {
           Center(
             child: Column(
               children: [
-                const SearchBarComponent(
-                  hint_text: HINT_SEARCH_POST,
-                ),
+                SearchBarComponent(
+                    hint_text: HINT_SEARCH_POST,
+                    onChanged: (String value) {
+                      setState(() {
+                        _searchText = value;
+                      });
+                    }),
                 const SizedBox(
                   height: 10.0,
                 ),
@@ -56,6 +61,10 @@ class _PostListScreen extends State<PostListScreen> {
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
                                     snapshot.data!
+                                        .where((post) => post.title
+                                            .toLowerCase()
+                                            .contains(
+                                                _searchText.toLowerCase()))
                                         .map((post) =>
                                             PostItemComponent(post: post))
                                         .toList(),
