@@ -100,4 +100,25 @@ class Section {
   String toString() {
     return '<Section> [$name]${is_mark_one ? ' <marcada>' : ''}';
   }
+
+  Map<String, dynamic> toMap(bool include_es_marcada, bool? forBack) {
+    forBack ??= false;
+
+    Map<String, dynamic> map = {};
+
+    if (forBack) {
+      map['id'] = id;
+      map['nombre'] = name;
+      map['es_marcada'] = is_mark_one ? true : false;
+    } else {
+      map['id'] = id;
+      map['name'] = name;
+    }
+
+    if (!include_es_marcada && map.containsKey('es_marcada')) {
+      map.remove('es_marcada');
+    }
+
+    return map;
+  }
 }
