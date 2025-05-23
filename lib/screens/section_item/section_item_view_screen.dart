@@ -150,6 +150,26 @@ class _SectionItemView extends State<SectionItemView> {
     }
   }
 
+  void onMark() {
+    String message = '';
+
+    try {
+      markSection(_section).then((value) {
+        if (!mounted) return;
+
+        setState(() {
+          _section = Section.fromSection(value);
+        });
+      });
+      message = 'Marcado exitoso';
+    } catch (e) {
+      Navigator.of(context).pop();
+      message = 'Marcado fallido';
+    } finally {
+      showMessage(message, context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -281,7 +301,16 @@ class _SectionItemView extends State<SectionItemView> {
                               ),
                             ),
                             iconSize: 40,
-                            onPressed: () {},
+                            onPressed: () {
+                              if (!_section.is_mark_one) {
+                                onMark();
+                              } else {
+                                showMessage(
+                                  'Ya está marcada',
+                                  context,
+                                );
+                              }
+                            },
                           ),
                         )
                       : SizedBox(
