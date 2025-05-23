@@ -116,6 +116,64 @@ class Segment {
     }
   }
 
+  factory Segment.fromSegment(Segment segment) {
+    Segment newSegment = Segment();
+    newSegment.copySegment(segment);
+    return newSegment;
+  }
+
+  void copySegment(Segment segment) {
+    id = segment.id;
+    measure = segment.measure;
+    order = segment.order;
+    type = segment.type;
+    content = segment.content;
+  }
+
+  void setSegment(String attr, dynamic value) {
+    switch (attr) {
+      case 'measure':
+      case 'medida':
+        if (value is SegmentMeasure) {
+          measure = value;
+        } else {
+          measure = SegmentMeasure.values.firstWhere(
+            (e) => SegmentItem.measureMap[value] == e,
+            orElse: () => SegmentMeasure.full,
+          );
+        }
+        break;
+      case 'order':
+      case 'posicion':
+        order = value;
+        break;
+      case 'type':
+      case 'tipo':
+        content = jsonDecode('{"tipo": "$value"}');
+
+        type = SegmentType.values.firstWhere(
+          (e) => SegmentItem.typeMap[value] == e,
+          orElse: () => SegmentType.text,
+        );
+        break;
+      case 'main_content':
+      case 'contenido_principal':
+        content['contenido'] = value;
+        break;
+      case 'content':
+      case 'contenido':
+        content = jsonDecode(value);
+        break;
+      default:
+        setContent(attr, value);
+        break;
+    }
+  }
+
+  void setContent(String key, dynamic value) {
+    content[key] = value;
+  }
+
   @override
   String toString() {
     return '<Segment> [${measure.name}] [${type.name}] ($order)';
@@ -131,7 +189,7 @@ class Segment {
 
   dynamic getMainContent() {
     return switch (type) {
-      SegmentType.text || SegmentType.image => content['contenido'],
+      SegmentType.text || SegmentType.image => content['contenido'] ?? '',
     };
   }
 

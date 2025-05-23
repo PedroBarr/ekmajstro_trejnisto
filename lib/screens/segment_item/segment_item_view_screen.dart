@@ -59,6 +59,14 @@ class _SegmentItemView extends State<SegmentItemView> {
     });
   }
 
+  void setSegment(String attr, dynamic value) {
+    if (!mounted) return;
+
+    setState(() {
+      _segment.setSegment(attr, value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -82,7 +90,10 @@ class _SegmentItemView extends State<SegmentItemView> {
               Builder(builder: (context) {
                 if (_segment.id.isNotEmpty) {
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      debugPrint(
+                          'Saving segment: ${_segment.content.toString()}');
+                    },
                     child: const Padding(
                       padding: EdgeInsets.only(
                         right: 10.0,
@@ -105,7 +116,9 @@ class _SegmentItemView extends State<SegmentItemView> {
                       (entry) => entry.type == _segment.type,
                       orElse: () => IconSegmentType.text,
                     ),
-                    onSelected: (_) {},
+                    onSelected: (value) {
+                      setSegment('type', getTextType(value!));
+                    },
                     dropdownMenuEntries: IconSegmentType.entries,
                   );
                 } else {
@@ -153,7 +166,9 @@ class _SegmentItemView extends State<SegmentItemView> {
                                         entry.measure == _segment.measure,
                                     orElse: () => IconSegmentMeasure.full,
                                   ),
-                                  onSelected: (_) {},
+                                  onSelected: (value) {
+                                    setSegment('measure', value!.measure);
+                                  },
                                   dropdownMenuEntries:
                                       IconSegmentMeasure.entries,
                                 ),
@@ -181,6 +196,9 @@ class _SegmentItemView extends State<SegmentItemView> {
                                     controller: TextEditingController(
                                       text: _segment.getClass(),
                                     ),
+                                    onSubmitted: (value) {
+                                      setSegment('clase', value);
+                                    },
                                   ),
                                 ),
                               ],
@@ -239,6 +257,9 @@ class _SegmentItemView extends State<SegmentItemView> {
                 controller: TextEditingController(
                   text: _segment.getMainContent(),
                 ),
+                onSubmitted: (value) {
+                  setSegment('contenido_principal', value);
+                },
               ),
             ),
           ],
@@ -260,6 +281,9 @@ class _SegmentItemView extends State<SegmentItemView> {
             CustomImageFieldComponent(
               height: 200,
               value: _segment.getMainContent(),
+              onConfirm: (value) {
+                setSegment('contenido_principal', value);
+              },
             ),
           ],
         ),

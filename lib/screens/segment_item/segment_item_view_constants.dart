@@ -26,6 +26,13 @@ enum IconSegmentType {
   );
 }
 
+String getTextType(IconSegmentType type) {
+  return switch (type) {
+    IconSegmentType.text => 'texto',
+    IconSegmentType.image => 'imagen',
+  };
+}
+
 typedef IconSegmentMeasureEntry = DropdownMenuEntry<IconSegmentMeasure>;
 
 enum IconSegmentMeasure {
