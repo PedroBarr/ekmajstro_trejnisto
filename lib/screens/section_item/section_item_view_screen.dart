@@ -91,6 +91,16 @@ class _SectionItemView extends State<SectionItemView> {
   void setSection(String attr, dynamic value) {
     if (!mounted) return;
 
+    switch (attr) {
+      case 'name':
+        setState(() {
+          _section.name = value;
+        });
+        break;
+      default:
+        break;
+    }
+
     setState(() {
       toggleModified(true);
     });
@@ -160,13 +170,15 @@ class _SectionItemView extends State<SectionItemView> {
             ],
             title: Builder(
               builder: (context) {
-                if (_section.name.isNotEmpty) {
+                if (!_is_loading) {
                   return CustomTextFieldComponent(
                     value: _section.name,
                     spacing: 10.0,
                     font_size: 16,
                     max_length: 30,
-                    onConfirm: (value) {},
+                    onConfirm: (value) {
+                      setSection('name', value);
+                    },
                   );
                 } else {
                   return const CircularProgressIndicator();
