@@ -120,4 +120,22 @@ class Segment {
   String toString() {
     return '<Segment> [${measure.name}] [${type.name}] ($order)';
   }
+
+  dynamic getContent(String key) {
+    if (content.containsKey(key)) {
+      return content[key];
+    } else {
+      return null;
+    }
+  }
+
+  dynamic getMainContent() {
+    return switch (type) {
+      SegmentType.text || SegmentType.image => content['contenido'],
+    };
+  }
+
+  dynamic getClass() {
+    return getContent('clase');
+  }
 }

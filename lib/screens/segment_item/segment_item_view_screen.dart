@@ -149,6 +149,9 @@ class _SegmentItemView extends State<SegmentItemView> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          controller: TextEditingController(
+                            text: _segment.getClass(),
+                          ),
                         ),
                       ),
                     ],
@@ -198,6 +201,9 @@ class _SegmentItemView extends State<SegmentItemView> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
+                controller: TextEditingController(
+                  text: _segment.getMainContent(),
+                ),
               ),
             ),
           ],
@@ -218,6 +224,7 @@ class _SegmentItemView extends State<SegmentItemView> {
             const Spacer(),
             CustomImageFieldComponent(
               height: 200,
+              value: _segment.getMainContent(),
             ),
           ],
         ),
