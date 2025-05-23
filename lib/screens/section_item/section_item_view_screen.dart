@@ -120,29 +120,25 @@ class _SectionItemView extends State<SectionItemView> {
     });
   }
 
-  void navigateToPost(BuildContext context) {
-    String route = buildIdRouteById(ROUTER_POST_VIEW_ROUTE, widget.post_id);
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      route,
-      (Route<dynamic> route) => route.settings.name == route,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Scaffold(
           appBar: AppBar(
-            leading: Builder(builder: (context) {
-              return _is_loading
-                  ? Container()
-                  : GestureDetector(
-                      onTap: () => navigateToPost(context),
-                      child:
-                          iconNavPost(Theme.of(context).colorScheme.onSurface),
-                    );
-            }),
+            leading: Builder(
+              builder: (context) {
+                return _is_loading
+                    ? Container()
+                    : GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: iconNavPost(
+                            Theme.of(context).colorScheme.onSurface),
+                      );
+              },
+            ),
             actions: [
               Builder(builder: (context) {
                 if (_is_modified) {
