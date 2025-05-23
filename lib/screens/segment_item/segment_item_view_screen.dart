@@ -45,8 +45,11 @@ class _SegmentItemView extends State<SegmentItemView> {
         if (!mounted) return;
         toggleLoading(false);
       });
+
+      toggleModified(false);
+    } else {
+      toggleModified(true);
     }
-    toggleModified(false);
   }
 
   void toggleLoading(dynamic value) {
@@ -225,7 +228,7 @@ class _SegmentItemView extends State<SegmentItemView> {
                             const SizedBox(height: 10.0),
                             Builder(
                               builder: (context) {
-                                return _segment.id.isNotEmpty
+                                return !_is_loading
                                     ? switch (_segment.type) {
                                         SegmentType.text => _buildTextSegment(),
                                         SegmentType.image =>
@@ -279,6 +282,7 @@ class _SegmentItemView extends State<SegmentItemView> {
                 onSubmitted: (value) {
                   setSegment('contenido_principal', value);
                 },
+                textInputAction: TextInputAction.done,
               ),
             ),
           ],
