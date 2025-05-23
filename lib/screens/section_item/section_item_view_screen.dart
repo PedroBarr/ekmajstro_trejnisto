@@ -64,25 +64,7 @@ class _SectionItemView extends State<SectionItemView> {
       }).whenComplete(() {
         if (!mounted) return;
 
-        getSectionSegments(_section).then((segments) {
-          segments.sort((a, b) => a.order.compareTo(b.order));
-
-          if (mounted) {
-            setState(() {
-              _segments = segments;
-            });
-          }
-
-          return segments;
-        }).then((segments) {
-          if (!mounted) return;
-
-          initSegmentLinesPages(segments);
-        }).whenComplete(() {
-          if (!mounted) return;
-
-          toggleLoading(false);
-        });
+        loadSegments();
       });
     }
     toggleModified(false);
@@ -185,6 +167,40 @@ class _SectionItemView extends State<SectionItemView> {
     ];
 
     return buildSubRoute(subpaths);
+  }
+
+  void onRelocateSegment(
+    SegmentItem segment,
+    SegmentDirection direction,
+  ) {
+    relocateSegment(segment, getSegmentDirectionName(direction))
+        .whenComplete(() {
+      loadSegments();
+    });
+  }
+
+  loadSegments() {
+    toggleLoading(true);
+
+    getSectionSegments(_section).then((segments) {
+      segments.sort((a, b) => a.order.compareTo(b.order));
+
+      if (mounted) {
+        setState(() {
+          _segments = segments;
+        });
+      }
+
+      return segments;
+    }).then((segments) {
+      if (!mounted) return;
+
+      initSegmentLinesPages(segments);
+    }).whenComplete(() {
+      if (!mounted) return;
+
+      toggleLoading(false);
+    });
   }
 
   @override
@@ -409,13 +425,63 @@ class _SectionItemView extends State<SectionItemView> {
               borderRadius: BorderRadius.circular(10),
             ),
             padding: const EdgeInsets.all(8),
-            child: Center(
-              child: getIcon(segment.type),
+            child: Row(
+              children: [
+                Builder(
+                  builder: (context) {
+                    return isFirstSegment(segment)
+                        ? const SizedBox(
+                            width: 20,
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              onRelocateSegment(
+                                segment,
+                                SegmentDirection.up,
+                              );
+                            },
+                            child: Icon(
+                              getSegmentDirectionIcon(SegmentDirection.up),
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          );
+                  },
+                ),
+                const Spacer(),
+                getIcon(segment.type),
+                const Spacer(),
+                Builder(
+                  builder: (context) {
+                    return isLastSegment(segment)
+                        ? const SizedBox(
+                            width: 20,
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              onRelocateSegment(
+                                segment,
+                                SegmentDirection.down,
+                              );
+                            },
+                            child: Icon(
+                              getSegmentDirectionIcon(SegmentDirection.down),
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          );
+                  },
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  bool isFirstSegment(SegmentItem segment) {
+    return _segments.indexOf(segment) == 0;
   }
 
   Color getColor(SegmentType type) {
@@ -433,6 +499,10 @@ class _SectionItemView extends State<SectionItemView> {
           color: Colors.white,
         ),
     };
+  }
+
+  bool isLastSegment(SegmentItem segment) {
+    return _segments.indexOf(segment) == _segments.length - 1;
   }
 
   FlexGridSize getFlexGridSize(SegmentMeasure measure) {

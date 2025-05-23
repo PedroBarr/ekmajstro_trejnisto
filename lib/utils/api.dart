@@ -32,6 +32,8 @@ const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
 const String SEGMENTOS_SECCION_ENDPOINT =
     '/seccion/$ROUTE_ID_WILDCARD/segmentos';
 const String SEGMENTO_ENDPOINT = '/segmento/$ROUTE_ID_WILDCARD';
+const String SEGMENTO_REUBICAR_ENDPOINT =
+    '/segmento/$ROUTE_ID_WILDCARD/reubicar';
 
 Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
@@ -329,6 +331,29 @@ Future<Segment> getSegment(String id) async {
     late Segment segment = Segment.fromJson(body);
 
     return segment;
+  } catch (e) {
+    throw Exception(ERROR_SEGMENT_ITEM);
+  }
+}
+
+Future<bool> relocateSegment(SegmentItem segment, String direction) async {
+  try {
+    String subPath = SEGMENTO_REUBICAR_ENDPOINT.replaceAll(
+        ROUTE_ID_WILDCARD, segment.id.toString());
+
+    Map<String, dynamic> cargador = {
+      'reubicacion': direction,
+    };
+
+    final response = await http.patch(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(cargador),
+    );
+
+    return response.statusCode == 200;
   } catch (e) {
     throw Exception(ERROR_SEGMENT_ITEM);
   }
