@@ -68,7 +68,7 @@ class SegmentItem extends ModelItem {
 
   @override
   String toString() {
-    return '<Segment> [$id] [${measure.name}] [${type.name}] ($order)';
+    return '<Segment> [${measure.name}] [${type.name}] ($order)';
   }
 }
 
@@ -86,4 +86,38 @@ class Segment {
     this.type = SegmentType.text,
     this.content = const {},
   });
+
+  factory Segment.fromJson(Map<String, dynamic> json) {
+    try {
+      String id = json['id']?.toString() ?? json['segm_id'].toString();
+
+      SegmentMeasure measure = SegmentMeasure.values.firstWhere(
+        (e) => SegmentItem.measureMap[json['segm_medida']] == e,
+        orElse: () => SegmentMeasure.full,
+      );
+
+      int order = json['segm_posicion'] ?? 0;
+
+      dynamic content = json['segm_contenido'];
+      SegmentType type = SegmentType.values.firstWhere(
+        (e) => SegmentItem.typeMap[content['tipo']] == e,
+        orElse: () => SegmentType.text,
+      );
+
+      return Segment(
+        id: id,
+        measure: measure,
+        order: order,
+        type: type,
+        content: content,
+      );
+    } catch (e) {
+      throw const FormatException(ERROR_SEGMENT_ITEM_PARSER);
+    }
+  }
+
+  @override
+  String toString() {
+    return '<Segment> [${measure.name}] [${type.name}] ($order)';
+  }
 }

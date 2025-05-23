@@ -31,6 +31,7 @@ const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
 
 const String SEGMENTOS_SECCION_ENDPOINT =
     '/seccion/$ROUTE_ID_WILDCARD/segmentos';
+const String SEGMENTO_ENDPOINT = '/segmento/$ROUTE_ID_WILDCARD';
 
 Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
@@ -312,5 +313,23 @@ Future<Section> markSection(Section section) async {
     return new_section;
   } catch (e) {
     throw Exception(ERROR_SECTION_ITEM);
+  }
+}
+
+Future<Segment> getSegment(String id) async {
+  try {
+    String subPath =
+        SEGMENTO_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, id.toString());
+
+    final response = await http.get(
+      Uri.parse(BACKEND_API + subPath),
+    );
+
+    late dynamic body = getBody(response);
+    late Segment segment = Segment.fromJson(body);
+
+    return segment;
+  } catch (e) {
+    throw Exception(ERROR_SEGMENT_ITEM);
   }
 }
