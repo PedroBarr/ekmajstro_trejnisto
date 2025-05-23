@@ -15,6 +15,26 @@ enum SegmentMeasure {
   third,
 }
 
+String getSegmentTypeText(SegmentType type) {
+  switch (type) {
+    case SegmentType.text:
+      return 'texto';
+    case SegmentType.image:
+      return 'imagen';
+  }
+}
+
+String getSegmentMeasureText(SegmentMeasure measure) {
+  switch (measure) {
+    case SegmentMeasure.full:
+      return '1-col';
+    case SegmentMeasure.half:
+      return '2-col';
+    case SegmentMeasure.third:
+      return '3-col';
+  }
+}
+
 class SegmentItem extends ModelItem {
   final SegmentMeasure measure;
   final int order;
@@ -158,7 +178,7 @@ class Segment {
         break;
       case 'main_content':
       case 'contenido_principal':
-        content['contenido'] = value;
+        setContent('contenido', value);
         break;
       case 'content':
       case 'contenido':
@@ -171,7 +191,9 @@ class Segment {
   }
 
   void setContent(String key, dynamic value) {
-    content[key] = value;
+    Map<String, dynamic> newContent = jsonDecode(jsonEncode(content));
+    newContent[key] = value;
+    content = newContent;
   }
 
   @override
@@ -189,6 +211,43 @@ class Segment {
                 order == other.order &&
                 type == other.type &&
                 content.toString() == other.content.toString())));
+  }
+
+  Map<String, dynamic> toMap(bool include_posicion, bool? forBack) {
+    forBack ??= false;
+
+    Map<String, dynamic> map = {};
+
+    if (forBack) {
+      map['id'] = id;
+      map['medida'] = getSegmentMeasureText(measure);
+      map['posicion'] = order;
+      map['contenido'] = content;
+
+      if (!map['contenido'].containsKey('tipo')) {
+        map['contenido']['tipo'] = getSegmentTypeText(type);
+      }
+    } else {
+      map['id'] = id;
+      map['segm_medida'] = measure.name;
+      map['segm_posicion'] = order;
+      map['segm_tipo'] = type.name;
+      map['segm_contenido'] = jsonEncode(content);
+    }
+
+    if (!include_posicion) {
+      if (forBack) {
+        if (map.containsKey('posicion')) {
+          map.remove('posicion');
+        }
+      } else {
+        if (map.containsKey('segm_posicion')) {
+          map.remove('segm_posicion');
+        }
+      }
+    }
+
+    return map;
   }
 
   dynamic getContent(String key) {

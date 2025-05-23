@@ -34,6 +34,7 @@ const String SEGMENTOS_SECCION_ENDPOINT =
 const String SEGMENTO_ENDPOINT = '/segmento/$ROUTE_ID_WILDCARD';
 const String SEGMENTO_REUBICAR_ENDPOINT =
     '/segmento/$ROUTE_ID_WILDCARD/reubicar';
+const String SEGMENTO_NUEVO_ENDPOINT = '/segmento';
 
 Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
@@ -354,6 +355,41 @@ Future<bool> relocateSegment(SegmentItem segment, String direction) async {
     );
 
     return response.statusCode == 200;
+  } catch (e) {
+    throw Exception(ERROR_SEGMENT_ITEM);
+  }
+}
+
+Future<Segment> saveSegment(Segment segment, int? sectionId) async {
+  // if (segment.id.isNotEmpty) {
+  //   return updateSegment(segment);
+  // } else
+  if (sectionId != null) {
+    return createSegment(segment, sectionId);
+  } else {
+    return Future.value(segment);
+  }
+}
+
+Future<Segment> createSegment(Segment segment, int sectionId) async {
+  try {
+    String subPath = SEGMENTO_NUEVO_ENDPOINT;
+
+    Map<String, dynamic> segmentMap = segment.toMap(false, true);
+    segmentMap['seccion'] = sectionId;
+
+    final response = await http.post(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(segmentMap),
+    );
+
+    late dynamic body = getBody(response);
+    late Segment new_segment = Segment.fromJson(body);
+
+    return new_segment;
   } catch (e) {
     throw Exception(ERROR_SEGMENT_ITEM);
   }
