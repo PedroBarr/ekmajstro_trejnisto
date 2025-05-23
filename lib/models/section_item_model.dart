@@ -42,11 +42,11 @@ class SectionItem extends ModelItem {
 }
 
 class Section {
-  final String id;
-  final String name;
-  final bool is_mark_one;
+  String id;
+  String name;
+  bool is_mark_one;
 
-  const Section({
+  Section({
     this.id = '',
     this.name = '',
     this.is_mark_one = false,
@@ -82,6 +82,18 @@ class Section {
         Section(id: id.toString(), name: name),
       _ => throw const FormatException(ERROR_SECTION_ITEM_PARSER),
     };
+  }
+
+  factory Section.fromSection(Section section) {
+    Section newSection = Section();
+    newSection.copySection(section);
+    return newSection;
+  }
+
+  void copySection(Section section) {
+    id = section.id;
+    name = section.name;
+    is_mark_one = section.is_mark_one;
   }
 
   @override
