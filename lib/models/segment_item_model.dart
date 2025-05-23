@@ -127,7 +127,7 @@ class Segment {
     measure = segment.measure;
     order = segment.order;
     type = segment.type;
-    content = segment.content;
+    content = jsonDecode(jsonEncode(segment.content));
   }
 
   void setSegment(String attr, dynamic value) {
@@ -177,6 +177,18 @@ class Segment {
   @override
   String toString() {
     return '<Segment> [${measure.name}] [${type.name}] ($order)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return (identical(this, other) ||
+        (other is Segment &&
+            runtimeType == other.runtimeType &&
+            (id == other.id &&
+                measure == other.measure &&
+                order == other.order &&
+                type == other.type &&
+                content.toString() == other.content.toString())));
   }
 
   dynamic getContent(String key) {

@@ -26,6 +26,7 @@ class _SegmentItemView extends State<SegmentItemView> {
   Segment _segment = Segment();
 
   bool _is_loading = false;
+  bool _is_modified = false;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _SegmentItemView extends State<SegmentItemView> {
         toggleLoading(false);
       });
     }
+    toggleModified(false);
   }
 
   void toggleLoading(dynamic value) {
@@ -59,11 +61,28 @@ class _SegmentItemView extends State<SegmentItemView> {
     });
   }
 
+  void toggleModified(dynamic value) {
+    if (!mounted) return;
+
+    setState(() {
+      if ([true, false].contains(value)) {
+        _is_modified = value;
+      } else {
+        _is_modified = !_is_modified;
+      }
+    });
+  }
+
   void setSegment(String attr, dynamic value) {
     if (!mounted) return;
 
     setState(() {
+      Segment segment = Segment.fromSegment(_segment);
       _segment.setSegment(attr, value);
+
+      if (!(segment == _segment)) {
+        toggleModified(true);
+      }
     });
   }
 
@@ -88,7 +107,7 @@ class _SegmentItemView extends State<SegmentItemView> {
             ),
             actions: [
               Builder(builder: (context) {
-                if (_segment.id.isNotEmpty) {
+                if (_is_modified) {
                   return GestureDetector(
                     onTap: () {
                       debugPrint(
