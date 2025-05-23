@@ -25,17 +25,38 @@ class SegmentItemView extends StatefulWidget {
 class _SegmentItemView extends State<SegmentItemView> {
   Segment _segment = Segment();
 
+  bool _is_loading = false;
+
   @override
   void initState() {
     super.initState();
 
     if (widget.segment_id != null && isNumeric(widget.segment_id.toString())) {
+      toggleLoading(true);
+
       getSegment(widget.segment_id!.toString()).then((segment) {
+        if (!mounted) return;
+
         setState(() {
           _segment = segment;
         });
+      }).whenComplete(() {
+        if (!mounted) return;
+        toggleLoading(false);
       });
     }
+  }
+
+  void toggleLoading(dynamic value) {
+    if (!mounted) return;
+
+    setState(() {
+      if ([true, false].contains(value)) {
+        _is_loading = value;
+      } else {
+        _is_loading = !_is_loading;
+      }
+    });
   }
 
   @override
@@ -46,7 +67,7 @@ class _SegmentItemView extends State<SegmentItemView> {
           appBar: AppBar(
             leading: Builder(
               builder: (context) {
-                return _segment.id.isEmpty
+                return _is_loading
                     ? Container()
                     : GestureDetector(
                         onTap: () {
@@ -78,7 +99,7 @@ class _SegmentItemView extends State<SegmentItemView> {
             ],
             title: Builder(
               builder: (context) {
-                if (_segment.id.isNotEmpty) {
+                if (!_is_loading) {
                   return DropdownMenu<IconSegmentType>(
                     initialSelection: IconSegmentType.values.firstWhere(
                       (entry) => entry.type == _segment.type,
@@ -93,83 +114,97 @@ class _SegmentItemView extends State<SegmentItemView> {
               },
             ),
           ),
-          body: Container(
-            padding: const EdgeInsets.only(
-              top: 10.0,
-              left: 10.0,
-              bottom: 10.0,
-            ),
-            width: MediaQuery.of(context).size.width - 20,
-            height: MediaQuery.of(context).size.height - 20,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Posición'),
-                      Text(
-                        _segment.order == -1
-                            ? 'Sin asignar'
-                            : _segment.order.toString(),
-                        style: Theme.of(context).textTheme.bodyLarge,
+          body: Builder(
+            builder: (context) {
+              return !_is_loading
+                  ? Container(
+                      padding: const EdgeInsets.only(
+                        top: 10.0,
+                        left: 10.0,
+                        bottom: 10.0,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Medida'),
-                      DropdownMenu<IconSegmentMeasure>(
-                        initialSelection: IconSegmentMeasure.values.firstWhere(
-                          (entry) => entry.measure == _segment.measure,
-                          orElse: () => IconSegmentMeasure.full,
-                        ),
-                        onSelected: (_) {},
-                        dropdownMenuEntries: IconSegmentMeasure.entries,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Clase'),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2,
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width / 2,
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Clase',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                      width: MediaQuery.of(context).size.width - 20,
+                      height: MediaQuery.of(context).size.height - 20,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Posición'),
+                                Text(
+                                  _segment.order == -1
+                                      ? 'Sin asignar'
+                                      : _segment.order.toString(),
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ],
                             ),
-                          ),
-                          controller: TextEditingController(
-                            text: _segment.getClass(),
-                          ),
+                            const SizedBox(height: 10.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Medida'),
+                                DropdownMenu<IconSegmentMeasure>(
+                                  initialSelection:
+                                      IconSegmentMeasure.values.firstWhere(
+                                    (entry) =>
+                                        entry.measure == _segment.measure,
+                                    orElse: () => IconSegmentMeasure.full,
+                                  ),
+                                  onSelected: (_) {},
+                                  dropdownMenuEntries:
+                                      IconSegmentMeasure.entries,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Clase'),
+                                Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  constraints: BoxConstraints(
+                                    maxWidth:
+                                        MediaQuery.of(context).size.width / 2,
+                                  ),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      hintText: 'Clase',
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    ),
+                                    controller: TextEditingController(
+                                      text: _segment.getClass(),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10.0),
+                            Builder(
+                              builder: (context) {
+                                return _segment.id.isNotEmpty
+                                    ? switch (_segment.type) {
+                                        SegmentType.text => _buildTextSegment(),
+                                        SegmentType.image =>
+                                          _buildImageSegment(),
+                                      }
+                                    : SizedBox.shrink();
+                              },
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 10.0),
-                  Builder(
-                    builder: (context) {
-                      return _segment.id.isNotEmpty
-                          ? switch (_segment.type) {
-                              SegmentType.text => _buildTextSegment(),
-                              SegmentType.image => _buildImageSegment(),
-                            }
-                          : SizedBox.shrink();
-                    },
-                  ),
-                ],
-              ),
-            ),
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    );
+            },
           ),
         ),
         const FABEkmajstroComponent(),
