@@ -236,7 +236,9 @@ Future<List<SegmentItem>> getSectionSegments(Section section) async {
 }
 
 Future<Section> saveSection(Section section, int? postId) async {
-  if (postId != null) {
+  if (section.id.isNotEmpty) {
+    return updateSection(section);
+  } else if (postId != null) {
     return createSection(section, postId);
   } else {
     return Future.value(section);
@@ -256,6 +258,27 @@ Future<Section> createSection(Section section, int postId) async {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(sectionMap),
+    );
+
+    late dynamic body = getBody(response);
+    late Section new_section = Section.fromJson(body);
+
+    return new_section;
+  } catch (e) {
+    throw Exception(ERROR_SECTION_ITEM);
+  }
+}
+
+Future<Section> updateSection(Section section) async {
+  try {
+    String subPath = SECCION_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, section.id);
+
+    final response = await http.put(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(section.toMap(false, true)),
     );
 
     late dynamic body = getBody(response);
