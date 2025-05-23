@@ -170,6 +170,23 @@ class _SectionItemView extends State<SectionItemView> {
     }
   }
 
+  void navigateToSegment(BuildContext context, String route) {
+    Navigator.of(context).pushNamed(route);
+  }
+
+  String _buildRoute({SegmentItem? segment}) {
+    List<String> subpaths = [
+      buildIdRouteById(ROUTER_POST_VIEW_ROUTE, widget.post_id),
+      buildIdRoute(ROUTER_SECTION_ITEM_SUB_ROUTE,
+          SectionItem.fromJson(_section.toMap(false, false))),
+      (segment == null
+          ? ROUTER_SEGMENT_ADD_SUB_ROUTE
+          : buildIdRoute(ROUTER_SEGMENT_ADD_SUB_ROUTE, segment)),
+    ];
+
+    return buildSubRoute(subpaths);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -351,7 +368,9 @@ class _SectionItemView extends State<SectionItemView> {
           ),
           floatingActionButton: (_section.id.isNotEmpty
               ? FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    navigateToSegment(context, _buildRoute());
+                  },
                   backgroundColor: Theme.of(context).colorScheme.onSurface,
                   tooltip: section_segments_add,
                   mini: true,
@@ -380,14 +399,19 @@ class _SectionItemView extends State<SectionItemView> {
           top: 5,
           bottom: 5,
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            color: getColor(segment.type),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: getIcon(segment.type),
+        child: GestureDetector(
+          onTap: () {
+            navigateToSegment(context, _buildRoute(segment: segment));
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: getColor(segment.type),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Center(
+              child: getIcon(segment.type),
+            ),
           ),
         ),
       ),

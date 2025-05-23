@@ -1,3 +1,4 @@
+import 'package:ekmajstro_trejnisto/screens/segment_item/segment_item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/screens/screens.dart';
@@ -12,6 +13,7 @@ const String ROUTE_ADD_WILDCARD = ':id';
 const String ROUTER_POST_LIST_ROUTE = '/app/posts';
 const String ROUTER_POST_ITEM_ROUTE = '/app/post';
 const String ROUTER_SECTION_ITEM_SUB_PATH = '/section';
+const String ROUTER_SEGMENT_ITEM_SUB_PATH = '/segment';
 
 const String ROUTER_POST_VIEW_ROUTE =
     '$ROUTER_POST_ITEM_ROUTE/$ROUTE_ID_WILDCARD';
@@ -27,6 +29,16 @@ const String ROUTER_SECTION_VIEW_ROUTE =
     '$ROUTER_POST_VIEW_ROUTE$ROUTER_SECTION_ITEM_SUB_ROUTE';
 const String ROUTER_SECTION_ADD_ROUTE =
     '$ROUTER_POST_VIEW_ROUTE$ROUTER_SECTION_ADD_SUB_ROUTE';
+
+const String ROUTER_SEGMENT_ITEM_SUB_ROUTE =
+    '$ROUTER_SEGMENT_ITEM_SUB_PATH/$ROUTE_ID_WILDCARD';
+const String ROUTER_SEGMENT_ADD_SUB_ROUTE =
+    '$ROUTER_SEGMENT_ITEM_SUB_PATH/$ROUTE_ADD_WILDCARD';
+
+const String ROUTER_SEGMENT_VIEW_ROUTE =
+    '$ROUTER_SECTION_ITEM_SUB_ROUTE$ROUTER_SEGMENT_ITEM_SUB_ROUTE';
+const String ROUTER_SEGMENT_ADD_ROUTE =
+    '$ROUTER_SECTION_ITEM_SUB_ROUTE$ROUTER_SEGMENT_ADD_SUB_ROUTE';
 
 Route<dynamic> mainRouter(RouteSettings settings) {
   if (settings.name == ROUTER_MAIN_ROUTE) {
@@ -113,6 +125,46 @@ Route<dynamic> mainRouter(RouteSettings settings) {
                 ),
               ),
             );
+          }
+
+          if (subPath2.contains('$ROUTER_SEGMENT_ITEM_SUB_PATH/')) {
+            final String subPathWithWildCard3 =
+                subPath2.replaceAll('$ROUTER_SEGMENT_ITEM_SUB_PATH/', '');
+
+            final int indexEndWildCard3 = subPathWithWildCard3.contains('/')
+                ? subPathWithWildCard3.indexOf('/')
+                : subPathWithWildCard3.length;
+
+            final String wildCard3 =
+                subPathWithWildCard3.substring(0, indexEndWildCard3);
+
+            if (wildCard3 == ROUTE_ADD_WILDCARD) {
+              return MaterialPageRoute(
+                builder: (_) => SafeArea(
+                  child: SegmentItemView(
+                    post_id: int.parse(wildCard),
+                    section_id: int.parse(wildCard2),
+                  ),
+                ),
+              );
+            }
+
+            if (isNumeric(wildCard3)) {
+              String subPath3 =
+                  subPathWithWildCard3.substring(indexEndWildCard3);
+
+              if (['', '/'].contains(subPath3)) {
+                return MaterialPageRoute(
+                  builder: (_) => SafeArea(
+                    child: SegmentItemView(
+                      post_id: int.parse(wildCard),
+                      section_id: int.parse(wildCard2),
+                      segment_id: int.parse(wildCard3),
+                    ),
+                  ),
+                );
+              }
+            }
           }
         }
       }
