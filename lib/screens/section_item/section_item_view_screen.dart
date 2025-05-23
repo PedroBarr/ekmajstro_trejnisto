@@ -234,22 +234,28 @@ class _SectionItemView extends State<SectionItemView> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: IconButton(
-                    icon: const Icon(Icons.stars),
-                    color: _section.is_mark_one
-                        ? Theme.of(context).colorScheme.onSurface
-                        : Colors.grey,
-                    style: ButtonStyle(
-                      overlayColor: WidgetStateProperty.all(
-                        Colors.transparent,
-                      ),
-                    ),
-                    iconSize: 40,
-                    onPressed: () {},
-                  ),
-                ),
+                Builder(builder: (context) {
+                  return _section.id.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: IconButton(
+                            icon: const Icon(Icons.stars),
+                            color: _section.is_mark_one
+                                ? Theme.of(context).colorScheme.onSurface
+                                : Colors.grey,
+                            style: ButtonStyle(
+                              overlayColor: WidgetStateProperty.all(
+                                Colors.transparent,
+                              ),
+                            ),
+                            iconSize: 40,
+                            onPressed: () {},
+                          ),
+                        )
+                      : SizedBox(
+                          width: 10,
+                        );
+                }),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15),
                   child: IconButton(
@@ -282,17 +288,19 @@ class _SectionItemView extends State<SectionItemView> {
               ],
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: Theme.of(context).colorScheme.onSurface,
-            tooltip: section_segments_add,
-            mini: true,
-            shape: const CircleBorder(),
-            child: Icon(
-              Icons.add,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
+          floatingActionButton: (_section.id.isNotEmpty
+              ? FloatingActionButton(
+                  onPressed: () {},
+                  backgroundColor: Theme.of(context).colorScheme.onSurface,
+                  tooltip: section_segments_add,
+                  mini: true,
+                  shape: const CircleBorder(),
+                  child: Icon(
+                    Icons.add,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                )
+              : null),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.miniCenterDocked,
         ),
