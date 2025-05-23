@@ -323,7 +323,7 @@ class _SectionItemView extends State<SectionItemView> {
                                 onMark();
                               } else {
                                 showMessage(
-                                  'Ya está marcada',
+                                  segment_mark_already,
                                   context,
                                 );
                               }
