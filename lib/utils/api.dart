@@ -289,3 +289,28 @@ Future<Section> updateSection(Section section) async {
     throw Exception(ERROR_SECTION_ITEM);
   }
 }
+
+Future<Section> markSection(Section section) async {
+  try {
+    String subPath = SECCION_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, section.id);
+
+    Map<String, dynamic> sectionMap = {
+      'es_marcada': true,
+    };
+
+    final response = await http.put(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(sectionMap),
+    );
+
+    late dynamic body = getBody(response);
+    late Section new_section = Section.fromJson(body);
+
+    return new_section;
+  } catch (e) {
+    throw Exception(ERROR_SECTION_ITEM);
+  }
+}
