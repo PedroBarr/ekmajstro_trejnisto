@@ -130,6 +130,26 @@ class _SectionItemView extends State<SectionItemView> {
     });
   }
 
+  void onSave() {
+    String message = '';
+
+    try {
+      saveSection(_section, widget.post_id).then((value) {
+        if (!mounted) return;
+
+        setState(() {
+          _section = Section.fromSection(value);
+        });
+      });
+      message = 'Guardado exitoso';
+    } catch (e) {
+      Navigator.of(context).pop();
+      message = 'Guardado fallido';
+    } finally {
+      showMessage(message, context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -153,7 +173,7 @@ class _SectionItemView extends State<SectionItemView> {
               Builder(builder: (context) {
                 if (_is_modified) {
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: onSave,
                     child: const Padding(
                       padding: EdgeInsets.only(
                         right: 10.0,
