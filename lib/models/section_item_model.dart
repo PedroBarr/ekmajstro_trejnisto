@@ -67,6 +67,15 @@ class Section {
       } =>
         Section(id: id.toString(), name: name, is_mark_one: is_mark == 1),
       {
+        'secc_id': String id,
+        'secc_nombre': String name,
+      } =>
+        Section(id: id, name: name),
+      {
+        'secc_id': int id,
+        'secc_nombre': String name,
+      } ||
+      {
         'id': int id,
         'name': String name,
       } =>
