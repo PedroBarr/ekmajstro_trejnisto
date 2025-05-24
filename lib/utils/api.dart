@@ -432,3 +432,21 @@ Future<List<Tag>> getTags() async {
     throw Exception(ERROR_TAG_ITEM_LIST);
   }
 }
+
+Future<List<Tag>> getPostTagsList(int post_id) async {
+  try {
+    String subPath = ETIQUETAS_PUBLICACION_ENDPOINT.replaceAll(
+        ROUTE_ID_WILDCARD, post_id.toString());
+
+    final response = await http.get(
+      Uri.parse(BACKEND_API + subPath),
+    );
+
+    late dynamic body = getBody(response);
+    late List<Tag> tags = dtoTagList(body);
+
+    return tags;
+  } catch (e) {
+    throw Exception(ERROR_TAG_ITEM_LIST);
+  }
+}
