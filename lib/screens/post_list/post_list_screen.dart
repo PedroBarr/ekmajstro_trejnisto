@@ -18,11 +18,37 @@ class _PostListScreen extends State<PostListScreen> {
   late Future<List<PostItem>> _posts;
   String _searchText = '';
 
+  bool _is_loading = false;
+
   @override
   void initState() {
     super.initState();
 
-    _posts = getPosts(with_preview: true);
+    loadPosts();
+  }
+
+  void loadPosts() {
+    if (mounted) {
+      setState(() {
+        toggleLoading(true);
+
+        _posts = getPosts(with_preview: true).whenComplete(() {
+          toggleLoading(false);
+        });
+      });
+    }
+  }
+
+  void toggleLoading(dynamic value) {
+    if (!mounted) return;
+
+    setState(() {
+      if ([true, false].contains(value)) {
+        _is_loading = value;
+      } else {
+        _is_loading = !_is_loading;
+      }
+    });
   }
 
   @override
@@ -49,6 +75,10 @@ class _PostListScreen extends State<PostListScreen> {
                     future: _posts,
                     builder: (BuildContext context,
                         AsyncSnapshot<List<PostItem>> snapshot) {
+                      if (_is_loading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
                       if (snapshot.hasData) {
                         return Expanded(
                           child: Column(children: [
