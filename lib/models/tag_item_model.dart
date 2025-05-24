@@ -47,4 +47,37 @@ class Tag {
     required this.name,
     this.description = '',
   });
+
+  factory Tag.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        "etq_id": String id,
+        "etq_nombre": String name,
+        "etq_descripcion": String description,
+      } ||
+      {
+        "id": String id,
+        "name": String name,
+        "description": String description,
+      } =>
+        Tag(id: id, name: name, description: description),
+      {
+        "etq_id": int id,
+        "etq_nombre": String name,
+        "etq_descripcion": String description,
+      } ||
+      {
+        "id": int id,
+        "name": String name,
+        "description": String description,
+      } =>
+        Tag(id: id.toString(), name: name, description: description),
+      _ => throw const FormatException(ERROR_TAG_ITEM_PARSER)
+    };
+  }
+
+  @override
+  String toString() {
+    return '<Tag> [$name]';
+  }
 }

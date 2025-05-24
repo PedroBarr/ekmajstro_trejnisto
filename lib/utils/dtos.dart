@@ -54,3 +54,14 @@ List<SegmentItem> dtoSegmentItemList(List<dynamic> list) {
 
   return segments;
 }
+
+List<Tag> dtoTagList(List<dynamic> list) {
+  List<Tag> tags = [];
+
+  for (final tagResponse in list) {
+    Tag tag = Tag.fromJson(tagResponse);
+    tags.add(tag);
+  }
+
+  return tags;
+}
