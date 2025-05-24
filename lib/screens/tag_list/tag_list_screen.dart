@@ -21,6 +21,8 @@ class _TagListScreenState extends State<TagListScreen> {
   List<Tag> _tags = [];
   List<Tag> _selected_tags = [];
 
+  bool _is_loading = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +31,8 @@ class _TagListScreenState extends State<TagListScreen> {
   }
 
   void loadTags() {
+    toggleLoading(true);
+
     getTags().then((tags) {
       setState(() {
         _tags = tags;
@@ -39,7 +43,23 @@ class _TagListScreenState extends State<TagListScreen> {
           setState(() {
             _selected_tags = tags;
           });
+        }).whenComplete(() {
+          toggleLoading(false);
         });
+      } else {
+        toggleLoading(false);
+      }
+    });
+  }
+
+  void toggleLoading(dynamic value) {
+    if (!mounted) return;
+
+    setState(() {
+      if ([true, false].contains(value)) {
+        _is_loading = value;
+      } else {
+        _is_loading = !_is_loading;
       }
     });
   }
@@ -132,7 +152,7 @@ class _TagListScreenState extends State<TagListScreen> {
                 height: 10.0,
               ),
               Expanded(
-                child: (_tags.isNotEmpty
+                child: (!_is_loading
                     ? Container(
                         padding: const EdgeInsets.all(8.0),
                         child: GridView.builder(
