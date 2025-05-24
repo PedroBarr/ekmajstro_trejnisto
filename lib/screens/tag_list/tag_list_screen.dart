@@ -21,6 +21,8 @@ class _TagListScreenState extends State<TagListScreen> {
   List<Tag> _tags = [];
   List<Tag> _selected_tags = [];
 
+  String _search_text = '';
+
   bool _is_loading = false;
 
   @override
@@ -98,6 +100,13 @@ class _TagListScreenState extends State<TagListScreen> {
           ),
           body: Column(
             children: [
+              SearchBarComponent(
+                  hint_text: 'Buscar etiqueta',
+                  onChanged: (String value) {
+                    setState(() {
+                      _search_text = value;
+                    });
+                  }),
               const SizedBox(height: 10.0),
               (widget.post_id != null && _selected_tags.isNotEmpty)
                   ? Container(
@@ -221,6 +230,8 @@ class _TagListScreenState extends State<TagListScreen> {
             .map((tag) => tag.id.toString())
             .toList()
             .contains(tag.id.toString()))
+        .where((tag) =>
+            tag.name.toLowerCase().contains(_search_text.toLowerCase()))
         .toList();
   }
 }
