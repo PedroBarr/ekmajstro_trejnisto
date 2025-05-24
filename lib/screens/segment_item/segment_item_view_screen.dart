@@ -277,6 +277,10 @@ class _SegmentItemView extends State<SegmentItemView> {
                                                   .width /
                                               2,
                                         ),
+                                        padding: const EdgeInsets.only(
+                                          top: 5.0,
+                                          bottom: 5.0,
+                                        ),
                                         child: TextField(
                                           decoration: InputDecoration(
                                             hintText: 'Contenido',
