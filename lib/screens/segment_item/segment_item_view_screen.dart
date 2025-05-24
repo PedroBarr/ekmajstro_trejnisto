@@ -334,13 +334,13 @@ class _SegmentItemView extends State<SegmentItemView> {
                                             field: Container(
                                               width: MediaQuery.of(context)
                                                       .size
-                                                      .width /
-                                                  2,
+                                                      .width *
+                                                  0.75,
                                               constraints: BoxConstraints(
                                                 maxWidth: MediaQuery.of(context)
                                                         .size
-                                                        .width /
-                                                    2,
+                                                        .width *
+                                                    0.75,
                                               ),
                                               child: TextField(
                                                 decoration: InputDecoration(
