@@ -361,10 +361,9 @@ Future<bool> relocateSegment(SegmentItem segment, String direction) async {
 }
 
 Future<Segment> saveSegment(Segment segment, int? sectionId) async {
-  // if (segment.id.isNotEmpty) {
-  //   return updateSegment(segment);
-  // } else
-  if (sectionId != null) {
+  if (segment.id.isNotEmpty) {
+    return updateSegment(segment);
+  } else if (sectionId != null) {
     return createSegment(segment, sectionId);
   } else {
     return Future.value(segment);
@@ -384,6 +383,28 @@ Future<Segment> createSegment(Segment segment, int sectionId) async {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(segmentMap),
+    );
+
+    late dynamic body = getBody(response);
+    late Segment new_segment = Segment.fromJson(body);
+
+    return new_segment;
+  } catch (e) {
+    throw Exception(ERROR_SEGMENT_ITEM);
+  }
+}
+
+Future<Segment> updateSegment(Segment segment) async {
+  try {
+    String subPath =
+        SEGMENTO_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, segment.id);
+
+    final response = await http.put(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(segment.toMap(true, true)),
     );
 
     late dynamic body = getBody(response);
