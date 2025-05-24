@@ -142,250 +142,261 @@ class _PostItemView extends State<PostItemView> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Scaffold(
-          appBar: AppBar(
-            leading: Builder(
-              builder: (context) {
-                return _is_loading
-                    ? Container()
-                    : GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: iconNavPostList(
-                            Theme.of(context).colorScheme.onSurface),
-                      );
-              },
-            ),
-            actions: [
-              Builder(builder: (context) {
-                if (_is_modified) {
-                  return GestureDetector(
-                    onTap: onSave,
-                    child: const Padding(
-                      padding: EdgeInsets.only(
-                        right: 10.0,
-                        left: 10.0,
+        RefreshSwipperComponent(
+          onRefresh: () {
+            loadData();
+          },
+          refreshing: _is_loading,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: Builder(
+                builder: (context) {
+                  return _is_loading
+                      ? Container()
+                      : GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: iconNavPostList(
+                              Theme.of(context).colorScheme.onSurface),
+                        );
+                },
+              ),
+              actions: [
+                Builder(builder: (context) {
+                  if (_is_modified) {
+                    return GestureDetector(
+                      onTap: onSave,
+                      child: const Padding(
+                        padding: EdgeInsets.only(
+                          right: 10.0,
+                          left: 10.0,
+                        ),
+                        child: Icon(
+                          Icons.save_as_rounded,
+                        ),
                       ),
-                      child: Icon(
-                        Icons.save_as_rounded,
-                      ),
-                    ),
-                  );
-                }
-                return Container();
-              }),
-            ],
-            title: Builder(
-              builder: (context) {
-                if (!_is_loading) {
-                  return CustomTextFieldComponent(
-                    value: _post.title,
-                    spacing: 10.0,
-                    font_size: 16,
-                    onConfirm: (value) => setPost(Post.POST_ATTR_TITTLE, value),
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
+                    );
+                  }
+                  return Container();
+                }),
+              ],
+              title: Builder(
+                builder: (context) {
+                  if (!_is_loading) {
+                    return CustomTextFieldComponent(
+                      value: _post.title,
+                      spacing: 10.0,
+                      font_size: 16,
+                      onConfirm: (value) =>
+                          setPost(Post.POST_ATTR_TITTLE, value),
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
             ),
-          ),
-          body: Column(
-            children: <Widget>[
-              Flexible(
-                child: Builder(
-                  builder: (context) {
-                    if (_is_loading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 250.0,
-                              width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          CustomImageFieldComponent(
-                                            height: 210,
-                                            value: _post.image_url,
-                                            onConfirm: (value) => setPost(
-                                                Post.POST_ATTR_IMAGE, value),
-                                            title: post_cover_image_title,
-                                            is_title_editable: false,
-                                          ),
-                                          const Text(
-                                            post_cover_image_title,
-                                            style: TextStyle(
-                                              fontSize: 11,
+            body: Column(
+              children: <Widget>[
+                Flexible(
+                  child: Builder(
+                    builder: (context) {
+                      if (_is_loading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 250.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            CustomImageFieldComponent(
+                                              height: 210,
+                                              value: _post.image_url,
+                                              onConfirm: (value) => setPost(
+                                                  Post.POST_ATTR_IMAGE, value),
+                                              title: post_cover_image_title,
+                                              is_title_editable: false,
                                             ),
-                                          ),
-                                        ],
+                                            const Text(
+                                              post_cover_image_title,
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Builder(
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return _preview
-                                                            .id!.isNotEmpty
-                                                        ? Center(
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                final Uri uri =
-                                                                    Uri.parse(_post
-                                                                        .getAppLink());
+                                    Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Builder(
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return _preview
+                                                              .id!.isNotEmpty
+                                                          ? Center(
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  final Uri
+                                                                      uri =
+                                                                      Uri.parse(
+                                                                          _post
+                                                                              .getAppLink());
 
-                                                                Clipboard.setData(
-                                                                        ClipboardData(
-                                                                            text:
-                                                                                uri.toString()))
-                                                                    .then((_) {
-                                                                  showMessage(
-                                                                      'Enlace copiado al portapapeles',
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Icon(
-                                                                Icons
-                                                                    .gesture_outlined,
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .colorScheme
-                                                                    .onSurface,
+                                                                  Clipboard.setData(ClipboardData(
+                                                                          text: uri
+                                                                              .toString()))
+                                                                      .then(
+                                                                          (_) {
+                                                                    showMessage(
+                                                                        'Enlace copiado al portapapeles',
+                                                                        context);
+                                                                  });
+                                                                },
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .gesture_outlined,
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .colorScheme
+                                                                      .onSurface,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          )
-                                                        : SizedBox.shrink();
-                                                  },
-                                                ),
-                                                SizedBox(
-                                                  height:
-                                                      _preview.id!.isNotEmpty
-                                                          ? 30.0
-                                                          : 0,
-                                                ),
-                                                Text(
-                                                  _post.user,
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 17,
+                                                            )
+                                                          : SizedBox.shrink();
+                                                    },
                                                   ),
-                                                ),
-                                                const Text(
-                                                  post_user_title,
-                                                  style: TextStyle(
-                                                    fontSize: 11,
+                                                  SizedBox(
+                                                    height:
+                                                        _preview.id!.isNotEmpty
+                                                            ? 30.0
+                                                            : 0,
                                                   ),
-                                                ),
-                                              ],
+                                                  Text(
+                                                    _post.user,
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 17,
+                                                    ),
+                                                  ),
+                                                  const Text(
+                                                    post_user_title,
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10.0,
-                                          ),
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  _post.getDateFormatted(),
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 17,
-                                                  ),
-                                                ),
-                                                const Text(
-                                                  post_publish_date_title,
-                                                  style: TextStyle(
-                                                    fontSize: 11,
-                                                  ),
-                                                ),
-                                              ],
+                                            const SizedBox(
+                                              height: 10.0,
                                             ),
-                                          ),
-                                        ],
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    _post.getDateFormatted(),
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 17,
+                                                    ),
+                                                  ),
+                                                  const Text(
+                                                    post_publish_date_title,
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              AccordionComponent(
+                                elements: <AccordionElement>[
+                                  AccordionElement(
+                                    name: post_sections_title,
+                                    content: SectionItemListComponent(
+                                      include_add: _post.id.isNotEmpty,
+                                      sections: _sections,
+                                      post: _post,
+                                    ),
+                                  ),
+                                  AccordionElement(
+                                    name: post_resources_title,
+                                    content: ResourceItemListComponent(
+                                      include_add: _post.id.isNotEmpty,
+                                      resources: _resources,
+                                    ),
+                                  ),
+                                  AccordionElement(
+                                    name: post_tags_title,
+                                    content: TagItemListComponent(
+                                      include_add: _post.id.isNotEmpty,
+                                      tags: _tags,
+                                    ),
+                                  ),
+                                  AccordionElement(
+                                    name: post_preview_title,
+                                    content: PreviewItemComponent(
+                                      is_publishable: _post.id.isNotEmpty,
+                                      preview: _preview,
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            AccordionComponent(
-                              elements: <AccordionElement>[
-                                AccordionElement(
-                                  name: post_sections_title,
-                                  content: SectionItemListComponent(
-                                    include_add: _post.id.isNotEmpty,
-                                    sections: _sections,
-                                    post: _post,
-                                  ),
-                                ),
-                                AccordionElement(
-                                  name: post_resources_title,
-                                  content: ResourceItemListComponent(
-                                    include_add: _post.id.isNotEmpty,
-                                    resources: _resources,
-                                  ),
-                                ),
-                                AccordionElement(
-                                  name: post_tags_title,
-                                  content: TagItemListComponent(
-                                    include_add: _post.id.isNotEmpty,
-                                    tags: _tags,
-                                  ),
-                                ),
-                                AccordionElement(
-                                  name: post_preview_title,
-                                  content: PreviewItemComponent(
-                                    is_publishable: _post.id.isNotEmpty,
-                                    preview: _preview,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         const FABEkmajstroComponent(),
