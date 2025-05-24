@@ -6,4 +6,3 @@ export 'tag_item_model.dart';
 export 'preview_item_model.dart';
 export 'nav_item_model.dart';
 export 'model_item.dart';
-export 'tag_model.dart';

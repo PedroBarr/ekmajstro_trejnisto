@@ -36,3 +36,15 @@ class TagItem extends ModelItem {
     return '<Tag> [$name]';
   }
 }
+
+class Tag {
+  final String id;
+  final String name;
+  final String description;
+
+  const Tag({
+    this.id = '',
+    required this.name,
+    this.description = '',
+  });
+}
