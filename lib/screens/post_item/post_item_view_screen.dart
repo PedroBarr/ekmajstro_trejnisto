@@ -26,6 +26,7 @@ class _PostItemView extends State<PostItemView> {
   List<ResourceItem> _resources = [];
   List<TagItem> _tags = [];
   PreviewItem _preview = PreviewItem();
+
   bool _is_loading = false;
   bool _is_modified = false;
 
@@ -34,47 +35,51 @@ class _PostItemView extends State<PostItemView> {
     super.initState();
 
     if (widget.post_id != null && isNumeric(widget.post_id!.toString())) {
-      toggleLoading(true);
+      loadData();
+    }
+    toggleModified(false);
+  }
 
-      getPost(widget.post_id.toString()).then((Post post) {
-        if (!mounted) return;
+  void loadData() {
+    toggleLoading(true);
 
-        setState(() {
-          _post = Post.fromPost(post);
-        });
+    getPost(widget.post_id.toString()).then((Post post) {
+      if (!mounted) return;
+
+      setState(() {
+        _post = Post.fromPost(post);
+      });
+    }).whenComplete(() {
+      if (!mounted) return;
+
+      getPostSections(_post).then((List<SectionItem> sections) {
+        _sections = sections;
       }).whenComplete(() {
         if (!mounted) return;
 
-        getPostSections(_post).then((List<SectionItem> sections) {
-          _sections = sections;
+        getPostResources(_post).then((List<ResourceItem> resources) {
+          _resources = resources;
         }).whenComplete(() {
           if (!mounted) return;
 
-          getPostResources(_post).then((List<ResourceItem> resources) {
-            _resources = resources;
+          getPostTags(_post).then((List<TagItem> tags) {
+            _tags = tags;
           }).whenComplete(() {
             if (!mounted) return;
 
-            getPostTags(_post).then((List<TagItem> tags) {
-              _tags = tags;
-            }).whenComplete(() {
+            getPostPreview(_post).then((PreviewItem preview) {
               if (!mounted) return;
 
-              getPostPreview(_post).then((PreviewItem preview) {
-                if (!mounted) return;
-
-                setState(() {
-                  _preview = preview;
-                });
-              }).whenComplete(() {
-                toggleLoading(false);
+              setState(() {
+                _preview = preview;
               });
+            }).whenComplete(() {
+              toggleLoading(false);
             });
           });
         });
       });
-    }
-    toggleModified(false);
+    });
   }
 
   void setPost(String attr, String value) {
