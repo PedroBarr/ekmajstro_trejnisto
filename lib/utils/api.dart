@@ -36,6 +36,8 @@ const String SEGMENTO_REUBICAR_ENDPOINT =
     '/segmento/$ROUTE_ID_WILDCARD/reubicar';
 const String SEGMENTO_NUEVO_ENDPOINT = '/segmento';
 
+const String TAGS_ENDPOINT = '/etiquetas';
+
 Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
     final query_params = {
@@ -413,5 +415,20 @@ Future<Segment> updateSegment(Segment segment) async {
     return new_segment;
   } catch (e) {
     throw Exception(ERROR_SEGMENT_ITEM);
+  }
+}
+
+Future<List<Tag>> getTags() async {
+  try {
+    final response = await http.get(
+      Uri.parse(BACKEND_API + TAGS_ENDPOINT),
+    );
+
+    late dynamic body = getBody(response);
+    late List<Tag> tags = dtoTagList(body);
+
+    return tags;
+  } catch (e) {
+    throw Exception(ERROR_TAG_ITEM_LIST);
   }
 }
