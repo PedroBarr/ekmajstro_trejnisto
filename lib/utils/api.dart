@@ -25,9 +25,10 @@ const String RECURSOS_PUBLICACION_ENDPOINT =
 
 const String ETIQUETAS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/etiquetas';
-const String TAGS_ENDPOINT = '/etiquetas';
-const String TAG_POST_ENDPOINT = '/publicacion/etiqueta';
-const String UNTAG_POST_ENDPOINT = '/publicacion/etiqueta/$ROUTE_ID_WILDCARD';
+const String ETIQUETAS_ENDPOINT = '/etiquetas';
+const String ETIQUETAR_PUBLICACION_ENDPOINT = '/publicacion/etiqueta';
+const String DESETIQUETAR_PUBLICACION_ENDPOINT =
+    '/publicacion/etiqueta/$ROUTE_ID_WILDCARD';
 
 const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/previsualizacion';
@@ -422,7 +423,7 @@ Future<Segment> updateSegment(Segment segment) async {
 Future<List<Tag>> getTags() async {
   try {
     final response = await http.get(
-      Uri.parse(BACKEND_API + TAGS_ENDPOINT),
+      Uri.parse(BACKEND_API + ETIQUETAS_ENDPOINT),
     );
 
     late dynamic body = getBody(response);
@@ -460,7 +461,7 @@ Future<List<Tag>> tagPost(int post_id, int tag_id) async {
     };
 
     final response = await http.post(
-      Uri.parse(BACKEND_API + TAG_POST_ENDPOINT),
+      Uri.parse(BACKEND_API + ETIQUETAR_PUBLICACION_ENDPOINT),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -478,8 +479,8 @@ Future<List<Tag>> tagPost(int post_id, int tag_id) async {
 
 Future<List<Tag>> untagPost(int post_id, int tag_id) async {
   try {
-    String subPath =
-        UNTAG_POST_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, tag_id.toString());
+    String subPath = DESETIQUETAR_PUBLICACION_ENDPOINT.replaceAll(
+        ROUTE_ID_WILDCARD, tag_id.toString());
 
     Map<String, dynamic> tag_map = {
       'publicacion': post_id,
