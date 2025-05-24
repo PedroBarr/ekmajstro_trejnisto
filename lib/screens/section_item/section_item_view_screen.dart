@@ -207,198 +207,204 @@ class _SectionItemView extends State<SectionItemView> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Scaffold(
-          appBar: AppBar(
-            leading: Builder(
+        RefreshSwipperComponent(
+          onRefresh: () {
+            loadSegments();
+          },
+          refreshing: _is_loading,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: Builder(
+                builder: (context) {
+                  return _is_loading
+                      ? Container()
+                      : GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: iconNavPost(
+                              Theme.of(context).colorScheme.onSurface),
+                        );
+                },
+              ),
+              actions: [
+                Builder(builder: (context) {
+                  if (_is_modified) {
+                    return GestureDetector(
+                      onTap: onSave,
+                      child: const Padding(
+                        padding: EdgeInsets.only(
+                          right: 10.0,
+                          left: 10.0,
+                        ),
+                        child: Icon(
+                          Icons.save_as_rounded,
+                        ),
+                      ),
+                    );
+                  }
+                  return Container();
+                }),
+              ],
+              title: Builder(
+                builder: (context) {
+                  if (!_is_loading) {
+                    return CustomTextFieldComponent(
+                      value: _section.name,
+                      spacing: 10.0,
+                      font_size: 16,
+                      max_length: 30,
+                      onConfirm: (value) {
+                        setSection('name', value);
+                      },
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
+            ),
+            body: Builder(
               builder: (context) {
                 return _is_loading
-                    ? Container()
-                    : GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: iconNavPost(
-                            Theme.of(context).colorScheme.onSurface),
-                      );
-              },
-            ),
-            actions: [
-              Builder(builder: (context) {
-                if (_is_modified) {
-                  return GestureDetector(
-                    onTap: onSave,
-                    child: const Padding(
-                      padding: EdgeInsets.only(
-                        right: 10.0,
-                        left: 10.0,
-                      ),
-                      child: Icon(
-                        Icons.save_as_rounded,
-                      ),
-                    ),
-                  );
-                }
-                return Container();
-              }),
-            ],
-            title: Builder(
-              builder: (context) {
-                if (!_is_loading) {
-                  return CustomTextFieldComponent(
-                    value: _section.name,
-                    spacing: 10.0,
-                    font_size: 16,
-                    max_length: 30,
-                    onConfirm: (value) {
-                      setSection('name', value);
-                    },
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
-          ),
-          body: Builder(
-            builder: (context) {
-              return _is_loading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : (_segment_lines_pages.isNotEmpty
-                      ? FlexGrid(
-                          children: getSegmentCurrentPage()
-                              .map(
-                                (segment) => FlexGridItem(
-                                  size: getFlexGridSize(segment.measure),
-                                  child: getContainer(segment),
-                                ),
-                              )
-                              .toList())
-                      : const Center(
-                          child: Text(
-                            section_segments_empty,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ));
-            },
-          ),
-          bottomNavigationBar: BottomAppBar(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${_segments.length}',
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontFamily: 'Roboto',
-                  ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: IconButton(
-                    icon: Icon(isFirstPage()
-                        ? Icons.arrow_circle_left_outlined
-                        : Icons.arrow_circle_left_sharp),
-                    color: isFirstPage()
-                        ? Colors.grey
-                        : Theme.of(context).colorScheme.onSurface,
-                    style: ButtonStyle(
-                      overlayColor: WidgetStateProperty.all(
-                        Colors.transparent,
-                      ),
-                    ),
-                    iconSize: 30,
-                    onPressed: () {
-                      previousPage();
-                    },
-                  ),
-                ),
-                Builder(builder: (context) {
-                  return _section.id.isNotEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: IconButton(
-                            icon: const Icon(Icons.stars),
-                            color: _section.is_mark_one
-                                ? Theme.of(context).colorScheme.onSurface
-                                : Colors.grey,
-                            style: ButtonStyle(
-                              overlayColor: WidgetStateProperty.all(
-                                Colors.transparent,
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : (_segment_lines_pages.isNotEmpty
+                        ? FlexGrid(
+                            children: getSegmentCurrentPage()
+                                .map(
+                                  (segment) => FlexGridItem(
+                                    size: getFlexGridSize(segment.measure),
+                                    child: getContainer(segment),
+                                  ),
+                                )
+                                .toList())
+                        : const Center(
+                            child: Text(
+                              section_segments_empty,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey,
                               ),
                             ),
-                            iconSize: 40,
-                            onPressed: () {
-                              if (!_section.is_mark_one) {
-                                onMark();
-                              } else {
-                                showMessage(
-                                  segment_mark_already,
-                                  context,
-                                );
-                              }
-                            },
-                          ),
-                        )
-                      : SizedBox(
-                          width: 10,
-                        );
-                }),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: IconButton(
-                    icon: Icon(isLastPage()
-                        ? Icons.arrow_circle_right_outlined
-                        : Icons.arrow_circle_right_sharp),
-                    color: isLastPage()
-                        ? Colors.grey
-                        : Theme.of(context).colorScheme.onSurface,
-                    style: ButtonStyle(
-                      overlayColor: WidgetStateProperty.all(
-                        Colors.transparent,
-                      ),
-                    ),
-                    iconSize: 30,
-                    onPressed: () {
-                      nextPage();
-                    },
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '${_segments.length}',
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.transparent,
-                    fontFamily: 'Roboto',
-                  ),
-                ),
-              ],
+                          ));
+              },
             ),
-          ),
-          floatingActionButton: (_section.id.isNotEmpty
-              ? FloatingActionButton(
-                  onPressed: () {
-                    navigateToSegment(context, _buildRoute());
-                  },
-                  backgroundColor: Theme.of(context).colorScheme.onSurface,
-                  tooltip: section_segments_add,
-                  mini: true,
-                  shape: const CircleBorder(),
-                  child: Icon(
-                    Icons.add,
-                    color: Theme.of(context).primaryColor,
+            bottomNavigationBar: BottomAppBar(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${_segments.length}',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontFamily: 'Roboto',
+                    ),
                   ),
-                )
-              : null),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.miniCenterDocked,
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: IconButton(
+                      icon: Icon(isFirstPage()
+                          ? Icons.arrow_circle_left_outlined
+                          : Icons.arrow_circle_left_sharp),
+                      color: isFirstPage()
+                          ? Colors.grey
+                          : Theme.of(context).colorScheme.onSurface,
+                      style: ButtonStyle(
+                        overlayColor: WidgetStateProperty.all(
+                          Colors.transparent,
+                        ),
+                      ),
+                      iconSize: 30,
+                      onPressed: () {
+                        previousPage();
+                      },
+                    ),
+                  ),
+                  Builder(builder: (context) {
+                    return _section.id.isNotEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: IconButton(
+                              icon: const Icon(Icons.stars),
+                              color: _section.is_mark_one
+                                  ? Theme.of(context).colorScheme.onSurface
+                                  : Colors.grey,
+                              style: ButtonStyle(
+                                overlayColor: WidgetStateProperty.all(
+                                  Colors.transparent,
+                                ),
+                              ),
+                              iconSize: 40,
+                              onPressed: () {
+                                if (!_section.is_mark_one) {
+                                  onMark();
+                                } else {
+                                  showMessage(
+                                    segment_mark_already,
+                                    context,
+                                  );
+                                }
+                              },
+                            ),
+                          )
+                        : SizedBox(
+                            width: 10,
+                          );
+                  }),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: IconButton(
+                      icon: Icon(isLastPage()
+                          ? Icons.arrow_circle_right_outlined
+                          : Icons.arrow_circle_right_sharp),
+                      color: isLastPage()
+                          ? Colors.grey
+                          : Theme.of(context).colorScheme.onSurface,
+                      style: ButtonStyle(
+                        overlayColor: WidgetStateProperty.all(
+                          Colors.transparent,
+                        ),
+                      ),
+                      iconSize: 30,
+                      onPressed: () {
+                        nextPage();
+                      },
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${_segments.length}',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.transparent,
+                      fontFamily: 'Roboto',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            floatingActionButton: (_section.id.isNotEmpty
+                ? FloatingActionButton(
+                    onPressed: () {
+                      navigateToSegment(context, _buildRoute());
+                    },
+                    backgroundColor: Theme.of(context).colorScheme.onSurface,
+                    tooltip: section_segments_add,
+                    mini: true,
+                    shape: const CircleBorder(),
+                    child: Icon(
+                      Icons.add,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  )
+                : null),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniCenterDocked,
+          ),
         ),
         const FABEkmajstroComponent(),
       ],
