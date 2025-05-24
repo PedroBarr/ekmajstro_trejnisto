@@ -24,7 +24,7 @@ class _TagItemListComponent extends State<TagItemListComponent> {
     Navigator.pushNamed(
       context,
       buildIdRouteById(
-        ROUTER_TAG_LIST_ROUTE,
+        ROUTER_TAG_VIEW_ROUTE,
         int.parse(widget.post_id),
       ),
     );
