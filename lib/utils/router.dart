@@ -40,7 +40,11 @@ const String ROUTER_SEGMENT_VIEW_ROUTE =
 const String ROUTER_SEGMENT_ADD_ROUTE =
     '$ROUTER_SECTION_ITEM_SUB_ROUTE$ROUTER_SEGMENT_ADD_SUB_ROUTE';
 
-const String ROUTER_TAG_LIST_ROUTE = '/app/tags';
+const String ROUTER_TAG_ITEM_SUB_PATH = '/tags';
+const String ROUTER_TAG_LIST_ROUTE =
+    '$ROUTER_MAIN_ROUTE$ROUTER_TAG_ITEM_SUB_PATH';
+const String ROUTER_TAG_VIEW_ROUTE =
+    '$ROUTER_POST_VIEW_ROUTE$ROUTER_TAG_ITEM_SUB_PATH';
 
 Route<dynamic> mainRouter(RouteSettings settings) {
   if (settings.name == ROUTER_MAIN_ROUTE) {
@@ -168,6 +172,21 @@ Route<dynamic> mainRouter(RouteSettings settings) {
               }
             }
           }
+        }
+      }
+
+      if (subPath.contains('$ROUTER_TAG_ITEM_SUB_PATH')) {
+        final String subPathWithWildCard2 =
+            subPath.replaceAll('$ROUTER_TAG_ITEM_SUB_PATH', '');
+
+        if (['', '/'].contains(subPathWithWildCard2)) {
+          return MaterialPageRoute(
+            builder: (_) => SafeArea(
+              child: TagListScreen(
+                post_id: int.parse(wildCard),
+              ),
+            ),
+          );
         }
       }
     }

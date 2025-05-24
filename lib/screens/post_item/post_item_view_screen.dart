@@ -374,6 +374,7 @@ class _PostItemView extends State<PostItemView> {
                                     content: TagItemListComponent(
                                       include_add: _post.id.isNotEmpty,
                                       tags: _tags,
+                                      post_id: _post.id,
                                     ),
                                   ),
                                   AccordionElement(

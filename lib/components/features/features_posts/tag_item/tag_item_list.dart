@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 class TagItemListComponent extends StatefulWidget {
   final List<TagItem> tags;
   final bool include_add;
+  final String post_id;
 
   const TagItemListComponent({
     super.key,
     required this.tags,
     this.include_add = false,
+    required this.post_id,
   });
 
   @override
@@ -17,6 +20,16 @@ class TagItemListComponent extends StatefulWidget {
 }
 
 class _TagItemListComponent extends State<TagItemListComponent> {
+  void navigateToTagList() {
+    Navigator.pushNamed(
+      context,
+      buildIdRouteById(
+        ROUTER_TAG_LIST_ROUTE,
+        int.parse(widget.post_id),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,7 +80,7 @@ class _TagItemListComponent extends State<TagItemListComponent> {
           builder: (context) {
             return widget.include_add
                 ? GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToTagList,
                     child: Container(
                       padding: const EdgeInsets.only(
                         left: 10.0,
