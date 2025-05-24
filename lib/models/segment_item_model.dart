@@ -273,4 +273,10 @@ class Segment {
   dynamic getClass() {
     return getContent('clase');
   }
+
+  void addPart(String part) {
+    if (!content.keys.toList().contains(part)) {
+      content[part] = '';
+    }
+  }
 }
