@@ -23,3 +23,11 @@ Widget iconNavSection(
       Icons.pages_outlined,
       color: color,
     );
+
+Widget iconNavTagList(
+  Color color,
+) =>
+    Icon(
+      Icons.label_important,
+      color: color,
+    );
