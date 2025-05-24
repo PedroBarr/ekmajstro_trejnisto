@@ -142,9 +142,15 @@ class _TagListScreenState extends State<TagListScreen> {
                           ),
                           itemBuilder: (BuildContext context, int index) {
                             final tag = getMainTags()[index];
-                            debugPrint('Building tag: ${tag.name}');
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                tagPost(widget.post_id!, int.parse(tag.id))
+                                    .then((tags) {
+                                  setState(() {
+                                    _selected_tags = tags;
+                                  });
+                                });
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5.0),

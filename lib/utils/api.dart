@@ -25,6 +25,8 @@ const String RECURSOS_PUBLICACION_ENDPOINT =
 
 const String ETIQUETAS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/etiquetas';
+const String TAGS_ENDPOINT = '/etiquetas';
+const String TAG_POST_ENDPOINT = '/publicacion/etiqueta';
 
 const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/previsualizacion';
@@ -35,8 +37,6 @@ const String SEGMENTO_ENDPOINT = '/segmento/$ROUTE_ID_WILDCARD';
 const String SEGMENTO_REUBICAR_ENDPOINT =
     '/segmento/$ROUTE_ID_WILDCARD/reubicar';
 const String SEGMENTO_NUEVO_ENDPOINT = '/segmento';
-
-const String TAGS_ENDPOINT = '/etiquetas';
 
 Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
@@ -440,6 +440,30 @@ Future<List<Tag>> getPostTagsList(int post_id) async {
 
     final response = await http.get(
       Uri.parse(BACKEND_API + subPath),
+    );
+
+    late dynamic body = getBody(response);
+    late List<Tag> tags = dtoTagList(body);
+
+    return tags;
+  } catch (e) {
+    throw Exception(ERROR_TAG_ITEM_LIST);
+  }
+}
+
+Future<List<Tag>> tagPost(int post_id, int tag_id) async {
+  try {
+    Map<String, dynamic> tag_map = {
+      'publicacion': post_id,
+      'etiqueta': tag_id,
+    };
+
+    final response = await http.post(
+      Uri.parse(BACKEND_API + TAG_POST_ENDPOINT),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(tag_map),
     );
 
     late dynamic body = getBody(response);
