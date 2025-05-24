@@ -305,88 +305,100 @@ class _SegmentItemView extends State<SegmentItemView> {
                               ),
                             ),
                             const SizedBox(height: 10.0),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return DialogSimpleTextComponent(
-                                      title: 'Agregar parte',
-                                      text: 'Agregar parte al segmento',
-                                      confirmText: 'Aceptar',
-                                      onConfirm: () {
-                                        if (_part_name.isNotEmpty && mounted) {
-                                          setState(() {
-                                            _segment.addPart(
-                                              _part_name,
-                                            );
-                                            _part_name = '';
-                                          });
+                            (_segment.id.isEmpty
+                                ? const SizedBox.shrink()
+                                : GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return DialogSimpleTextComponent(
+                                            title: 'Agregar parte',
+                                            text:
+                                                'Agregar nueva parte al segmento de tipo ${getSegmentTypeText(_segment.type)}',
+                                            confirmText: 'Aceptar',
+                                            onConfirm: () {
+                                              if (_part_name.isNotEmpty &&
+                                                  mounted) {
+                                                setState(() {
+                                                  _segment.addPart(
+                                                    _part_name,
+                                                  );
+                                                  _part_name = '';
+                                                });
 
-                                          Navigator.of(context).pop();
-                                        }
-                                      },
-                                      showField: true,
-                                      field: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        constraints: BoxConstraints(
-                                          maxWidth: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2,
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            hintText: 'Nombre de la parte',
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
+                                                Navigator.of(context).pop();
+                                              }
+                                            },
+                                            showField: true,
+                                            field: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2,
+                                              constraints: BoxConstraints(
+                                                maxWidth: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2,
+                                              ),
+                                              child: TextField(
+                                                decoration: InputDecoration(
+                                                  hintText:
+                                                      'Nombre de la parte',
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                                onSubmitted: (value) {
+                                                  if (mounted) {
+                                                    setState(() {
+                                                      _part_name = value;
+                                                    });
+                                                  }
+                                                },
+                                              ),
                                             ),
-                                          ),
-                                          onSubmitted: (value) {
-                                            if (mounted) {
-                                              setState(() {
-                                                _part_name = value;
-                                              });
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                      onCancel: () {
-                                        if (mounted) {
-                                          setState(() {
-                                            _part_name = '';
-                                          });
-                                        }
+                                            onCancel: () {
+                                              if (mounted) {
+                                                setState(() {
+                                                  _part_name = '';
+                                                });
+                                              }
 
-                                        Navigator.of(context).pop();
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                              child: Container(
-                                width: MediaQuery.of(context).size.width - 20,
-                                height: 50.0,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    style: BorderStyle.solid,
-                                    color:
-                                        Theme.of(context).colorScheme.surface,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Icon(
-                                  Icons.add,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 30.0,
-                                ),
-                              ),
-                            ),
+                                              Navigator.of(context).pop();
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          20,
+                                      height: 50.0,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          style: BorderStyle.solid,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .surface,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        size: 30.0,
+                                      ),
+                                    ),
+                                  )),
                           ],
                         ),
                       ),
