@@ -8,5 +8,5 @@ const String SPLASHSCREEN_BOTTOM_LEFT_IMAGE =
     'assets/images/animations/floritura_izquierda.webp';
 // const String SPLASHSCREEN_BOTTOM_RIGHT_IMAGE =
 //     'assets/images/animations/floritura_derecha.webp';
-const int SPLASHSCREEN_REMAIN_MS = 1500;
+const int SPLASHSCREEN_REMAIN_MS = 2500;
 const int SPLASHSCREEN_TRANSITION_MS = 500;
