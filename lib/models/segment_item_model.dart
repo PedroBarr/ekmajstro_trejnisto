@@ -15,6 +15,12 @@ enum SegmentMeasure {
   third,
 }
 
+List<String> defaultParts = [
+  'contenido',
+  'tipo',
+  'clase',
+];
+
 String getSegmentTypeText(SegmentType type) {
   switch (type) {
     case SegmentType.text:

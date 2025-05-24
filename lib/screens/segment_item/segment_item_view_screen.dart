@@ -254,6 +254,50 @@ class _SegmentItemView extends State<SegmentItemView> {
                                     : SizedBox.shrink();
                               },
                             ),
+                            const SizedBox(height: 10.0),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: List.generate(
+                                getContentKeys().length,
+                                (index) {
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(getContentKeys()[index]),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                        ),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            hintText: 'Contenido',
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                          ),
+                                          controller: TextEditingController(
+                                            text: _segment.getContent(
+                                                getContentKeys()[index]),
+                                          ),
+                                          onSubmitted: (value) {
+                                            setSegment(
+                                                getContentKeys()[index], value);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -329,5 +373,11 @@ class _SegmentItemView extends State<SegmentItemView> {
         ),
       ],
     );
+  }
+
+  List<String> getContentKeys() {
+    return _segment.content.keys
+        .where((key) => !defaultParts.contains(key))
+        .toList();
   }
 }
