@@ -40,16 +40,17 @@ class _DialogSimpleTextComponentState extends State<DialogSimpleTextComponent> {
         borderRadius: BorderRadius.circular(10),
       ),
       backgroundColor: Theme.of(context).primaryColor,
-      title: Text(widget.title),
-      content: Builder(builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(widget.text),
-            if (widget.showField!) widget.field! else const SizedBox.shrink(),
-          ],
-        );
-      }),
+      title: Text(
+        widget.title,
+        textAlign: TextAlign.start,
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(widget.text),
+          if (widget.showField!) widget.field! else const SizedBox.shrink(),
+        ],
+      ),
       actions: [
         if (widget.showCancel!)
           TextButton(
