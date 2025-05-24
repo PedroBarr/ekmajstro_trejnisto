@@ -16,7 +16,7 @@ class PostListScreen extends StatefulWidget {
 
 class _PostListScreen extends State<PostListScreen> {
   late Future<List<PostItem>> _posts;
-  String _searchText = '';
+  String _search_text = '';
 
   bool _is_loading = false;
 
@@ -69,7 +69,7 @@ class _PostListScreen extends State<PostListScreen> {
                       hint_text: HINT_SEARCH_POST,
                       onChanged: (String value) {
                         setState(() {
-                          _searchText = value;
+                          _search_text = value;
                         });
                       }),
                   const SizedBox(
@@ -101,7 +101,7 @@ class _PostListScreen extends State<PostListScreen> {
                                           .where((post) => post.title
                                               .toLowerCase()
                                               .contains(
-                                                  _searchText.toLowerCase()))
+                                                  _search_text.toLowerCase()))
                                           .map((post) =>
                                               PostItemComponent(post: post))
                                           .toList(),
