@@ -19,6 +19,7 @@ const String ERROR_SEGMENT_ITEM_LIST =
     'Fallo al recuperar la lista de segmentos';
 const String ERROR_SECTION_ITEM = 'Fallo al recuperar la sección';
 const String ERROR_SEGMENT_ITEM = 'Fallo al recuperar el segmento';
+const String ERROR_TAG_ITEM = 'Fallo al recuperar la etiqueta';
 
 // MODELS
 const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación';

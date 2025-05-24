@@ -29,6 +29,7 @@ const String ETIQUETAS_ENDPOINT = '/etiquetas';
 const String ETIQUETAR_PUBLICACION_ENDPOINT = '/publicacion/etiqueta';
 const String DESETIQUETAR_PUBLICACION_ENDPOINT =
     '/publicacion/etiqueta/$ROUTE_ID_WILDCARD';
+const String ETIQUETA_NUEVA_ENDPOINT = '/etiqueta';
 
 const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/previsualizacion';
@@ -500,5 +501,24 @@ Future<List<Tag>> untagPost(int post_id, int tag_id) async {
     return tags;
   } catch (e) {
     throw Exception(ERROR_TAG_ITEM_LIST);
+  }
+}
+
+Future<Tag> createTag(Tag tag) async {
+  try {
+    final response = await http.post(
+      Uri.parse(BACKEND_API + ETIQUETA_NUEVA_ENDPOINT),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(tag.toMap(true)),
+    );
+
+    late dynamic body = getBody(response);
+    late Tag new_tag = Tag.fromJson(body);
+
+    return new_tag;
+  } catch (e) {
+    throw Exception(ERROR_TAG_ITEM);
   }
 }

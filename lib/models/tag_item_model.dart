@@ -80,4 +80,22 @@ class Tag {
   String toString() {
     return '<Tag> [$name]';
   }
+
+  Map<String, dynamic> toMap(bool? forBack) {
+    forBack ??= false;
+
+    if (forBack) {
+      return {
+        'id': id,
+        'nombre': name,
+        'descripcion': description,
+      };
+    }
+
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+    };
+  }
 }
