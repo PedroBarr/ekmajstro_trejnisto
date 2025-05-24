@@ -128,6 +128,9 @@ class _TagListScreenState extends State<TagListScreen> {
                       ),
                     )
                   : const SizedBox.shrink(),
+              const SizedBox(
+                height: 10.0,
+              ),
               Expanded(
                 child: (_tags.isNotEmpty
                     ? Container(
@@ -147,6 +150,10 @@ class _TagListScreenState extends State<TagListScreen> {
                             final tag = getMainTags()[index];
                             return GestureDetector(
                               onTap: () {
+                                if (widget.post_id == null) {
+                                  return;
+                                }
+
                                 tagPost(widget.post_id!, int.parse(tag.id))
                                     .then((tags) {
                                   setState(() {
