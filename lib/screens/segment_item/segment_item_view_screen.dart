@@ -89,6 +89,26 @@ class _SegmentItemView extends State<SegmentItemView> {
     });
   }
 
+  void onSave() {
+    String message = '';
+
+    try {
+      saveSegment(_segment, widget.section_id).then((value) {
+        if (!mounted) return;
+
+        setState(() {
+          _segment = Segment.fromSegment(value);
+        });
+      });
+      message = 'Guardado exitoso';
+    } catch (e) {
+      Navigator.of(context).pop();
+      message = 'Guardado fallido';
+    } finally {
+      showMessage(message, context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -112,10 +132,7 @@ class _SegmentItemView extends State<SegmentItemView> {
               Builder(builder: (context) {
                 if (_is_modified) {
                   return GestureDetector(
-                    onTap: () {
-                      debugPrint(
-                          'Saving segment: ${_segment.content.toString()}');
-                    },
+                    onTap: onSave,
                     child: const Padding(
                       padding: EdgeInsets.only(
                         right: 10.0,
