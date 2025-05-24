@@ -101,8 +101,11 @@ class _TagListScreenState extends State<TagListScreen> {
                           final tag = _selected_tags[index];
                           return GestureDetector(
                             onTap: () {
-                              setState(() {
-                                _selected_tags.remove(tag);
+                              untagPost(widget.post_id!, int.parse(tag.id))
+                                  .then((tags) {
+                                setState(() {
+                                  _selected_tags = tags;
+                                });
                               });
                             },
                             child: Container(

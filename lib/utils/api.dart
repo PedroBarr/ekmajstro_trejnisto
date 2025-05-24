@@ -27,6 +27,7 @@ const String ETIQUETAS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/etiquetas';
 const String TAGS_ENDPOINT = '/etiquetas';
 const String TAG_POST_ENDPOINT = '/publicacion/etiqueta';
+const String UNTAG_POST_ENDPOINT = '/publicacion/etiqueta/$ROUTE_ID_WILDCARD';
 
 const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/previsualizacion';
@@ -460,6 +461,32 @@ Future<List<Tag>> tagPost(int post_id, int tag_id) async {
 
     final response = await http.post(
       Uri.parse(BACKEND_API + TAG_POST_ENDPOINT),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(tag_map),
+    );
+
+    late dynamic body = getBody(response);
+    late List<Tag> tags = dtoTagList(body);
+
+    return tags;
+  } catch (e) {
+    throw Exception(ERROR_TAG_ITEM_LIST);
+  }
+}
+
+Future<List<Tag>> untagPost(int post_id, int tag_id) async {
+  try {
+    String subPath =
+        UNTAG_POST_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, tag_id.toString());
+
+    Map<String, dynamic> tag_map = {
+      'publicacion': post_id,
+    };
+
+    final response = await http.delete(
+      Uri.parse(BACKEND_API + subPath),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
