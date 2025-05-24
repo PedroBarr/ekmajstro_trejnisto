@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
+import 'package:ekmajstro_trejnisto/config/config.dart';
+import 'package:ekmajstro_trejnisto/components/components.dart';
 
 class TagListScreen extends StatefulWidget {
   final int? post_id;
@@ -45,15 +47,44 @@ class _TagListScreenState extends State<TagListScreen> {
     });
   }
 
+  void navigateToPostList() {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      ROUTER_POST_LIST_ROUTE,
+      (Route<dynamic> route) => route.settings.name == ROUTER_POST_LIST_ROUTE,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tag List'),
-      ),
-      body: Center(
-        child: Text('Tag List Screen'),
-      ),
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            leading: GestureDetector(
+              onTap: () {
+                if (widget.post_id != null) {
+                  Navigator.of(context).pop();
+                } else {
+                  navigateToPostList();
+                }
+              },
+              child: iconNavPostList(Theme.of(context).colorScheme.onSurface),
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.my_library_add),
+                tooltip: 'Agregar etiqueta',
+                onPressed: () {},
+              ),
+            ],
+            title: const Text('Etiquetas'),
+          ),
+          body: Center(
+            child: Text('Tag List Screen'),
+          ),
+        ),
+        const FABEkmajstroComponent(),
+      ],
     );
   }
 }
