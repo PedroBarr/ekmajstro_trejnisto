@@ -29,6 +29,8 @@ const String ERROR_RESOURCE_ITEM_PARSER = 'Fallo al cargar el elemento recurso';
 const String ERROR_TAG_ITEM_PARSER = 'Fallo al cargar el elemento etiqueta';
 const String ERROR_PREVIEW_ITEM_PARSER = 'Fallo al cargar el elemento etiqueta';
 const String ERROR_SEGMENT_ITEM_PARSER = 'Fallo al cargar el elemento segmento';
+const String ERROR_RESOURCE_TYPE_ITEM_PARSER =
+    'Fallo al cargar el elemento tipo de recurso';
 
 // VISTAS
 const String HINT_SEARCH_DEFAULT = 'Buscar';
