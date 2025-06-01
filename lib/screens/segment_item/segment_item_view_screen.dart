@@ -102,10 +102,10 @@ class _SegmentItemView extends State<SegmentItemView> {
           _segment = Segment.fromSegment(value);
         });
       });
-      message = 'Guardado exitoso';
+      message = SEGMENT_SAVE_SUCCESS_MESSAGE;
     } catch (e) {
       Navigator.of(context).pop();
-      message = 'Guardado fallido';
+      message = SEGMENT_SAVE_ERROR_MESSAGE;
     } finally {
       showMessage(message, context);
     }
@@ -186,10 +186,10 @@ class _SegmentItemView extends State<SegmentItemView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Posición'),
+                                const Text(SEGMENT_LABEL_POSITION),
                                 Text(
                                   _segment.order == -1
-                                      ? 'Sin asignar'
+                                      ? SEGMENT_POSITION_ERROR_MESSAGE
                                       : _segment.order.toString(),
                                   style: Theme.of(context).textTheme.bodyLarge,
                                 ),
@@ -199,7 +199,7 @@ class _SegmentItemView extends State<SegmentItemView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Medida'),
+                                const Text(SEGMENT_LABEL_MEASURE),
                                 DropdownMenu<IconSegmentMeasure>(
                                   initialSelection:
                                       IconSegmentMeasure.values.firstWhere(
@@ -219,7 +219,7 @@ class _SegmentItemView extends State<SegmentItemView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Clase'),
+                                const Text(SEGMENT_LABEL_CLASS),
                                 Container(
                                   width: MediaQuery.of(context).size.width / 2,
                                   constraints: BoxConstraints(
@@ -228,7 +228,7 @@ class _SegmentItemView extends State<SegmentItemView> {
                                   ),
                                   child: TextField(
                                     decoration: InputDecoration(
-                                      hintText: 'Clase',
+                                      hintText: SEGMENT_LABEL_CLASS,
                                       border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(10.0),
@@ -283,7 +283,7 @@ class _SegmentItemView extends State<SegmentItemView> {
                                         ),
                                         child: TextField(
                                           decoration: InputDecoration(
-                                            hintText: 'Contenido',
+                                            hintText: SEGMENT_LABEL_CONTENT,
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
@@ -313,10 +313,9 @@ class _SegmentItemView extends State<SegmentItemView> {
                                         context: context,
                                         builder: (context) {
                                           return DialogSimpleTextComponent(
-                                            title: 'Agregar parte',
+                                            title: SEGMENT_LABEL_ADD_PART,
                                             text:
-                                                'Agregar nueva parte al segmento de tipo ${getSegmentTypeText(_segment.type)}',
-                                            confirmText: 'Aceptar',
+                                                '$SEGMENT_LABEL_ADD_PART_MESSAGE_BASE${getSegmentTypeText(_segment.type)}',
                                             onConfirm: () {
                                               if (_part_name.isNotEmpty &&
                                                   mounted) {
@@ -345,7 +344,7 @@ class _SegmentItemView extends State<SegmentItemView> {
                                               child: TextField(
                                                 decoration: InputDecoration(
                                                   hintText:
-                                                      'Nombre de la parte',
+                                                      SEGMENT_PART_LABEL_NAME,
                                                   border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
