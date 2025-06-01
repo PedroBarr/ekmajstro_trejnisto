@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'section_item_constants.dart';
+import 'add_section_item_component.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
 
@@ -78,37 +79,8 @@ class _SectionItemListComponent extends State<SectionItemListComponent> {
               Builder(
                 builder: (context) {
                   return widget.include_add
-                      ? GestureDetector(
-                          onTap: () {
-                            navigateToSection(
-                              context,
-                              sectionBuildRoute(widget.post),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(
-                              left: 10.0,
-                              right: 10.0,
-                            ),
-                            width: MediaQuery.of(context).size.width,
-                            child: Container(
-                              height: 40.0,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  style: BorderStyle.solid,
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Icon(
-                                Icons.add,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            ),
-                          ),
+                      ? AddSectionItemComponent(
+                          post: widget.post,
                         )
                       : SizedBox.shrink();
                 },
