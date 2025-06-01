@@ -3,11 +3,11 @@ import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'models.dart';
 
 class PreviewItem extends ModelItem {
-  final String short_text;
-  final String long_text;
-  final String image_url;
+  String short_text;
+  String long_text;
+  String image_url;
 
-  const PreviewItem({
+  PreviewItem({
     super.id = '',
     this.short_text = '',
     this.long_text = '',
