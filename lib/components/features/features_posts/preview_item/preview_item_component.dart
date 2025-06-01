@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
+import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 class PreviewItemComponent extends StatefulWidget {
@@ -36,7 +36,7 @@ class _PreviewItemComponent extends State<PreviewItemComponent> {
         _preview = preview;
       });
 
-      showMessage('Publicación exitosa', context);
+      showMessage(SAVE_PREVIEW_SUCCESS, context);
     });
   }
 
