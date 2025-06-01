@@ -44,6 +44,8 @@ const String SEGMENTO_REUBICAR_ENDPOINT =
     '/segmento/$ROUTE_ID_WILDCARD/reubicar';
 const String SEGMENTO_NUEVO_ENDPOINT = '/segmento';
 
+const String TIPO_RECURSOS_ENDPOINT = '/tipo_recursos';
+
 Future<List<PostItem>> getPosts({bool? with_preview}) async {
   try {
     final query_params = {
@@ -595,5 +597,20 @@ Future<List<ResourceItem>> getResources() async {
     return resources;
   } catch (e) {
     throw Exception(ERROR_RESOURCE_ITEM_LIST);
+  }
+}
+
+Future<List<ResourceTypeItem>> getResourceTypes() async {
+  try {
+    final response = await http.get(
+      Uri.parse(BACKEND_API + TIPO_RECURSOS_ENDPOINT),
+    );
+
+    late dynamic body = getBody(response);
+    late List<ResourceTypeItem> resourceTypes = dtoResourceTypeItemList(body);
+
+    return resourceTypes;
+  } catch (e) {
+    throw Exception(ERROR_RESOURCE_TYPE_ITEM_LIST);
   }
 }

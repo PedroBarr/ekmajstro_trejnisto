@@ -17,6 +17,8 @@ const String ERROR_PREVIEW_ITEM =
     'Fallo al recuperar la lista de previsualización';
 const String ERROR_SEGMENT_ITEM_LIST =
     'Fallo al recuperar la lista de segmentos';
+const String ERROR_RESOURCE_TYPE_ITEM_LIST =
+    'Fallo al recuperar la lista de tipos de recursos';
 const String ERROR_SECTION_ITEM = 'Fallo al recuperar la sección';
 const String ERROR_SEGMENT_ITEM = 'Fallo al recuperar el segmento';
 const String ERROR_TAG_ITEM = 'Fallo al recuperar la etiqueta';
