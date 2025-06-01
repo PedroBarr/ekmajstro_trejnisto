@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'dialog_simple_text_constants.dart';
+
 class DialogSimpleTextComponent extends StatefulWidget {
   final String title;
   final String text;
@@ -15,8 +17,8 @@ class DialogSimpleTextComponent extends StatefulWidget {
     super.key,
     required this.title,
     required this.text,
-    this.confirmText = 'Aceptar',
-    this.cancelText = 'Cancelar',
+    this.confirmText = DIALOG_SIMPLE_TEXT_CONFIRM,
+    this.cancelText = DIALOG_SIMPLE_TEXT_CANCEL,
     this.onConfirm,
     this.onCancel,
     this.showCancel = true,
@@ -24,7 +26,7 @@ class DialogSimpleTextComponent extends StatefulWidget {
     this.field = const SizedBox(),
   }) : assert(
           showField == true ? field != null : true,
-          'Field must be provided if showField is true.',
+          DIALOG_SIMPLE_TEXT_FIELD_REQUIRED,
         );
 
   @override
