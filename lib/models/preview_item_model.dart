@@ -60,4 +60,23 @@ class PreviewItem extends ModelItem {
   String toString() {
     return '<Preview> [$short_text]';
   }
+
+  Map<String, dynamic> toMap(bool? forBack) {
+    forBack ??= false;
+
+    if (forBack) {
+      return {
+        'resumen': short_text,
+        'descripcion': long_text,
+        'miniatura_uri': image_url,
+      };
+    }
+
+    return {
+      'id': id,
+      'short_text': short_text,
+      'long_text': long_text,
+      'image_url': image_url,
+    };
+  }
 }
