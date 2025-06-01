@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'segment_item_view_constants.dart';
+import 'add_part_segment_item_component.dart';
 
 import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
@@ -28,8 +29,6 @@ class _SegmentItemView extends State<SegmentItemView> {
 
   bool _is_loading = false;
   bool _is_modified = false;
-
-  String _part_name = '';
 
   @override
   void initState() {
@@ -308,96 +307,15 @@ class _SegmentItemView extends State<SegmentItemView> {
                             const SizedBox(height: 10.0),
                             (_segment.id.isEmpty
                                 ? const SizedBox.shrink()
-                                : GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return DialogSimpleTextComponent(
-                                            title: SEGMENT_LABEL_ADD_PART,
-                                            text:
-                                                '$SEGMENT_LABEL_ADD_PART_MESSAGE_BASE${getSegmentTypeText(_segment.type)}',
-                                            onConfirm: () {
-                                              if (_part_name.isNotEmpty &&
-                                                  mounted) {
-                                                setState(() {
-                                                  _segment.addPart(
-                                                    _part_name,
-                                                  );
-                                                  _part_name = '';
-                                                });
-
-                                                Navigator.of(context).pop();
-                                              }
-                                            },
-                                            showField: true,
-                                            field: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.75,
-                                              constraints: BoxConstraints(
-                                                maxWidth: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.75,
-                                              ),
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                  hintText:
-                                                      SEGMENT_PART_LABEL_NAME,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                ),
-                                                onSubmitted: (value) {
-                                                  if (mounted) {
-                                                    setState(() {
-                                                      _part_name = value;
-                                                    });
-                                                  }
-                                                },
-                                              ),
-                                            ),
-                                            onCancel: () {
-                                              if (mounted) {
-                                                setState(() {
-                                                  _part_name = '';
-                                                });
-                                              }
-
-                                              Navigator.of(context).pop();
-                                            },
-                                          );
-                                        },
-                                      );
+                                : AddPartSegmentItemComponent(
+                                    segment: _segment,
+                                    onPartAdded: (part_name) {
+                                      setState(() {
+                                        _segment.addPart(
+                                          part_name,
+                                        );
+                                      });
                                     },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width -
-                                          20,
-                                      height: 50.0,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          style: BorderStyle.solid,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .surface,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        size: 30.0,
-                                      ),
-                                    ),
                                   )),
                           ],
                         ),
