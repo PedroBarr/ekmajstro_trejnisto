@@ -7,11 +7,13 @@ import 'package:ekmajstro_trejnisto/screens/post_item/post_item.dart';
 class PreviewItemComponent extends StatefulWidget {
   final PreviewItem preview;
   final bool is_publishable;
+  final String post_id;
 
   const PreviewItemComponent({
     super.key,
     required this.preview,
     this.is_publishable = false,
+    required this.post_id,
   });
 
   @override
@@ -19,6 +21,15 @@ class PreviewItemComponent extends StatefulWidget {
 }
 
 class _PreviewItemComponent extends State<PreviewItemComponent> {
+  PreviewItem _preview = PreviewItem();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _preview = widget.preview;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -34,8 +45,12 @@ class _PreviewItemComponent extends State<PreviewItemComponent> {
                       children: [
                         CustomImageFieldComponent(
                           height: 210,
-                          value: widget.preview.image_url,
-                          onConfirm: (value) {},
+                          value: _preview.image_url,
+                          onConfirm: (value) {
+                            setState(() {
+                              _preview.image_url = value;
+                            });
+                          },
                           title: preview_cover_image_title,
                           is_title_editable: false,
                         ),
@@ -51,21 +66,29 @@ class _PreviewItemComponent extends State<PreviewItemComponent> {
                       height: 10,
                     ),
                     CustomTextFieldComponent(
-                      value: widget.preview.short_text,
+                      value: _preview.short_text,
                       font_size: 14,
                       bold_text: false,
                       max_length: 50,
-                      onConfirm: (value) {},
+                      onConfirm: (value) {
+                        setState(() {
+                          _preview.short_text = value;
+                        });
+                      },
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     CustomTextFieldComponent(
-                      value: widget.preview.long_text,
+                      value: _preview.long_text,
                       font_size: 14,
                       bold_text: false,
                       max_length: 50,
-                      onConfirm: (value) {},
+                      onConfirm: (value) {
+                        setState(() {
+                          _preview.long_text = value;
+                        });
+                      },
                     ),
                     SizedBox(
                       height: widget.is_publishable ? 10 : 0,

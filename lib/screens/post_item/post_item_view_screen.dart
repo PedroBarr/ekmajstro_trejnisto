@@ -382,6 +382,7 @@ class _PostItemView extends State<PostItemView> {
                                     content: PreviewItemComponent(
                                       is_publishable: _post.id.isNotEmpty,
                                       preview: _preview,
+                                      post_id: _post.id,
                                     ),
                                   ),
                                 ],
