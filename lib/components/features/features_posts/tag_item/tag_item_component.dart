@@ -4,10 +4,12 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 
 class TagItemComponent extends StatefulWidget {
   final TagItem tag;
+  final Color? background_color;
 
   const TagItemComponent({
     super.key,
     required this.tag,
+    this.background_color,
   });
 
   @override
@@ -20,7 +22,8 @@ class _TagItemComponent extends State<TagItemComponent> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Theme.of(context).colorScheme.onSurface,
+        color:
+            widget.background_color ?? Theme.of(context).colorScheme.onSurface,
       ),
       alignment: Alignment.center,
       child: Text(

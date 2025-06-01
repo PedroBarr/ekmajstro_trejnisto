@@ -8,13 +8,17 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 class TagItemListComponent extends StatefulWidget {
   final List<TagItem> tags;
   final bool include_add;
-  final String post_id;
+  final String? post_id;
+  final Function(TagItem)? onTapTag;
+  final Color? tag_color;
 
   const TagItemListComponent({
     super.key,
     required this.tags,
     this.include_add = false,
-    required this.post_id,
+    this.post_id,
+    this.onTapTag,
+    this.tag_color,
   });
 
   @override
@@ -45,8 +49,17 @@ class _TagItemListComponent extends State<TagItemListComponent> {
                 ),
                 itemCount: widget.tags.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return TagItemComponent(
-                    tag: widget.tags[index],
+                  return GestureDetector(
+                    onTap: () {
+                      if (widget.onTapTag != null) {
+                        widget.onTapTag!(widget.tags[index]);
+                      }
+                    },
+                    child: TagItemComponent(
+                      tag: widget.tags[index],
+                      background_color: widget.tag_color ??
+                          Theme.of(context).colorScheme.onSurface,
+                    ),
                   );
                 },
               ),
@@ -54,12 +67,14 @@ class _TagItemListComponent extends State<TagItemListComponent> {
             );
           },
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        (widget.include_add
+            ? const SizedBox(
+                height: 10,
+              )
+            : SizedBox.shrink()),
         Builder(
           builder: (context) {
-            return widget.include_add
+            return widget.include_add && widget.post_id != null
                 ? AddTagItemComponent(
                     post_id: widget.post_id,
                   )
