@@ -31,3 +31,11 @@ Widget iconNavTagList(
       Icons.label_important,
       color: color,
     );
+
+Widget iconNavResourceList(
+  Color color,
+) =>
+    Icon(
+      Icons.file_present_sharp,
+      color: color,
+    );
