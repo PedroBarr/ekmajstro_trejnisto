@@ -69,13 +69,6 @@ class _TagListScreenState extends State<TagListScreen> {
     });
   }
 
-  void navigateToPostList() {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      ROUTER_POST_LIST_ROUTE,
-      (Route<dynamic> route) => route.settings.name == ROUTER_POST_LIST_ROUTE,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -87,10 +80,12 @@ class _TagListScreenState extends State<TagListScreen> {
                 if (widget.post_id != null) {
                   Navigator.of(context).pop();
                 } else {
-                  navigateToPostList();
+                  navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
                 }
               },
-              child: iconNavPostList(Theme.of(context).colorScheme.onSurface),
+              child: iconNavPostList(
+                Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             actions: [
               CreateTagItemComponent(
@@ -138,7 +133,10 @@ class _TagListScreenState extends State<TagListScreen> {
                         include_add: false,
                         tag_color: Theme.of(context).colorScheme.onPrimary,
                         onTapTag: (TagItem tag) {
-                          untagPost(widget.post_id!, int.parse(tag.id!)).then(
+                          untagPost(
+                            widget.post_id!,
+                            int.parse(tag.id!),
+                          ).then(
                             (tags) {
                               setState(() {
                                 _selected_tags = tags;
@@ -163,7 +161,10 @@ class _TagListScreenState extends State<TagListScreen> {
                             return;
                           }
 
-                          tagPost(widget.post_id!, int.parse(tag.id!)).then(
+                          tagPost(
+                            widget.post_id!,
+                            int.parse(tag.id!),
+                          ).then(
                             (tags) {
                               setState(() {
                                 _selected_tags = tags;

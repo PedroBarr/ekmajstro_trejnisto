@@ -1,9 +1,10 @@
-import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:flutter/material.dart';
 
 import 'resource_list_constants.dart';
 
-import 'package:flutter/material.dart';
+import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
+import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
 
 class ResourceListScreen extends StatefulWidget {
@@ -36,6 +37,14 @@ class _ResourceListScreen extends State<ResourceListScreen> {
       children: [
         Scaffold(
           appBar: AppBar(
+            leading: GestureDetector(
+              onTap: () {
+                navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
+              },
+              child: iconNavPostList(
+                Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
             title: const Text(RESOURCE_LIST_TITLE),
           ),
           body: SingleChildScrollView(

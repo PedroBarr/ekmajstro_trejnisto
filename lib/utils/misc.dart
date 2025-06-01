@@ -46,3 +46,10 @@ void showMessage(String message, BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(snack);
   }
 }
+
+void navigateToLocation(BuildContext context, String location) {
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    location,
+    (Route<dynamic> route) => route.settings.name == location,
+  );
+}

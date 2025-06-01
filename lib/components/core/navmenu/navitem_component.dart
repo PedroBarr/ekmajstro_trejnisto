@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 class NavitemComponent extends StatefulWidget {
   final NavItemModel nav_item;
@@ -19,21 +20,16 @@ class NavitemComponent extends StatefulWidget {
 }
 
 class _NavitemComponent extends State<NavitemComponent> {
-  void navigateToLocation(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      widget.nav_item.location,
-      (Route<dynamic> route) => route.settings.name == widget.nav_item.location,
-    );
-
-    if (widget.onNavItemTap != null) {
-      widget.onNavItemTap!();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => navigateToLocation(context),
+      onTap: () {
+        navigateToLocation(context, widget.nav_item.location);
+
+        if (widget.onNavItemTap != null) {
+          widget.onNavItemTap!();
+        }
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
