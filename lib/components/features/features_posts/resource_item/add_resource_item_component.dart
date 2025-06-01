@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
+
 class AddResourceItemComponent extends StatefulWidget {
+  final String? post_id;
+
   const AddResourceItemComponent({
     super.key,
+    this.post_id,
   });
 
   @override
@@ -10,10 +15,20 @@ class AddResourceItemComponent extends StatefulWidget {
 }
 
 class _AddResourceItemComponent extends State<AddResourceItemComponent> {
+  void navigateToResourceList() {
+    Navigator.pushNamed(
+      context,
+      buildIdRouteById(
+        ROUTER_RESOURCE_VIEW_ROUTE,
+        int.parse(widget.post_id!),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: navigateToResourceList,
       child: Container(
         padding: const EdgeInsets.only(
           left: 10.0,
