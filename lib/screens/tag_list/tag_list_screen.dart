@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'create_tag_item_component.dart';
+
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/config/config.dart';
@@ -20,9 +22,6 @@ class TagListScreen extends StatefulWidget {
 class _TagListScreenState extends State<TagListScreen> {
   List<Tag> _tags = [];
   List<Tag> _selected_tags = [];
-
-  String _name = '';
-  String _description = '';
 
   String _search_text = '';
 
@@ -93,95 +92,16 @@ class _TagListScreenState extends State<TagListScreen> {
               child: iconNavPostList(Theme.of(context).colorScheme.onSurface),
             ),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.my_library_add),
-                tooltip: 'Agregar etiqueta',
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return DialogSimpleTextComponent(
-                        title: "Agregar etiqueta",
-                        text:
-                            "Digitar el nombre y la descripción de la etiqueta",
-                        confirmText: "Agregar",
-                        onConfirm: () {
-                          Tag tag = Tag(
-                            name: _name,
-                            description: _description,
-                          );
-
-                          createTag(tag).then((newTag) {
-                            setState(() {
-                              _name = '';
-                              _description = '';
-                            });
-
-                            if (widget.post_id != null) {
-                              tagPost(widget.post_id!, int.parse(newTag.id));
-                            }
-                          }).whenComplete(() {
-                            loadTags();
-                          });
-
-                          Navigator.of(context).pop();
-                        },
-                        showField: true,
-                        field: Container(
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.height * 0.75,
-                          ),
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 10.0),
-                              TextField(
-                                decoration: const InputDecoration(
-                                  labelText: 'Nombre de la etiqueta',
-                                  hintText: 'Ejemplo: Fuerza',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(5.0),
-                                    ),
-                                  ),
-                                ),
-                                onSubmitted: (value) {
-                                  setState(() {
-                                    _name = value;
-                                  });
-                                },
-                              ),
-                              const SizedBox(height: 10.0),
-                              TextField(
-                                decoration: const InputDecoration(
-                                  labelText: 'Descripción de la etiqueta',
-                                  hintText: 'Ejemplo: Entrenamiento de fuerza',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(5.0),
-                                    ),
-                                  ),
-                                ),
-                                onSubmitted: (value) {
-                                  setState(() {
-                                    _description = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        onCancel: () {
-                          setState(() {
-                            _name = '';
-                            _description = '';
-                          });
-
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    },
-                  );
+              CreateTagItemComponent(
+                onTagAdded: (Tag tag) {
+                  if (widget.post_id != null) {
+                    tagPost(widget.post_id!, int.parse(tag.id))
+                        .whenComplete(() {
+                      loadTags();
+                    });
+                  } else {
+                    loadTags();
+                  }
                 },
               ),
             ],
