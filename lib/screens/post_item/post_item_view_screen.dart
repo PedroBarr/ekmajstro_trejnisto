@@ -236,6 +236,7 @@ class _PostItemView extends State<PostItemView> {
                                     content: ResourceItemListComponent(
                                       include_add: _post.id.isNotEmpty,
                                       resources: _resources,
+                                      post_id: _post.id,
                                     ),
                                   ),
                                   AccordionElement(
