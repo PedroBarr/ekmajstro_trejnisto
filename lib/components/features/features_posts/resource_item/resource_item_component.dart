@@ -5,10 +5,12 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 
 class ResourceItemComponent extends StatefulWidget {
   final ResourceItem resource;
+  final bool? is_selected;
 
   const ResourceItemComponent({
     super.key,
     required this.resource,
+    this.is_selected = false,
   });
 
   @override
@@ -23,7 +25,9 @@ class _ResourceItemComponent extends State<ResourceItemComponent> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: widget.is_selected!
+              ? Theme.of(context).colorScheme.onSurface
+              : Theme.of(context).colorScheme.onPrimary,
         ),
         padding: const EdgeInsets.all(10.0),
         width: MediaQuery.of(context).size.width - 20.0,
