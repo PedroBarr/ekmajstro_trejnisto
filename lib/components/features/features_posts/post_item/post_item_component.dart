@@ -45,15 +45,6 @@ class _PostItemComponent extends State<PostItemComponent> {
               ),
             ),
             const Spacer(),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.fast_forward_rounded,
-              ),
-              highlightColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              focusColor: Colors.transparent,
-            ),
             const SizedBox(width: 10.0),
             Builder(builder: (context) {
               if (widget.post!.with_preview) {
