@@ -114,6 +114,8 @@ class _SegmentItemView extends State<SegmentItemView> {
 
   @override
   Widget build(BuildContext context) {
+    double value_part_width = MediaQuery.of(context).size.width / 2;
+
     return Stack(
       children: [
         Scaffold(
@@ -222,10 +224,9 @@ class _SegmentItemView extends State<SegmentItemView> {
                               children: [
                                 const Text(SEGMENT_LABEL_CLASS),
                                 Container(
-                                  width: MediaQuery.of(context).size.width / 2,
+                                  width: value_part_width,
                                   constraints: BoxConstraints(
-                                    maxWidth:
-                                        MediaQuery.of(context).size.width / 2,
+                                    maxWidth: value_part_width,
                                   ),
                                   child: TextField(
                                     decoration: InputDecoration(
@@ -263,6 +264,7 @@ class _SegmentItemView extends State<SegmentItemView> {
                               onPartModified: (part_name, value) {
                                 setSegment(part_name, value);
                               },
+                              value_part_width: value_part_width,
                             ),
                             const SizedBox(height: 10.0),
                             (_segment.id.isEmpty

@@ -7,11 +7,13 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 class PartSegmentItemListComponent extends StatefulWidget {
   final Segment segment;
   final Function(String, dynamic)? onPartModified;
+  final double? value_part_width;
 
   const PartSegmentItemListComponent({
     super.key,
     required this.segment,
     this.onPartModified,
+    this.value_part_width,
   });
 
   @override
@@ -23,6 +25,9 @@ class _PartSegmentItemListComponentState
     extends State<PartSegmentItemListComponent> {
   @override
   Widget build(BuildContext context) {
+    double value_part_width =
+        widget.value_part_width ?? MediaQuery.of(context).size.width / 2;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
@@ -33,9 +38,9 @@ class _PartSegmentItemListComponentState
             children: [
               Text(getContentKeys()[index]),
               Container(
-                width: MediaQuery.of(context).size.width / 2,
+                width: value_part_width,
                 constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width / 2,
+                  maxWidth: value_part_width,
                 ),
                 padding: const EdgeInsets.only(
                   top: 5.0,
