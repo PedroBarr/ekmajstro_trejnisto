@@ -144,10 +144,10 @@ class _SectionItemView extends State<SectionItemView> {
           _section = Section.fromSection(value);
         });
       });
-      message = 'Marcado exitoso';
+      message = MARK_SEGMENT_SUCCESS_MESSAGE;
     } catch (e) {
       Navigator.of(context).pop();
-      message = 'Marcado fallido';
+      message = MARK_SEGMENT_ERROR_MESSAGE;
     } finally {
       showMessage(message, context);
     }
