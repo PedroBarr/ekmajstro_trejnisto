@@ -82,7 +82,11 @@ class _ResourceListScreen extends State<ResourceListScreen> {
           appBar: AppBar(
             leading: GestureDetector(
               onTap: () {
-                navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
+                if (widget.post_id != null) {
+                  Navigator.of(context).pop();
+                } else {
+                  navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
+                }
               },
               child: iconNavPostList(
                 Theme.of(context).colorScheme.onSurface,
