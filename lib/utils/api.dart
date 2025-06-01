@@ -34,6 +34,7 @@ const String ETIQUETA_NUEVA_ENDPOINT = '/etiqueta';
 
 const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/previsualizacion';
+const String PREVISUALIZACION_NUEVA_ENDPOINT = '/previsualizacion';
 
 const String SEGMENTOS_SECCION_ENDPOINT =
     '/seccion/$ROUTE_ID_WILDCARD/segmentos';
@@ -521,6 +522,38 @@ Future<Tag> createTag(Tag tag) async {
     return new_tag;
   } catch (e) {
     throw Exception(ERROR_TAG_ITEM);
+  }
+}
+
+Future<PreviewItem> savePreview(PreviewItem preview, String? post_id) async {
+  if (post_id != null) {
+    return createPreview(preview, post_id);
+  } else {
+    return Future.value(preview);
+  }
+}
+
+Future<PreviewItem> createPreview(PreviewItem preview, String post_id) async {
+  try {
+    String subPath = PREVISUALIZACION_NUEVA_ENDPOINT;
+
+    Map<String, dynamic> previewMap = preview.toMap(true);
+    previewMap['publicacion'] = post_id;
+
+    final response = await http.post(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(previewMap),
+    );
+
+    late dynamic body = getBody(response);
+    late PreviewItem new_preview = PreviewItem.fromJson(body);
+
+    return new_preview;
+  } catch (e) {
+    throw Exception(ERROR_PREVIEW_ITEM);
   }
 }
 
