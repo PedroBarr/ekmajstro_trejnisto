@@ -416,37 +416,32 @@ class _SegmentItemView extends State<SegmentItemView> {
   Widget _buildTextSegment() {
     return Column(
       children: [
-        Row(
-          children: [
-            Text(
-              'Contenido',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const Spacer(),
-            Container(
-              width: MediaQuery.of(context).size.width / 2,
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width / 2,
-              ),
-              child: TextField(
-                maxLines: 10,
-                minLines: 5,
-                decoration: InputDecoration(
-                  hintText: 'Texto',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                controller: TextEditingController(
-                  text: _segment.getMainContent(),
-                ),
-                onSubmitted: (value) {
-                  setSegment('contenido_principal', value);
-                },
-                textInputAction: TextInputAction.done,
+        Text(
+          SEGMENT_LABEL_CONTENT,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width - 20,
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width - 20,
+          ),
+          child: TextField(
+            maxLines: 10,
+            minLines: 5,
+            decoration: InputDecoration(
+              hintText: SEGMENT_CONTENT_LABEL_TEXT_TYPE,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
-          ],
+            controller: TextEditingController(
+              text: _segment.getMainContent(),
+            ),
+            onSubmitted: (value) {
+              setSegment('contenido_principal', value);
+            },
+            textInputAction: TextInputAction.done,
+          ),
         ),
       ],
     );
@@ -455,21 +450,19 @@ class _SegmentItemView extends State<SegmentItemView> {
   Widget _buildImageSegment() {
     return Column(
       children: [
-        Row(
-          children: [
-            Text(
-              'Imagen',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const Spacer(),
-            CustomImageFieldComponent(
-              height: 200,
-              value: _segment.getMainContent(),
-              onConfirm: (value) {
-                setSegment('contenido_principal', value);
-              },
-            ),
-          ],
+        Text(
+          SEGMENT_CONTENT_LABEL_IMAGE_TYPE,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        CustomImageFieldComponent(
+          height: 200,
+          value: _segment.getMainContent(),
+          onConfirm: (value) {
+            setSegment('contenido_principal', value);
+          },
         ),
       ],
     );
