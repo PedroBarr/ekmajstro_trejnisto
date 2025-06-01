@@ -16,6 +16,20 @@ class ResourceTypeItem extends ModelItem {
 
   factory ResourceTypeItem.fromJson(Map<String, dynamic> json) {
     return switch (json) {
+      {
+        'tp_rec_id': int id,
+        'tp_rec_nombre': String name,
+        'tp_rec_icon_url': String icon,
+        'tp_rec_filter_key': String key,
+      } =>
+        ResourceTypeItem(id: id.toString(), name: name, icon: icon, key: key),
+      {
+        'tp_rec_id': String id,
+        'tp_rec_nombre': String name,
+        'tp_rec_icon_url': String icon,
+        'tp_rec_filter_key': String key,
+      } =>
+        ResourceTypeItem(id: id, name: name, icon: icon, key: key),
       _ => throw const FormatException(ERROR_RESOURCE_TYPE_ITEM_PARSER),
     };
   }

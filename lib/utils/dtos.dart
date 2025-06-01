@@ -65,3 +65,15 @@ List<Tag> dtoTagList(List<dynamic> list) {
 
   return tags;
 }
+
+List<ResourceTypeItem> dtoResourceTypeItemList(List<dynamic> list) {
+  List<ResourceTypeItem> resourceTypes = [];
+
+  for (final resourceTypeResponse in list) {
+    ResourceTypeItem resourceType =
+        ResourceTypeItem.fromJson(resourceTypeResponse);
+    resourceTypes.add(resourceType);
+  }
+
+  return resourceTypes;
+}
