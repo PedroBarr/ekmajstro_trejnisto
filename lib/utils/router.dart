@@ -49,6 +49,8 @@ const String ROUTER_TAG_VIEW_ROUTE =
 const String ROUTER_RESOURCE_ITEM_SUB_PATH = '/resources';
 const String ROUTER_RESOURCE_LIST_ROUTE =
     '$ROUTER_MAIN_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH';
+const String ROUTER_RESOURCE_VIEW_ROUTE =
+    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH';
 
 Route<dynamic> mainRouter(RouteSettings settings) {
   if (settings.name == ROUTER_MAIN_ROUTE) {
@@ -193,6 +195,21 @@ Route<dynamic> mainRouter(RouteSettings settings) {
           );
         }
       }
+
+      if (subPath.contains('$ROUTER_RESOURCE_ITEM_SUB_PATH')) {
+        final String subPathWithWildCard2 =
+            subPath.replaceAll('$ROUTER_RESOURCE_ITEM_SUB_PATH', '');
+
+        if (['', '/'].contains(subPathWithWildCard2)) {
+          return MaterialPageRoute(
+            builder: (_) => SafeArea(
+              child: ResourceListScreen(
+                post_id: int.parse(wildCard),
+              ),
+            ),
+          );
+        }
+      }
     }
   }
 
@@ -204,7 +221,7 @@ Route<dynamic> mainRouter(RouteSettings settings) {
     );
   }
 
-  if (settings.name == '/app/resources') {
+  if (settings.name == ROUTER_RESOURCE_LIST_ROUTE) {
     return MaterialPageRoute(
       builder: (_) => SafeArea(
         child: ResourceListScreen(),
