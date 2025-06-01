@@ -33,6 +33,7 @@ const String ERROR_SEGMENT_ITEM_PARSER = 'Fallo al cargar el elemento segmento';
 // VISTAS
 const String HINT_SEARCH_DEFAULT = 'Buscar';
 const String HINT_SEARCH_POST = 'Buscar publicación';
+const String CLIPBOARD_COPY_SUCCESS = 'Enlace copiado al portapapeles';
 
 // NAVEGATION
 const String NAV_ITEM_POSTS_LABEL = 'Publicaciones';
