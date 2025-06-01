@@ -128,10 +128,10 @@ class _PostItemView extends State<PostItemView> {
           _post = Post.fromPost(value);
         });
       });
-      message = 'Guardado exitoso';
+      message = SAVE_POST_SUCCESS_MESSAGE;
     } catch (e) {
       Navigator.of(context).pop();
-      message = 'Guardado fallido';
+      message = SAVE_POST_ERROR_MESSAGE;
     } finally {
       showMessage(message, context);
     }
@@ -224,7 +224,7 @@ class _PostItemView extends State<PostItemView> {
                               AccordionComponent(
                                 elements: <AccordionElement>[
                                   AccordionElement(
-                                    name: post_sections_title,
+                                    name: POST_SECTIONS_TITLE,
                                     content: SectionItemListComponent(
                                       include_add: _post.id.isNotEmpty,
                                       sections: _sections,
@@ -232,14 +232,14 @@ class _PostItemView extends State<PostItemView> {
                                     ),
                                   ),
                                   AccordionElement(
-                                    name: post_resources_title,
+                                    name: POST_RESOURCES_TITLE,
                                     content: ResourceItemListComponent(
                                       include_add: _post.id.isNotEmpty,
                                       resources: _resources,
                                     ),
                                   ),
                                   AccordionElement(
-                                    name: post_tags_title,
+                                    name: POST_TAGS_TITLE,
                                     content: TagItemListComponent(
                                       include_add: _post.id.isNotEmpty,
                                       tags: _tags,
@@ -247,7 +247,7 @@ class _PostItemView extends State<PostItemView> {
                                     ),
                                   ),
                                   AccordionElement(
-                                    name: post_preview_title,
+                                    name: POST_PREVIEW_TITLE,
                                     content: PreviewItemComponent(
                                       is_publishable: _post.id.isNotEmpty,
                                       preview: _preview,

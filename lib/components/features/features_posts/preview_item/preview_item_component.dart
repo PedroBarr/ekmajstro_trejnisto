@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
-import 'package:ekmajstro_trejnisto/screens/post_item/post_item.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 class PreviewItemComponent extends StatefulWidget {
@@ -62,11 +61,11 @@ class _PreviewItemComponent extends State<PreviewItemComponent> {
                               _preview.image_url = value;
                             });
                           },
-                          title: preview_cover_image_title,
+                          title: PREVIEW_COVER_IMAGE_TITLE,
                           is_title_editable: false,
                         ),
                         const Text(
-                          preview_cover_image_title,
+                          PREVIEW_COVER_IMAGE_TITLE,
                           style: TextStyle(
                             fontSize: 11,
                           ),
@@ -145,7 +144,7 @@ class _PreviewItemComponent extends State<PreviewItemComponent> {
                   ),
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    preview_warning_first_save,
+                    PREVIEW_WARNING_FIRST_SAVE,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onError,
                       fontSize: 14,
