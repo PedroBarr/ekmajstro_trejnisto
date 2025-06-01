@@ -1,10 +1,11 @@
-import 'package:ekmajstro_trejnisto/components/components.dart';
-import 'package:ekmajstro_trejnisto/config/config.dart';
-import 'package:ekmajstro_trejnisto/screens/segment_item/segment_item_view_constants.dart';
-import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:flutter/material.dart';
 
+import 'segment_item_view_constants.dart';
+
+import 'package:ekmajstro_trejnisto/config/config.dart';
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:ekmajstro_trejnisto/components/components.dart';
 
 class SegmentItemView extends StatefulWidget {
   final int post_id;
