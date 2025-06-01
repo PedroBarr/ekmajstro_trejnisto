@@ -38,18 +38,19 @@ class _ResourceItemListComponent extends State<ResourceItemListComponent> {
                 height: 5,
               ),
             ],
-            widget.resources.map<Widget>((resource) {
+            getSortedResources().map<Widget>((resource) {
               return ResourceItemComponent(
                 resource: resource,
-                is_selected: widget.selected_resources != null &&
-                    widget.selected_resources!.contains(resource),
+                is_selected: isSelected(resource),
               );
             }).toList(),
             [
               Builder(
                 builder: (context) {
                   return widget.include_add
-                      ? AddResourceItemComponent()
+                      ? AddResourceItemComponent(
+                          post_id: widget.post_id,
+                        )
                       : SizedBox.shrink();
                 },
               ),
@@ -65,22 +66,19 @@ class _ResourceItemListComponent extends State<ResourceItemListComponent> {
     List<ResourceItem> resources = widget.resources.toList();
 
     if (widget.selected_resources != null) {
-      resources.sort((a, b) {
-        int aIndex = widget.selected_resources!.indexOf(a);
-        int bIndex = widget.selected_resources!.indexOf(b);
-
-        if (aIndex == -1 && bIndex == -1) {
-          return 0; // Neither is selected
-        } else if (aIndex == -1) {
-          return 1; // a is not selected, b is selected
-        } else if (bIndex == -1) {
-          return -1; // b is not selected, a is selected
-        } else {
-          return aIndex.compareTo(bIndex); // Both are selected, sort by index
-        }
-      });
+      resources = [
+        ...widget.selected_resources!,
+        ...resources.where((resource) =>
+            !widget.selected_resources!.any((r) => r.id == resource.id))
+      ];
     }
 
     return resources;
+  }
+
+  bool isSelected(ResourceItem resource) {
+    if (widget.selected_resources == null) return false;
+    return widget.selected_resources!
+        .any((ResourceItem r) => r.id == resource.id);
   }
 }
