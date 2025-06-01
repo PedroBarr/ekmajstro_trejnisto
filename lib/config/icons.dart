@@ -39,3 +39,5 @@ Widget iconNavResourceList(
       Icons.file_present_sharp,
       color: color,
     );
+
+IconData iconSectionMarkOne = Icons.stars;

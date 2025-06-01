@@ -1,3 +1,4 @@
+import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:flutter/material.dart';
 
 import 'section_item_constants.dart';
@@ -48,7 +49,7 @@ class _SectionItemComponent extends State<SectionItemComponent> {
               builder: (BuildContext context) {
                 return widget.section.is_mark_one
                     ? Icon(
-                        Icons.stars,
+                        iconSectionMarkOne,
                         color: Theme.of(context).scaffoldBackgroundColor,
                       )
                     : SizedBox.shrink();

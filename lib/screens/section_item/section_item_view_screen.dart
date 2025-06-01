@@ -1,10 +1,10 @@
-import 'package:ekmajstro_trejnisto/config/config.dart';
-import 'package:ekmajstro_trejnisto/screens/section_item/section_item_view_constants.dart';
 import 'package:flutter/material.dart';
 
+import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
+import 'package:ekmajstro_trejnisto/screens/section_item/section_item_view_constants.dart';
 
 class SectionItemView extends StatefulWidget {
   final int post_id;
@@ -332,7 +332,7 @@ class _SectionItemView extends State<SectionItemView> {
                         ? Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: IconButton(
-                              icon: const Icon(Icons.stars),
+                              icon: Icon(iconSectionMarkOne),
                               color: _section.is_mark_one
                                   ? Theme.of(context).colorScheme.onSurface
                                   : Colors.grey,
