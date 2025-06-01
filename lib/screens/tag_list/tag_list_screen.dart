@@ -39,12 +39,16 @@ class _TagListScreenState extends State<TagListScreen> {
     toggleLoading(true);
 
     getTags().then((tags) {
+      if (!mounted) return;
+
       setState(() {
         _tags = tags;
       });
     }).whenComplete(() {
       if (widget.post_id != null) {
         getPostTagsList(widget.post_id!).then((tags) {
+          if (!mounted) return;
+
           setState(() {
             _selected_tags = tags;
           });
@@ -108,6 +112,8 @@ class _TagListScreenState extends State<TagListScreen> {
               SearchBarComponent(
                   hint_text: HINT_TAG_LIST,
                   onChanged: (String value) {
+                    if (!mounted) return;
+
                     setState(() {
                       _search_text = value;
                     });
@@ -138,6 +144,8 @@ class _TagListScreenState extends State<TagListScreen> {
                             int.parse(tag.id!),
                           ).then(
                             (tags) {
+                              if (!mounted) return;
+
                               setState(() {
                                 _selected_tags = tags;
                               });
@@ -166,6 +174,8 @@ class _TagListScreenState extends State<TagListScreen> {
                             int.parse(tag.id!),
                           ).then(
                             (tags) {
+                              if (!mounted) return;
+
                               setState(() {
                                 _selected_tags = tags;
                               });
