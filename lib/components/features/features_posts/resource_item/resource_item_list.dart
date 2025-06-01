@@ -8,12 +8,14 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 class ResourceItemListComponent extends StatefulWidget {
   final List<ResourceItem> resources;
   final bool include_add;
+  final String? post_id;
   final List<ResourceItem>? selected_resources;
 
   const ResourceItemListComponent({
     super.key,
     required this.resources,
     this.include_add = false,
+    this.post_id,
     this.selected_resources,
   });
 
