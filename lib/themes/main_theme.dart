@@ -7,6 +7,7 @@ final ThemeData main_theme = ThemeData(
     headlineMedium: TextStyle(
       inherit: true,
       color: Color(0xFF1F1D2A),
+      fontFamily: 'Roboto',
     ),
     headlineLarge: TextStyle(inherit: true, color: Color(0xFF1F1D2A)),
   ),

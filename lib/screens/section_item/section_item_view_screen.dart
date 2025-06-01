@@ -300,7 +300,10 @@ class _SectionItemView extends State<SectionItemView> {
                     style: TextStyle(
                       fontSize: 25,
                       color: Theme.of(context).colorScheme.onSurface,
-                      fontFamily: 'Roboto',
+                      fontFamily: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.fontFamily,
                     ),
                   ),
                   const Spacer(),
@@ -381,7 +384,10 @@ class _SectionItemView extends State<SectionItemView> {
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.transparent,
-                      fontFamily: 'Roboto',
+                      fontFamily: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.fontFamily,
                     ),
                   ),
                 ],

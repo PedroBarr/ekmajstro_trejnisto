@@ -166,7 +166,8 @@ class _CustomTextFieldComponent extends State<CustomTextFieldComponent> {
                   fontSize: widget.font_size,
                   decoration: TextDecoration.none,
                   color: Theme.of(context).colorScheme.onSurface,
-                  fontFamily: 'Roboto',
+                  fontFamily:
+                      Theme.of(context).textTheme.headlineMedium?.fontFamily,
                 ),
               ),
               widget.spacing == double.infinity

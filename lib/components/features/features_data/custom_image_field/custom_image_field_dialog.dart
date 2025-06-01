@@ -107,7 +107,10 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onSurface,
                         decoration: TextDecoration.none,
-                        fontFamily: 'Roboto',
+                        fontFamily: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.fontFamily,
                       ),
                     );
                   } else {
