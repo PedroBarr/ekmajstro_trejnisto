@@ -26,9 +26,17 @@ class _SearchBarComponent extends State<SearchBarComponent> {
       child: TextField(
         decoration: InputDecoration(
           hintText: widget.hint_text,
-          prefixIcon: Icon(Icons.search, color: Theme.of(context).primaryColor),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).primaryColor,
+          ),
+          hintStyle: TextStyle(
+            color: Theme.of(context).primaryColor.withOpacity(0.5),
+          ),
         ),
-        style: TextStyle(color: Theme.of(context).primaryColor),
+        style: TextStyle(
+          color: Theme.of(context).primaryColor,
+        ),
         onChanged: (event) {
           if (widget.onChanged != null) {
             widget.onChanged!(event);
