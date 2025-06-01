@@ -22,6 +22,7 @@ const String SECCION_ENDPOINT = '/seccion/$ROUTE_ID_WILDCARD';
 
 const String RECURSOS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/recursos';
+const String RECURSOS_ENDPOINT = '/recursos';
 
 const String ETIQUETAS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/etiquetas';
@@ -520,5 +521,22 @@ Future<Tag> createTag(Tag tag) async {
     return new_tag;
   } catch (e) {
     throw Exception(ERROR_TAG_ITEM);
+  }
+}
+
+Future<List<ResourceItem>> getResources() async {
+  try {
+    final response = await http.get(
+      Uri.parse(BACKEND_API + RECURSOS_ENDPOINT).replace(
+        queryParameters: {'con_todo': 'true'},
+      ),
+    );
+
+    late dynamic body = getBody(response);
+    late List<ResourceItem> resources = dtoResourceItemList(body);
+
+    return resources;
+  } catch (e) {
+    throw Exception(ERROR_RESOURCE_ITEM_LIST);
   }
 }
