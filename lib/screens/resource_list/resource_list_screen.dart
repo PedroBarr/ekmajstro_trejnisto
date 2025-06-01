@@ -1,5 +1,7 @@
 import 'package:ekmajstro_trejnisto/models/models.dart';
 
+import 'resource_list_constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
@@ -34,12 +36,12 @@ class _ResourceListScreen extends State<ResourceListScreen> {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: const Text('Recursos'),
+            title: const Text(RESOURCE_LIST_TITLE),
           ),
           body: SingleChildScrollView(
             child: Column(children: [
               SearchBarComponent(
-                  hint_text: 'Buscar etiqueta',
+                  hint_text: HINT_RESOURCE_LIST,
                   onChanged: (String value) {
                     setState(() {
                       _search_text = value;
