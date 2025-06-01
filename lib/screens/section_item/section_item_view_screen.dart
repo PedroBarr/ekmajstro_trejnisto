@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'section_item_view_constants.dart';
+
 import 'package:ekmajstro_trejnisto/config/config.dart';
-import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
+import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
-import 'package:ekmajstro_trejnisto/screens/section_item/section_item_view_constants.dart';
 
 class SectionItemView extends StatefulWidget {
   final int post_id;
@@ -282,7 +283,7 @@ class _SectionItemView extends State<SectionItemView> {
                                 .toList())
                         : const Center(
                             child: Text(
-                              section_segments_empty,
+                              SECTION_SEGMENTS_EMPTY_MESSAGE,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.grey,
@@ -347,7 +348,7 @@ class _SectionItemView extends State<SectionItemView> {
                                   onMark();
                                 } else {
                                   showMessage(
-                                    segment_mark_already,
+                                    SEGMENT_MARK_ALREADY_MESSAGE,
                                     context,
                                   );
                                 }
@@ -399,7 +400,7 @@ class _SectionItemView extends State<SectionItemView> {
                       navigateToSegment(context, _buildRoute());
                     },
                     backgroundColor: Theme.of(context).colorScheme.onSurface,
-                    tooltip: section_segments_add,
+                    tooltip: SECTION_SEGMENTS_ADD,
                     mini: true,
                     shape: const CircleBorder(),
                     child: Icon(

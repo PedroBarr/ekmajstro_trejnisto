@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
-const String section_segments_add = 'Agregar segmento';
-const String section_segments_empty = 'No hay segmentos en esta sección';
-const String segment_mark_already = 'Ya está marcado';
+// Labels
+const String SECTION_SEGMENTS_ADD = 'Agregar segmento';
+
+// Messages
+const String SECTION_SEGMENTS_EMPTY_MESSAGE =
+    'No hay segmentos en esta sección';
+const String SEGMENT_MARK_ALREADY_MESSAGE = 'Ya está marcado';
 
 enum SegmentDirection {
   up,
