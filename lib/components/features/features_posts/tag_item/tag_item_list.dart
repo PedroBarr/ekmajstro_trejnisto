@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'add_tag_item_component.dart';
+
 import 'package:ekmajstro_trejnisto/models/models.dart';
-import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 class TagItemListComponent extends StatefulWidget {
   final List<TagItem> tags;
@@ -20,16 +21,6 @@ class TagItemListComponent extends StatefulWidget {
 }
 
 class _TagItemListComponent extends State<TagItemListComponent> {
-  void navigateToTagList() {
-    Navigator.pushNamed(
-      context,
-      buildIdRouteById(
-        ROUTER_TAG_VIEW_ROUTE,
-        int.parse(widget.post_id),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,31 +70,8 @@ class _TagItemListComponent extends State<TagItemListComponent> {
         Builder(
           builder: (context) {
             return widget.include_add
-                ? GestureDetector(
-                    onTap: navigateToTagList,
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                        left: 10.0,
-                        right: 10.0,
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      child: Container(
-                        height: 40.0,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            style: BorderStyle.solid,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                      ),
-                    ),
+                ? AddTagItemComponent(
+                    post_id: widget.post_id,
                   )
                 : SizedBox.shrink();
           },
