@@ -35,6 +35,7 @@ const String ETIQUETA_NUEVA_ENDPOINT = '/etiqueta';
 const String PREVISUALIZACION_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/previsualizacion';
 const String PREVISUALIZACION_NUEVA_ENDPOINT = '/previsualizacion';
+const String PREVISUALIZACION_ENDPOINT = '/previsualizacion/$ROUTE_ID_WILDCARD';
 
 const String SEGMENTOS_SECCION_ENDPOINT =
     '/seccion/$ROUTE_ID_WILDCARD/segmentos';
@@ -526,7 +527,9 @@ Future<Tag> createTag(Tag tag) async {
 }
 
 Future<PreviewItem> savePreview(PreviewItem preview, String? post_id) async {
-  if (post_id != null) {
+  if (preview.id!.isNotEmpty) {
+    return updatePreview(preview);
+  } else if (post_id != null) {
     return createPreview(preview, post_id);
   } else {
     return Future.value(preview);
@@ -546,6 +549,27 @@ Future<PreviewItem> createPreview(PreviewItem preview, String post_id) async {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(previewMap),
+    );
+
+    late dynamic body = getBody(response);
+    late PreviewItem new_preview = PreviewItem.fromJson(body);
+
+    return new_preview;
+  } catch (e) {
+    throw Exception(ERROR_PREVIEW_ITEM);
+  }
+}
+
+Future<PreviewItem> updatePreview(PreviewItem preview) async {
+  try {
+    String subPath =
+        PREVISUALIZACION_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, preview.id!);
+    final response = await http.put(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(preview.toMap(true)),
     );
 
     late dynamic body = getBody(response);
