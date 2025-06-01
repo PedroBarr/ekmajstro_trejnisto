@@ -2,6 +2,27 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
+// Field labels
+const String SEGMENT_LABEL_POSITION = 'Posición';
+const String SEGMENT_LABEL_MEASURE = 'Medida';
+const String SEGMENT_LABEL_CLASS = 'Clase';
+const String SEGMENT_LABEL_CONTENT = 'Contenido';
+
+const String SEGMENT_LABEL_ADD_PART = 'Agregar parte';
+const String SEGMENT_PART_LABEL_NAME = 'Nombre de la parte';
+
+const String SEGMENT_CONTENT_LABEL_TEXT_TYPE = 'Texto';
+const String SEGMENT_CONTENT_LABEL_IMAGE_TYPE = 'Imagen';
+
+// Messages
+const String SEGMENT_SAVE_SUCCESS_MESSAGE = 'Segmento guardado correctamente';
+const String SEGMENT_SAVE_ERROR_MESSAGE = 'Error al guardar el segmento';
+
+const String SEGMENT_POSITION_ERROR_MESSAGE = 'Sin asignar';
+const String SEGMENT_LABEL_ADD_PART_MESSAGE_BASE =
+    'Agregar nueva parte al segmento de tipo ';
+
+// Dropdowns constants and enums
 typedef IconSegmentTypeEntry = DropdownMenuEntry<IconSegmentType>;
 
 enum IconSegmentType {
