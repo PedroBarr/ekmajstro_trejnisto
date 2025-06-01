@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'custom_image_field_dialog.dart';
-import 'package:ekmajstro_trejnisto/components/core/backdrop/backdrop.dart';
+import 'custom_image_field_constants.dart';
+import 'package:ekmajstro_trejnisto/components/core/core.dart';
 
 class CustomImageFieldComponent extends StatefulWidget {
   final double height;
@@ -49,7 +50,7 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
         BackdropComponent.showDialog(
           context: context,
           child: CustomImageFieldDialog(
-            mode: 'edit',
+            mode: CUSTOM_IMAGE_FIELD_MODE_EDIT,
             value: widget.value,
             title: widget.title,
             is_title_editable: widget.is_title_editable,
@@ -84,7 +85,7 @@ class _CustomImageFieldComponent extends State<CustomImageFieldComponent> {
         BackdropComponent.showDialog(
           context: context,
           child: CustomImageFieldDialog(
-            mode: 'detail',
+            mode: CUSTOM_IMAGE_FIELD_MODE_DETAIL,
             value: widget.value,
             title: widget.title,
           ),

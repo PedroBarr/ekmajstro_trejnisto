@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:ekmajstro_trejnisto/components/components.dart';
+import 'custom_image_field_constants.dart';
+import 'package:ekmajstro_trejnisto/components/features/features_data/custom_text_field/custom_text_field.dart';
 
 class CustomImageFieldDialog extends StatefulWidget {
   final String mode;
@@ -14,7 +15,7 @@ class CustomImageFieldDialog extends StatefulWidget {
 
   const CustomImageFieldDialog({
     super.key,
-    this.mode = 'edit',
+    this.mode = CUSTOM_IMAGE_FIELD_MODE_DEFAULT,
     this.value,
     this.title,
     this.is_title_editable = false,
@@ -23,12 +24,14 @@ class CustomImageFieldDialog extends StatefulWidget {
     this.close_on_save = true,
     this.closeDialog,
   })  : assert(
-          mode == 'edit' || mode == 'detail',
-          'mode must be either "edit" or "detail"',
+          mode == CUSTOM_IMAGE_FIELD_MODE_EDIT ||
+              mode == CUSTOM_IMAGE_FIELD_MODE_DETAIL,
+          CUSTOM_IMAGE_FIELD_MODE_UNDEFINED_ERROR_MESSAGE,
         ),
         assert(
-          (mode == 'detail' && value != null) || mode == 'edit',
-          'value must be provided when mode is "detail"',
+          (mode == CUSTOM_IMAGE_FIELD_MODE_DETAIL && value != null) ||
+              mode == CUSTOM_IMAGE_FIELD_MODE_EDIT,
+          CUSTOM_IMAGE_FIELD_MODE_DETAIL_VALUE_REQUIRED_ERROR_MESSAGE,
         );
 
   @override
@@ -74,7 +77,7 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.mode == 'detail') {
+    if (widget.mode == CUSTOM_IMAGE_FIELD_MODE_DETAIL) {
       return Container(
         padding: const EdgeInsets.all(10.0),
         child: SingleChildScrollView(
@@ -195,7 +198,7 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                       borderRadius: BorderRadius.circular(10.0),
                       child: TextField(
                         decoration: InputDecoration(
-                          labelText: 'URL de la imagen',
+                          labelText: CUSTOM_IMAGE_FIELD_URL_LABEL,
                           labelStyle: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
                             fontSize: 12,
@@ -250,7 +253,7 @@ class _CustomImageFieldDialog extends State<CustomImageFieldDialog> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    'Actualizar imagen',
+                    CUSTOM_IMAGE_FIELD_CONFIRM_BUTTON_LABEL,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.onSurface,
