@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'tag_list_constants.dart';
+
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
@@ -24,15 +26,15 @@ class _CreateTagItemComponentState extends State<CreateTagItemComponent> {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.my_library_add),
-      tooltip: 'Agregar etiqueta',
+      tooltip: CREATE_TAG_TITLE,
       onPressed: () {
         showDialog(
           context: context,
           builder: (context) {
             return DialogSimpleTextComponent(
-              title: "Agregar etiqueta",
-              text: "Digitar el nombre y la descripción de la etiqueta",
-              confirmText: "Agregar",
+              title: CREATE_TAG_TITLE,
+              text: CREATE_TAG_DESCRIPTION,
+              confirmText: CREATE_TAG_CONFIRM_TEXT,
               onConfirm: () {
                 Tag tag = Tag(
                   name: _name,
@@ -63,8 +65,8 @@ class _CreateTagItemComponentState extends State<CreateTagItemComponent> {
                     const SizedBox(height: 10.0),
                     TextField(
                       decoration: const InputDecoration(
-                        labelText: 'Nombre de la etiqueta',
-                        hintText: 'Ejemplo: Fuerza',
+                        labelText: CREATE_TAG_NAME_LABEL,
+                        hintText: CREATE_TAG_NAME_HINT,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(5.0),
@@ -80,8 +82,8 @@ class _CreateTagItemComponentState extends State<CreateTagItemComponent> {
                     const SizedBox(height: 10.0),
                     TextField(
                       decoration: const InputDecoration(
-                        labelText: 'Descripción de la etiqueta',
-                        hintText: 'Ejemplo: Entrenamiento de fuerza',
+                        labelText: CREATE_TAG_DESCRIPTION_LABEL,
+                        hintText: CREATE_TAG_DESCRIPTION_HINT,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(5.0),

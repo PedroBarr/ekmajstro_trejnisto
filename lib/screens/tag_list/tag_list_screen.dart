@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'create_tag_item_component.dart';
+import 'tag_list_constants.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
@@ -105,12 +106,12 @@ class _TagListScreenState extends State<TagListScreen> {
                 },
               ),
             ],
-            title: const Text('Etiquetas'),
+            title: const Text(TAG_LIST_TITLE),
           ),
           body: Column(
             children: [
               SearchBarComponent(
-                  hint_text: 'Buscar etiqueta',
+                  hint_text: HINT_TAG_LIST,
                   onChanged: (String value) {
                     setState(() {
                       _search_text = value;
