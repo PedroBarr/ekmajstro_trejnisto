@@ -46,6 +46,10 @@ const String ROUTER_TAG_LIST_ROUTE =
 const String ROUTER_TAG_VIEW_ROUTE =
     '$ROUTER_POST_VIEW_ROUTE$ROUTER_TAG_ITEM_SUB_PATH';
 
+const String ROUTER_RESOURCE_ITEM_SUB_PATH = '/resources';
+const String ROUTER_RESOURCE_LIST_ROUTE =
+    '$ROUTER_MAIN_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH';
+
 Route<dynamic> mainRouter(RouteSettings settings) {
   if (settings.name == ROUTER_MAIN_ROUTE) {
     return mainRouter(const RouteSettings(
@@ -196,6 +200,14 @@ Route<dynamic> mainRouter(RouteSettings settings) {
     return MaterialPageRoute(
       builder: (_) => SafeArea(
         child: TagListScreen(),
+      ),
+    );
+  }
+
+  if (settings.name == '/app/resources') {
+    return MaterialPageRoute(
+      builder: (_) => SafeArea(
+        child: ResourceListScreen(),
       ),
     );
   }
