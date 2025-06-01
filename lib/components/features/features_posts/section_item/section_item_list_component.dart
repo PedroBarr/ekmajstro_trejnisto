@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'section_item_constants.dart';
+
 import 'package:ekmajstro_trejnisto/models/models.dart';
-import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 class SectionItemListComponent extends StatefulWidget {
   final List<SectionItem> sections;
@@ -20,22 +21,6 @@ class SectionItemListComponent extends StatefulWidget {
 }
 
 class _SectionItemListComponent extends State<SectionItemListComponent> {
-  void navigateToSection(BuildContext context, String route) {
-    Navigator.of(context).pushNamed(route);
-  }
-
-  String _buildRoute({SectionItem? section}) {
-    List<String> subpaths = [
-      buildIdRoute(
-          ROUTER_POST_VIEW_ROUTE, PostItem.fromJson(widget.post.toMap(false))),
-      (section == null
-          ? ROUTER_SECTION_ADD_SUB_ROUTE
-          : buildIdRoute(ROUTER_SECTION_ITEM_SUB_ROUTE, section)),
-    ];
-
-    return buildSubRoute(subpaths);
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -52,7 +37,8 @@ class _SectionItemListComponent extends State<SectionItemListComponent> {
             widget.sections.map<Widget>((section) {
               return GestureDetector(
                 onTap: () {
-                  navigateToSection(context, _buildRoute(section: section));
+                  navigateToSection(context,
+                      sectionBuildRoute(widget.post, section: section));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -96,7 +82,7 @@ class _SectionItemListComponent extends State<SectionItemListComponent> {
                           onTap: () {
                             navigateToSection(
                               context,
-                              _buildRoute(),
+                              sectionBuildRoute(widget.post),
                             );
                           },
                           child: Container(
