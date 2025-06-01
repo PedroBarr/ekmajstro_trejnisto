@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
 import 'package:ekmajstro_trejnisto/screens/post_item/post_item.dart';
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 class PreviewItemComponent extends StatefulWidget {
   final PreviewItem preview;
@@ -28,6 +29,16 @@ class _PreviewItemComponent extends State<PreviewItemComponent> {
     super.initState();
 
     _preview = widget.preview;
+  }
+
+  void onSave() {
+    savePreview(_preview, widget.post_id).then((preview) {
+      setState(() {
+        _preview = preview;
+      });
+
+      showMessage('Publicación exitosa', context);
+    });
   }
 
   @override
@@ -94,7 +105,7 @@ class _PreviewItemComponent extends State<PreviewItemComponent> {
                       height: widget.is_publishable ? 10 : 0,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: onSave,
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 10.0,
