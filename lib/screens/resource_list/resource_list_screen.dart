@@ -25,6 +25,8 @@ class _ResourceListScreen extends State<ResourceListScreen> {
 
   String _search_text = '';
 
+  bool _is_loading = false;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +35,8 @@ class _ResourceListScreen extends State<ResourceListScreen> {
   }
 
   void loadResources() {
+    toggleLoading(true);
+
     getResources().then((resources) {
       if (mounted) {
         setState(() {
@@ -49,7 +53,23 @@ class _ResourceListScreen extends State<ResourceListScreen> {
           setState(() {
             _selected_resources = resources;
           });
+        }).whenComplete(() {
+          toggleLoading(false);
         });
+      } else {
+        toggleLoading(false);
+      }
+    });
+  }
+
+  void toggleLoading(dynamic value) {
+    if (!mounted) return;
+
+    setState(() {
+      if ([true, false].contains(value)) {
+        _is_loading = value;
+      } else {
+        _is_loading = !_is_loading;
       }
     });
   }
@@ -79,16 +99,23 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                       _search_text = value;
                     });
                   }),
-              ResourceItemListComponent(
-                resources: _resources.where((resource) {
-                  return resource.name
-                          .toLowerCase()
-                          .contains(_search_text.toLowerCase()) ||
-                      resource.description
-                          .toLowerCase()
-                          .contains(_search_text.toLowerCase());
-                }).toList(),
-              ),
+              (_is_loading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    )
+                  : ResourceItemListComponent(
+                      resources: _resources.where((resource) {
+                        return resource.name
+                                .toLowerCase()
+                                .contains(_search_text.toLowerCase()) ||
+                            resource.description
+                                .toLowerCase()
+                                .contains(_search_text.toLowerCase());
+                      }).toList(),
+                      selected_resources: _selected_resources,
+                    )),
             ]),
           ),
         ),
