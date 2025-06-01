@@ -8,7 +8,12 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
 
 class ResourceListScreen extends StatefulWidget {
-  const ResourceListScreen({super.key});
+  final int? post_id;
+
+  const ResourceListScreen({
+    super.key,
+    this.post_id,
+  });
 
   @override
   State<ResourceListScreen> createState() => _ResourceListScreen();
@@ -16,16 +21,34 @@ class ResourceListScreen extends StatefulWidget {
 
 class _ResourceListScreen extends State<ResourceListScreen> {
   List<ResourceItem> _resources = [];
+  List<ResourceItem> _selected_resources = [];
 
   String _search_text = '';
 
   @override
   void initState() {
     super.initState();
+
+    loadResources();
+  }
+
+  void loadResources() {
     getResources().then((resources) {
       if (mounted) {
         setState(() {
           _resources = resources;
+        });
+      }
+    }).whenComplete(() {
+      if (widget.post_id != null) {
+        getPostResources(
+          Post(
+            id: widget.post_id!.toString(),
+          ),
+        ).then((resources) {
+          setState(() {
+            _selected_resources = resources;
+          });
         });
       }
     });
