@@ -14,4 +14,9 @@ List<NavItemModel> NAVMENU_ITEMS_LIST = [
     title: NAV_ITEM_TAGS_LABEL,
     location: ROUTER_TAG_LIST_ROUTE,
   ),
+  NavItemModel(
+    icon: iconNavResourceList(main_theme.scaffoldBackgroundColor),
+    title: NAV_ITEM_RESOURCES_LABEL,
+    location: ROUTER_RESOURCE_LIST_ROUTE,
+  ),
 ];
