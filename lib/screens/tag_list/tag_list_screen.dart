@@ -199,48 +199,30 @@ class _TagListScreenState extends State<TagListScreen> {
               const SizedBox(height: 10.0),
               (widget.post_id != null && _selected_tags.isNotEmpty)
                   ? Container(
-                      padding: const EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.only(
+                        left: 10.0,
+                        right: 10.0,
+                      ),
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 8.0,
+                        top: 8.0,
+                      ),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: _selected_tags.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 5.0,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          final tag = _selected_tags[index];
-                          return GestureDetector(
-                            onTap: () {
-                              untagPost(widget.post_id!, int.parse(tag.id))
-                                  .then((tags) {
-                                setState(() {
-                                  _selected_tags = tags;
-                                });
+                      child: TagItemListComponent(
+                        tags: getSelectedTags(),
+                        include_add: false,
+                        tag_color: Theme.of(context).colorScheme.onPrimary,
+                        onTapTag: (TagItem tag) {
+                          untagPost(widget.post_id!, int.parse(tag.id!)).then(
+                            (tags) {
+                              setState(() {
+                                _selected_tags = tags;
                               });
                             },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                tag.name,
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  fontSize: 16.0,
-                                ),
-                              ),
-                            ),
                           );
                         },
                       ),
@@ -251,53 +233,23 @@ class _TagListScreenState extends State<TagListScreen> {
               ),
               Expanded(
                 child: (!_is_loading
-                    ? Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GridView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: getMainTags().length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 5.0,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            final tag = getMainTags()[index];
-                            return GestureDetector(
-                              onTap: () {
-                                if (widget.post_id == null) {
-                                  return;
-                                }
+                    ? TagItemListComponent(
+                        tags: getMainTags(),
+                        include_add: widget.post_id != null,
+                        tag_color: Theme.of(context).colorScheme.onSurface,
+                        onTapTag: (TagItem tag) {
+                          if (widget.post_id == null) {
+                            return;
+                          }
 
-                                tagPost(widget.post_id!, int.parse(tag.id))
-                                    .then((tags) {
-                                  setState(() {
-                                    _selected_tags = tags;
-                                  });
-                                });
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
-                                ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  tag.name,
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                          tagPost(widget.post_id!, int.parse(tag.id!)).then(
+                            (tags) {
+                              setState(() {
+                                _selected_tags = tags;
+                              });
+                            },
+                          );
+                        },
                       )
                     : Center(
                         child: CircularProgressIndicator(
@@ -313,7 +265,7 @@ class _TagListScreenState extends State<TagListScreen> {
     );
   }
 
-  List<Tag> getMainTags() {
+  List<TagItem> getMainTags() {
     return _tags
         .where((tag) => !_selected_tags
             .map((tag) => tag.id.toString())
@@ -321,6 +273,19 @@ class _TagListScreenState extends State<TagListScreen> {
             .contains(tag.id.toString()))
         .where((tag) =>
             tag.name.toLowerCase().contains(_search_text.toLowerCase()))
+        .map((tag) => TagItem(
+              id: tag.id,
+              name: tag.name,
+            ))
+        .toList();
+  }
+
+  List<TagItem> getSelectedTags() {
+    return _selected_tags
+        .map((tag) => TagItem(
+              id: tag.id,
+              name: tag.name,
+            ))
         .toList();
   }
 }
