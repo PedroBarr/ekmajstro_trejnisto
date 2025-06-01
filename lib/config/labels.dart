@@ -37,6 +37,7 @@ const String HINT_SEARCH_POST = 'Buscar publicación';
 // NAVEGATION
 const String NAV_ITEM_POSTS_LABEL = 'Publicaciones';
 const String NAV_ITEM_TAGS_LABEL = 'Etiquetas';
+const String NAV_ITEM_RESOURCES_LABEL = 'Recursos';
 
 // SUB PATHS ASSETS
 const String SUB_PATH_ASSETS_TYPE_RESOURCE = '/img/icons/core/tipo_recurso/';
