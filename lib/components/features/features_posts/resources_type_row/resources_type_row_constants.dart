@@ -1,1 +1,1 @@
-const double DEFAULT_ICON_SIZE = 32.0;
+const double DEFAULT_ICON_SIZE = 50.0;
