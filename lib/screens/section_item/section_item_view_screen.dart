@@ -124,10 +124,10 @@ class _SectionItemView extends State<SectionItemView> {
           _section = Section.fromSection(value);
         });
       });
-      message = 'Guardado exitoso';
+      message = SAVE_SECTION_SUCCESS_MESSAGE;
     } catch (e) {
       Navigator.of(context).pop();
-      message = 'Guardado fallido';
+      message = SAVE_SECTION_ERROR_MESSAGE;
     } finally {
       showMessage(message, context);
     }
