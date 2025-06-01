@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'add_tag_item_component.dart';
+import 'tag_item_component.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
 
@@ -44,19 +45,8 @@ class _TagItemListComponent extends State<TagItemListComponent> {
                 ),
                 itemCount: widget.tags.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      widget.tags[index].name,
-                      style: TextStyle(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        fontSize: 16.0,
-                      ),
-                    ),
+                  return TagItemComponent(
+                    tag: widget.tags[index],
                   );
                 },
               ),
