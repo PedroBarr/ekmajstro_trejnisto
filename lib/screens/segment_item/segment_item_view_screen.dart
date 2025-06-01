@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'segment_item_view_constants.dart';
 import 'add_part_segment_item_component.dart';
+import 'part_segment_item_list_component.dart';
 
 import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
@@ -257,52 +258,11 @@ class _SegmentItemView extends State<SegmentItemView> {
                               },
                             ),
                             const SizedBox(height: 10.0),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: List.generate(
-                                getContentKeys().length,
-                                (index) {
-                                  return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(getContentKeys()[index]),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        constraints: BoxConstraints(
-                                          maxWidth: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2,
-                                        ),
-                                        padding: const EdgeInsets.only(
-                                          top: 5.0,
-                                          bottom: 5.0,
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            hintText: SEGMENT_LABEL_CONTENT,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                          ),
-                                          controller: TextEditingController(
-                                            text: _segment.getContent(
-                                                getContentKeys()[index]),
-                                          ),
-                                          onSubmitted: (value) {
-                                            setSegment(
-                                                getContentKeys()[index], value);
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
+                            PartSegmentItemListComponent(
+                              segment: _segment,
+                              onPartModified: (part_name, value) {
+                                setSegment(part_name, value);
+                              },
                             ),
                             const SizedBox(height: 10.0),
                             (_segment.id.isEmpty
@@ -385,11 +345,5 @@ class _SegmentItemView extends State<SegmentItemView> {
         ),
       ],
     );
-  }
-
-  List<String> getContentKeys() {
-    return _segment.content.keys
-        .where((key) => !defaultParts.contains(key))
-        .toList();
   }
 }
