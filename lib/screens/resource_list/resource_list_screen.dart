@@ -101,7 +101,37 @@ class _ResourceListScreen extends State<ResourceListScreen> {
   void processResourceSelection(
     BuildContext context,
     ResourceItem resource,
-  ) {}
+  ) {
+    if (widget.post_id != null) {
+      if (_selected_resources.any((item) => item.id == resource.id)) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return DialogActionOptionsComponent(
+              actions: getActionsForSelectedResource(
+                resource,
+                widget.post_id!,
+                loadResources,
+              ),
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return DialogActionOptionsComponent(
+              actions: getActionsForUnselectedResource(
+                resource,
+                widget.post_id!,
+                loadResources,
+              ),
+            );
+          },
+        );
+      }
+    }
+  }
 
   @override
   build(BuildContext context) {
