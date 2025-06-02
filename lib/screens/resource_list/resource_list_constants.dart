@@ -18,6 +18,12 @@ navigateToResourceItemViewScreen(
   int? post_id,
 }) {
   if (post_id != null) {
+    Navigator.of(context).pushNamed(
+      buildSubRoute([
+        buildIdRouteById(ROUTER_POST_VIEW_ROUTE, post_id),
+        buildIdRouteById(ROUTER_RESOURCE_ITEM_VIEW_SUB_PATH, resource_id),
+      ]),
+    );
   } else {
     Navigator.of(context)
         .pushNamed(buildIdRouteById(ROUTER_RESOURCE_VIEW_ROUTE, resource_id));
@@ -56,6 +62,7 @@ ActionItemModel getActionEditPostResource(
         post_id: post_id,
       );
     },
+    pop_on_tap: false,
   );
 }
 
@@ -105,6 +112,7 @@ List<ActionItemModel> getActionsForUnselectedResource(
   Function onComplete,
 ) {
   return [
+    getActionEditPostResource(context, resource, post_id),
     getActionAttachResource(resource, post_id, beforeComplete, onComplete),
   ];
 }
@@ -117,6 +125,7 @@ List<ActionItemModel> getActionsForSelectedResource(
   Function onComplete,
 ) {
   return [
+    getActionEditPostResource(context, resource, post_id),
     getActionDetachResource(resource, post_id, beforeComplete, onComplete),
   ];
 }

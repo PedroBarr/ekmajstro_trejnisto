@@ -157,6 +157,29 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                 Theme.of(context).colorScheme.onSurface,
               ),
             ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.add,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+                onPressed: () {
+                  if (widget.post_id != null) {
+                    Navigator.of(context).pushNamed(
+                      buildSubRoute([
+                        buildIdRouteById(
+                            ROUTER_POST_VIEW_ROUTE, widget.post_id!),
+                        ROUTER_RESOURCE_ADD_VIEW_SUB_PATH,
+                      ]),
+                    );
+                  } else {
+                    Navigator.of(context).pushNamed(
+                      ROUTER_RESOURCE_ADD_ROUTE,
+                    );
+                  }
+                },
+              ),
+            ],
             title: const Text(RESOURCE_LIST_TITLE),
           ),
           body: SingleChildScrollView(

@@ -59,10 +59,14 @@ const String ROUTER_RESOURCE_ADD_ROUTE =
     '$ROUTER_RESOURCE_ITEM_ROUTE/$ROUTE_ADD_WILDCARD';
 const String ROUTER_RESOURCE_VIEW_ROUTE =
     '$ROUTER_RESOURCE_ITEM_ROUTE/$ROUTE_ID_WILDCARD';
+const String ROUTER_RESOURCE_ADD_VIEW_SUB_PATH =
+    '$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ADD_WILDCARD';
+const String ROUTER_RESOURCE_ITEM_VIEW_SUB_PATH =
+    '$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ID_WILDCARD';
 const String ROUTER_POST_RESOURCE_ADD_SUB_ROUTE =
-    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ADD_WILDCARD';
+    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ADD_VIEW_SUB_PATH';
 const String ROUTER_POST_RESOURCE_VIEW_SUB_ROUTE =
-    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ID_WILDCARD';
+    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_VIEW_SUB_PATH';
 
 Route<dynamic> mainRouter(RouteSettings settings) {
   if (settings.name == ROUTER_MAIN_ROUTE) {
@@ -220,6 +224,43 @@ Route<dynamic> mainRouter(RouteSettings settings) {
               ),
             ),
           );
+        }
+      }
+
+      if (subPath.contains('$ROUTER_RESOURCE_ITEM_SUB_PATH/')) {
+        final String subPathWithWildCard2 =
+            subPath.replaceAll('$ROUTER_RESOURCE_ITEM_SUB_PATH/', '');
+
+        final int indexEndWildCard2 = subPathWithWildCard2.contains('/')
+            ? subPathWithWildCard2.indexOf('/')
+            : subPathWithWildCard2.length;
+
+        final String wildCard2 =
+            subPathWithWildCard2.substring(0, indexEndWildCard2);
+
+        if (wildCard2 == ROUTE_ADD_WILDCARD) {
+          return MaterialPageRoute(
+            builder: (_) => SafeArea(
+              child: ResourceItemViewScreen(
+                post_id: int.parse(wildCard),
+              ),
+            ),
+          );
+        }
+
+        if (isNumeric(wildCard2)) {
+          String subPath2 = subPathWithWildCard2.substring(indexEndWildCard2);
+
+          if (['', '/'].contains(subPath2)) {
+            return MaterialPageRoute(
+              builder: (_) => SafeArea(
+                child: ResourceItemViewScreen(
+                  post_id: int.parse(wildCard),
+                  resource_id: int.parse(wildCard2),
+                ),
+              ),
+            );
+          }
         }
       }
     }
