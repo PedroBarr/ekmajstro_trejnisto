@@ -46,11 +46,21 @@ const String ROUTER_TAG_LIST_ROUTE =
 const String ROUTER_TAG_VIEW_ROUTE =
     '$ROUTER_POST_VIEW_ROUTE$ROUTER_TAG_ITEM_SUB_PATH';
 
-const String ROUTER_RESOURCE_ITEM_SUB_PATH = '/resources';
+const String ROUTER_RESOURCE_LIST_SUB_PATH = '/resources';
 const String ROUTER_RESOURCE_LIST_ROUTE =
-    '$ROUTER_MAIN_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH';
+    '$ROUTER_MAIN_ROUTE$ROUTER_RESOURCE_LIST_SUB_PATH';
+const String ROUTER_POST_RESOURCES_VIEW_ROUTE =
+    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_LIST_SUB_PATH';
+
+const String ROUTER_RESOURCE_ITEM_SUB_PATH = '/resource';
+const String ROUTER_RESOURCE_ADD_ROUTE =
+    '$ROUTER_MAIN_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ADD_WILDCARD';
 const String ROUTER_RESOURCE_VIEW_ROUTE =
-    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH';
+    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ID_WILDCARD';
+const String ROUTER_POST_RESOURCE_ADD_SUB_ROUTE =
+    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ADD_WILDCARD';
+const String ROUTER_POST_RESOURCE_VIEW_SUB_ROUTE =
+    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ID_WILDCARD';
 
 Route<dynamic> mainRouter(RouteSettings settings) {
   if (settings.name == ROUTER_MAIN_ROUTE) {
@@ -196,9 +206,9 @@ Route<dynamic> mainRouter(RouteSettings settings) {
         }
       }
 
-      if (subPath.contains('$ROUTER_RESOURCE_ITEM_SUB_PATH')) {
+      if (subPath.contains('$ROUTER_RESOURCE_LIST_SUB_PATH')) {
         final String subPathWithWildCard2 =
-            subPath.replaceAll('$ROUTER_RESOURCE_ITEM_SUB_PATH', '');
+            subPath.replaceAll('$ROUTER_RESOURCE_LIST_SUB_PATH', '');
 
         if (['', '/'].contains(subPathWithWildCard2)) {
           return MaterialPageRoute(

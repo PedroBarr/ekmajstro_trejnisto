@@ -19,7 +19,7 @@ class _AddResourceItemComponent extends State<AddResourceItemComponent> {
     Navigator.pushNamed(
       context,
       buildIdRouteById(
-        ROUTER_RESOURCE_VIEW_ROUTE,
+        ROUTER_POST_RESOURCES_VIEW_ROUTE,
         int.parse(widget.post_id!),
       ),
     );
