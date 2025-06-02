@@ -7,3 +7,4 @@ export 'preview_item_model.dart';
 export 'nav_item_model.dart';
 export 'model_item.dart';
 export 'resource_type_item_model.dart';
+export 'action_item_model.dart';
