@@ -23,6 +23,7 @@ const String SECCION_ENDPOINT = '/seccion/$ROUTE_ID_WILDCARD';
 const String RECURSOS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/recursos';
 const String RECURSOS_ENDPOINT = '/recursos';
+const String ADJUNTAR_RECURSO_PUBLICACION_ENDPOINT = '/publicacion/recurso';
 
 const String ETIQUETAS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/etiquetas';
@@ -612,5 +613,34 @@ Future<List<ResourceTypeItem>> getResourceTypes() async {
     return resourceTypes;
   } catch (e) {
     throw Exception(ERROR_RESOURCE_TYPE_ITEM_LIST);
+  }
+}
+
+Future<List<ResourceItem>> attachResourceToPost(
+  int post_id,
+  ResourceItem resource,
+) async {
+  try {
+    String subPath = ADJUNTAR_RECURSO_PUBLICACION_ENDPOINT;
+
+    Map<String, dynamic> resourceMap = {
+      'publicacion': post_id,
+      'recurso': resource.id,
+    };
+
+    final response = await http.post(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(resourceMap),
+    );
+
+    late dynamic body = getBody(response);
+    late List<ResourceItem> resources = dtoResourceItemList(body);
+
+    return resources;
+  } catch (e) {
+    throw Exception(ERROR_RESOURCE_ITEM_LIST);
   }
 }
