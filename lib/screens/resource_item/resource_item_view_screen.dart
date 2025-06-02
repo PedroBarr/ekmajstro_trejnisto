@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'resource_item_view_constants.dart';
 
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
+import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 
 class ResourceItemViewScreen extends StatefulWidget {
@@ -98,7 +99,21 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) {
+            return _is_loading
+                ? Container()
+                : GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: iconNavResourceList(
+                        Theme.of(context).colorScheme.onSurface),
+                  );
+          },
+        ),
+      ),
       body: Center(
         child: CircularProgressIndicator(
           color: Theme.of(context).colorScheme.primary,
