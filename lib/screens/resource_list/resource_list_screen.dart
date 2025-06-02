@@ -103,6 +103,8 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                       _search_text = value;
                     });
                   }),
+              SizedBox(height: 5),
+              ResourcesTypeRowComponent(),
               (_is_loading
                   ? Center(
                       child: CircularProgressIndicator(
