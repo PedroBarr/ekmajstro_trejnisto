@@ -24,6 +24,8 @@ const String RECURSOS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/recursos';
 const String RECURSOS_ENDPOINT = '/recursos';
 const String ADJUNTAR_RECURSO_PUBLICACION_ENDPOINT = '/publicacion/recurso';
+const String DESVINCULAR_RECURSO_PUBLICACION_ENDPOINT =
+    '/publicacion/recurso/$ROUTE_ID_WILDCARD';
 
 const String ETIQUETAS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/etiquetas';
@@ -629,6 +631,35 @@ Future<List<ResourceItem>> attachResourceToPost(
     };
 
     final response = await http.post(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(resourceMap),
+    );
+
+    late dynamic body = getBody(response);
+    late List<ResourceItem> resources = dtoResourceItemList(body);
+
+    return resources;
+  } catch (e) {
+    throw Exception(ERROR_RESOURCE_ITEM_LIST);
+  }
+}
+
+Future<List<ResourceItem>> detachResourceFromPost(
+  int post_id,
+  ResourceItem resource,
+) async {
+  try {
+    String subPath = DESVINCULAR_RECURSO_PUBLICACION_ENDPOINT.replaceAll(
+        ROUTE_ID_WILDCARD, resource.id.toString());
+
+    Map<String, dynamic> resourceMap = {
+      'publicacion': post_id,
+    };
+
+    final response = await http.delete(
       Uri.parse(BACKEND_API + subPath),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
