@@ -123,8 +123,43 @@ class Resource {
     };
   }
 
+  factory Resource.fromResource(Resource resource) {
+    Resource newResource = Resource();
+    newResource.copyResource(resource);
+    return newResource;
+  }
+
+  void copyResource(Resource resource) {
+    id = resource.id;
+    name = resource.name;
+    description = resource.description;
+    type = resource.type;
+    type_key = resource.type_key;
+    file_name = resource.file_name;
+    file_uri = resource.file_uri;
+    file_size = resource.file_size;
+    file_mime = resource.file_mime;
+    file_extension = resource.file_extension;
+  }
+
   @override
   String toString() {
     return '<Resource> [$name] ($file_name, $type_key)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return (identical(this, other) ||
+        (other is Resource &&
+            (id == other.id &&
+                name == other.name &&
+                description == other.description &&
+                type == other.type &&
+                type_key == other.type_key &&
+                file_name == other.file_name &&
+                file_uri == other.file_uri &&
+                file_size == other.file_size &&
+                file_mime == other.file_mime &&
+                file_extension == other.file_extension)));
   }
 }
