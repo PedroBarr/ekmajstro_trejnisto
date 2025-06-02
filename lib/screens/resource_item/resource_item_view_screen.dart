@@ -5,6 +5,7 @@ import 'resource_item_view_constants.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:ekmajstro_trejnisto/components/components.dart';
 
 class ResourceItemViewScreen extends StatefulWidget {
   final int? resource_id;
@@ -50,6 +51,9 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
       Resource resource = Resource.fromResource(_resource);
 
       switch (attr) {
+        case 'name':
+          _resource.name = value;
+          break;
         default:
           break;
       }
@@ -130,6 +134,20 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
             },
           ),
         ],
+        title: Builder(
+          builder: (context) {
+            if (!_is_loading) {
+              return CustomTextFieldComponent(
+                value: _resource.name,
+                spacing: 10.0,
+                font_size: 16,
+                onConfirm: (value) => setResource('name', value),
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
       ),
       body: Center(
         child: CircularProgressIndicator(
