@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ActionItemModel {
   final String label;
   final Function? onTap;
-  final Widget? icon;
+  final IconData? icon;
   final Color? backColor;
   final Color? color;
 
