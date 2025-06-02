@@ -98,6 +98,11 @@ class _ResourceListScreen extends State<ResourceListScreen> {
     });
   }
 
+  void processResourceSelection(
+    BuildContext context,
+    ResourceItem resource,
+  ) {}
+
   @override
   build(BuildContext context) {
     return Stack(
@@ -142,6 +147,12 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                   : ResourceItemListComponent(
                       resources: getFilteredResources(),
                       selected_resources: _selected_resources,
+                      onTap: (ResourceItem r) {
+                        processResourceSelection(
+                          context,
+                          r,
+                        );
+                      },
                     )),
             ]),
           ),

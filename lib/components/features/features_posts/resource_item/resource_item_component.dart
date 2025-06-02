@@ -6,11 +6,13 @@ import 'package:ekmajstro_trejnisto/models/models.dart';
 class ResourceItemComponent extends StatefulWidget {
   final ResourceItem resource;
   final bool? is_selected;
+  final Function(ResourceItem)? onTap;
 
   const ResourceItemComponent({
     super.key,
     required this.resource,
     this.is_selected = false,
+    this.onTap,
   });
 
   @override
@@ -21,7 +23,11 @@ class _ResourceItemComponent extends State<ResourceItemComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        if (widget.onTap != null) {
+          widget.onTap!(widget.resource);
+        }
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),

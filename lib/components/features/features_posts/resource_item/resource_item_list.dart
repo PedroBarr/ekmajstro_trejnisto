@@ -10,6 +10,7 @@ class ResourceItemListComponent extends StatefulWidget {
   final bool include_add;
   final String? post_id;
   final List<ResourceItem>? selected_resources;
+  final Function(ResourceItem)? onTap;
 
   const ResourceItemListComponent({
     super.key,
@@ -17,6 +18,7 @@ class ResourceItemListComponent extends StatefulWidget {
     this.include_add = false,
     this.post_id,
     this.selected_resources,
+    this.onTap,
   });
 
   @override
@@ -42,6 +44,11 @@ class _ResourceItemListComponent extends State<ResourceItemListComponent> {
               return ResourceItemComponent(
                 resource: resource,
                 is_selected: isSelected(resource),
+                onTap: (ResourceItem resource) {
+                  if (widget.onTap != null) {
+                    widget.onTap!(resource);
+                  }
+                },
               );
             }).toList(),
             [
