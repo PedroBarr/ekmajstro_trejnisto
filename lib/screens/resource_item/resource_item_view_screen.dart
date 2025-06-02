@@ -113,6 +113,23 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                   );
           },
         ),
+        actions: [
+          Builder(
+            builder: (context) {
+              return _is_modified
+                  ? GestureDetector(
+                      onTap: onSave,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Icon(
+                          Icons.save_as_rounded,
+                        ),
+                      ),
+                    )
+                  : Container();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: CircularProgressIndicator(
