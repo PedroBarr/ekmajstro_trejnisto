@@ -91,3 +91,40 @@ class ResourceItem extends ModelItem {
     return "$BACKEND_ASSETS$SUB_PATH_ASSETS_TYPE_RESOURCE$type_icon.svg";
   }
 }
+
+class Resource {
+  String id;
+  String name;
+  String description;
+  String type;
+  String type_key;
+  String file_name;
+  String file_uri;
+  String file_size;
+  String file_mime;
+  String file_extension;
+
+  Resource({
+    this.id = '',
+    this.name = '',
+    this.description = '',
+    this.type = '',
+    this.type_key = '',
+    this.file_name = '',
+    this.file_uri = '',
+    this.file_size = '',
+    this.file_mime = '',
+    this.file_extension = '',
+  });
+
+  factory Resource.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      _ => throw const FormatException(ERROR_RESOURCE_ITEM_PARSER),
+    };
+  }
+
+  @override
+  String toString() {
+    return '<Resource> [$name] ($file_name, $type_key)';
+  }
+}
