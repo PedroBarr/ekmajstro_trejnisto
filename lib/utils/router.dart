@@ -53,10 +53,12 @@ const String ROUTER_POST_RESOURCES_VIEW_ROUTE =
     '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_LIST_SUB_PATH';
 
 const String ROUTER_RESOURCE_ITEM_SUB_PATH = '/resource';
+const String ROUTER_RESOURCE_ITEM_ROUTE =
+    '$ROUTER_MAIN_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH';
 const String ROUTER_RESOURCE_ADD_ROUTE =
-    '$ROUTER_MAIN_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ADD_WILDCARD';
+    '$ROUTER_RESOURCE_ITEM_ROUTE/$ROUTE_ADD_WILDCARD';
 const String ROUTER_RESOURCE_VIEW_ROUTE =
-    '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ID_WILDCARD';
+    '$ROUTER_RESOURCE_ITEM_ROUTE/$ROUTE_ID_WILDCARD';
 const String ROUTER_POST_RESOURCE_ADD_SUB_ROUTE =
     '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_SUB_PATH/$ROUTE_ADD_WILDCARD';
 const String ROUTER_POST_RESOURCE_VIEW_SUB_ROUTE =
@@ -237,6 +239,41 @@ Route<dynamic> mainRouter(RouteSettings settings) {
         child: ResourceListScreen(),
       ),
     );
+  }
+
+  if (settings.name!.contains('$ROUTER_RESOURCE_ITEM_ROUTE/')) {
+    final String path = settings.name ?? '';
+
+    final String subPathWithWildCard =
+        path.replaceAll('$ROUTER_RESOURCE_ITEM_ROUTE/', '');
+
+    final int indexEndWildCard = subPathWithWildCard.contains('/')
+        ? subPathWithWildCard.indexOf('/')
+        : subPathWithWildCard.length;
+
+    final String wildCard = subPathWithWildCard.substring(0, indexEndWildCard);
+
+    if (wildCard == ROUTE_ADD_WILDCARD) {
+      return MaterialPageRoute(
+        builder: (_) => SafeArea(
+          child: ResourceItemViewScreen(),
+        ),
+      );
+    }
+
+    if (isNumeric(wildCard)) {
+      String subPath = subPathWithWildCard.substring(indexEndWildCard);
+
+      if (['', '/'].contains(subPath)) {
+        return MaterialPageRoute(
+          builder: (_) => SafeArea(
+            child: ResourceItemViewScreen(
+              resource_id: int.parse(wildCard),
+            ),
+          ),
+        );
+      }
+    }
   }
 
   return MaterialPageRoute(

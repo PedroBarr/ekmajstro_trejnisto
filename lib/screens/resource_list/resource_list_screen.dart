@@ -109,6 +109,7 @@ class _ResourceListScreen extends State<ResourceListScreen> {
           builder: (context) {
             return DialogActionOptionsComponent(
               actions: getActionsForSelectedResource(
+                context,
                 resource,
                 widget.post_id!,
                 toggleLoading,
@@ -123,6 +124,7 @@ class _ResourceListScreen extends State<ResourceListScreen> {
           builder: (context) {
             return DialogActionOptionsComponent(
               actions: getActionsForUnselectedResource(
+                context,
                 resource,
                 widget.post_id!,
                 toggleLoading,
@@ -132,6 +134,8 @@ class _ResourceListScreen extends State<ResourceListScreen> {
           },
         );
       }
+    } else {
+      navigateToResourceItemViewScreen(context, int.parse(resource.id!));
     }
   }
 
