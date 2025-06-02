@@ -23,6 +23,8 @@ class _ResourceListScreen extends State<ResourceListScreen> {
   List<ResourceItem> _resources = [];
   List<ResourceItem> _selected_resources = [];
 
+  List<ResourceTypeItem> _search_resources_type = [];
+
   String _search_text = '';
 
   bool _is_loading = false;
@@ -74,6 +76,28 @@ class _ResourceListScreen extends State<ResourceListScreen> {
     });
   }
 
+  void addSelectedResourceType(ResourceTypeItem resourceType) {
+    if (!mounted) return;
+    if (_search_resources_type.any((item) => item.id == resourceType.id)) {
+      return;
+    }
+
+    setState(() {
+      _search_resources_type.add(resourceType);
+    });
+  }
+
+  void removeSelectedResourceType(ResourceTypeItem resourceType) {
+    if (!mounted) return;
+    if (!_search_resources_type.any((item) => item.id == resourceType.id)) {
+      return;
+    }
+
+    setState(() {
+      _search_resources_type.removeWhere((item) => item.id == resourceType.id);
+    });
+  }
+
   @override
   build(BuildContext context) {
     return Stack(
@@ -104,7 +128,11 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                     });
                   }),
               SizedBox(height: 5),
-              ResourcesTypeRowComponent(),
+              ResourcesTypeRowComponent(
+                selected_resources_type: _search_resources_type,
+                onSelect: addSelectedResourceType,
+                onUnselect: removeSelectedResourceType,
+              ),
               (_is_loading
                   ? Center(
                       child: CircularProgressIndicator(
@@ -112,14 +140,7 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                       ),
                     )
                   : ResourceItemListComponent(
-                      resources: _resources.where((resource) {
-                        return resource.name
-                                .toLowerCase()
-                                .contains(_search_text.toLowerCase()) ||
-                            resource.description
-                                .toLowerCase()
-                                .contains(_search_text.toLowerCase());
-                      }).toList(),
+                      resources: getFilteredResources(),
                       selected_resources: _selected_resources,
                     )),
             ]),
@@ -128,5 +149,22 @@ class _ResourceListScreen extends State<ResourceListScreen> {
         const FABEkmajstroComponent(),
       ],
     );
+  }
+
+  List<ResourceItem> getFilteredResources() {
+    return _resources.where((resource) {
+      return resource.name.toLowerCase().contains(_search_text.toLowerCase()) ||
+          resource.description
+              .toLowerCase()
+              .contains(_search_text.toLowerCase());
+    }).where((resource) {
+      if (_search_resources_type.isEmpty) {
+        return true;
+      }
+
+      return _search_resources_type.any(
+        (type) => type.name == resource.type,
+      );
+    }).toList();
   }
 }
