@@ -1,3 +1,4 @@
+import 'package:ekmajstro_trejnisto/utils/api.dart';
 import 'package:flutter/material.dart';
 
 import 'resources_type_row_item_component.dart';
@@ -5,14 +6,12 @@ import 'resources_type_row_item_component.dart';
 import 'package:ekmajstro_trejnisto/models/models.dart';
 
 class ResourcesTypeRowComponent extends StatefulWidget {
-  final List<ResourceTypeItem> resources_type;
   final List<ResourceTypeItem>? selected_resources_type;
   final Function(ResourceTypeItem)? onSelect;
   final Function(ResourceTypeItem)? onUnselect;
 
   const ResourcesTypeRowComponent({
     super.key,
-    required this.resources_type,
     this.selected_resources_type,
     this.onSelect,
     this.onUnselect,
@@ -24,6 +23,23 @@ class ResourcesTypeRowComponent extends StatefulWidget {
 }
 
 class _ResourcesTypeRowComponent extends State<ResourcesTypeRowComponent> {
+  List<ResourceTypeItem> _resources_type = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadResourcesType();
+  }
+
+  void loadResourcesType() {
+    getResourceTypes().then((types) {
+      if (!mounted) return;
+      setState(() {
+        _resources_type = types;
+      });
+    });
+  }
+
   void onTap(ResourceTypeItem item) {
     if (widget.selected_resources_type
             ?.any((selected) => selected.id == item.id) ??
@@ -58,7 +74,7 @@ class _ResourcesTypeRowComponent extends State<ResourcesTypeRowComponent> {
   }
 
   List<ResourceTypeItem> getSortedResourcesType() {
-    List<ResourceTypeItem> resources_type = widget.resources_type.toList();
+    List<ResourceTypeItem> resources_type = _resources_type.toList();
 
     if (widget.selected_resources_type != null) {
       resources_type = [
