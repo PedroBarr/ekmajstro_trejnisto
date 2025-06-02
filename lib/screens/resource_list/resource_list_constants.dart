@@ -1,33 +1,40 @@
 import 'package:flutter/material.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
 
 // Labels
 const String RESOURCE_LIST_TITLE = "Recursos";
 const String HINT_RESOURCE_LIST = "Buscar recursos";
 
+const String OPTION_EDIT_RESOURCE_LABEL = "Editar recurso";
+const String OPTION_ATTACH_RESOURCE_LABEL = "Adjuntar recurso";
+const String OPTION_DETACH_RESOURCE_LABEL = "Desvincular recurso";
+
 // Builder options
 ActionItemModel getActionEditResource(ResourceItem resource) {
   return ActionItemModel(
-    label: "Editar recurso",
+    label: OPTION_EDIT_RESOURCE_LABEL,
     icon: Icons.edit,
-    onTap: () {
-      print("Edit resource: ${resource.name}");
-    },
+    onTap: () {},
   );
 }
 
 ActionItemModel getActionAttachResource(
   ResourceItem resource,
   int post_id,
+  Function beforeComplete,
   Function onComplete,
 ) {
   return ActionItemModel(
-    label: "Adjuntar recurso",
+    label: OPTION_ATTACH_RESOURCE_LABEL,
     icon: Icons.attach_file,
     onTap: () {
-      print("Attach resource: ${resource.name} to post ID: $post_id");
-      onComplete();
+      beforeComplete();
+
+      attachResourceToPost(post_id, resource).whenComplete(() {
+        onComplete();
+      });
     },
   );
 }
@@ -35,14 +42,18 @@ ActionItemModel getActionAttachResource(
 ActionItemModel getActionDetachResource(
   ResourceItem resource,
   int post_id,
+  Function beforeComplete,
   Function onComplete,
 ) {
   return ActionItemModel(
-    label: "Desvincular recurso",
+    label: OPTION_DETACH_RESOURCE_LABEL,
     icon: Icons.remove_circle,
     onTap: () {
-      print("Detach resource: ${resource.name} from post ID: $post_id");
-      onComplete();
+      beforeComplete();
+
+      detachResourceFromPost(post_id, resource).whenComplete(() {
+        onComplete();
+      });
     },
   );
 }
@@ -50,21 +61,21 @@ ActionItemModel getActionDetachResource(
 List<ActionItemModel> getActionsForUnselectedResource(
   ResourceItem resource,
   int post_id,
+  Function beforeComplete,
   Function onComplete,
 ) {
   return [
-    getActionEditResource(resource),
-    getActionAttachResource(resource, post_id, onComplete),
+    getActionAttachResource(resource, post_id, beforeComplete, onComplete),
   ];
 }
 
 List<ActionItemModel> getActionsForSelectedResource(
   ResourceItem resource,
   int post_id,
+  Function beforeComplete,
   Function onComplete,
 ) {
   return [
-    getActionEditResource(resource),
-    getActionDetachResource(resource, post_id, onComplete),
+    getActionDetachResource(resource, post_id, beforeComplete, onComplete),
   ];
 }

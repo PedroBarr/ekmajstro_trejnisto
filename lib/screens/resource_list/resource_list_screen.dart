@@ -111,6 +111,7 @@ class _ResourceListScreen extends State<ResourceListScreen> {
               actions: getActionsForSelectedResource(
                 resource,
                 widget.post_id!,
+                toggleLoading,
                 loadResources,
               ),
             );
@@ -124,6 +125,7 @@ class _ResourceListScreen extends State<ResourceListScreen> {
               actions: getActionsForUnselectedResource(
                 resource,
                 widget.post_id!,
+                toggleLoading,
                 loadResources,
               ),
             );
