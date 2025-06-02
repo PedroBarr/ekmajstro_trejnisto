@@ -39,13 +39,16 @@ class _DialogActionOptionsComponentState
           return GestureDetector(
             onTap: () {
               action.onTap?.call();
-              Navigator.of(context).pop();
+
+              if (action.pop_on_tap) {
+                Navigator.of(context).pop();
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(10.0),
               margin: const EdgeInsets.symmetric(vertical: 5.0),
               decoration: BoxDecoration(
-                color: action.backColor ??
+                color: action.back_color ??
                     Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(10.0),
               ),
