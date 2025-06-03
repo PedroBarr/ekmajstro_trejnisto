@@ -23,6 +23,7 @@ class ResourceItemViewScreen extends StatefulWidget {
 
 class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
   Resource _resource = Resource();
+  ResourceTypeItem _selected_resource_type = ResourceTypeItem.nullable();
 
   bool _is_loading = false;
   bool _is_modified = false;
@@ -53,6 +54,36 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
       switch (attr) {
         case 'name':
           _resource.name = value;
+          break;
+        case 'description':
+          _resource.description = value;
+          break;
+        case 'type':
+          if (value is ResourceTypeItem) {
+            _resource.type = value.id.toString();
+            _resource.type_key = value.key;
+            _selected_resource_type = value;
+          } else {
+            _resource.type = '';
+            _resource.type_key = '';
+            _selected_resource_type = ResourceTypeItem.nullable();
+          }
+
+          break;
+        case 'file_name':
+          _resource.file_name = value;
+          break;
+        case 'file_uri':
+          _resource.file_uri = value;
+          break;
+        case 'file_size':
+          _resource.file_size = value;
+          break;
+        case 'file_mime':
+          _resource.file_mime = value;
+          break;
+        case 'file_extension':
+          _resource.file_extension = value;
           break;
         default:
           break;
@@ -102,58 +133,484 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (context) {
-            return _is_loading
-                ? Container()
-                : GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: iconNavResourceList(
-                        Theme.of(context).colorScheme.onSurface),
+    double widthFileFields = MediaQuery.of(context).size.width * 0.6;
+
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            leading: Builder(
+              builder: (context) {
+                return _is_loading
+                    ? Container()
+                    : GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: iconNavResourceList(
+                            Theme.of(context).colorScheme.onSurface),
+                      );
+              },
+            ),
+            actions: [
+              Builder(
+                builder: (context) {
+                  return _is_modified
+                      ? GestureDetector(
+                          onTap: onSave,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Icon(
+                              Icons.save_as_rounded,
+                            ),
+                          ),
+                        )
+                      : Container();
+                },
+              ),
+            ],
+            title: Builder(
+              builder: (context) {
+                if (!_is_loading) {
+                  return CustomTextFieldComponent(
+                    value: _resource.name,
+                    spacing: 10.0,
+                    font_size: 16,
+                    onConfirm: (value) => setResource('name', value),
                   );
-          },
-        ),
-        actions: [
-          Builder(
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
+          ),
+          body: Builder(
             builder: (context) {
-              return _is_modified
-                  ? GestureDetector(
-                      onTap: onSave,
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Icon(
-                          Icons.save_as_rounded,
-                        ),
+              return _is_loading
+                  ? const Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text(
+                            'Descripción',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Descripción',
+                              labelStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: 12,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
+                              ),
+                            ),
+                            onSubmitted: (value) {
+                              setResource('description', value);
+                            },
+                            controller: TextEditingController(
+                              text: _resource.description,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text(
+                            'Tipo',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          ResourcesTypeRowComponent(
+                            selected_resources_type: getSelectedResourceType(),
+                            onSelect: (ResourceTypeItem type) {
+                              setResource('type', type);
+                            },
+                            onUnselect: (ResourceTypeItem type) {
+                              setResource('type', null);
+                            },
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10.0),
+                            padding: EdgeInsets.all(15.0),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(15.0),
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                width: 1.0,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimary
+                                      .withOpacity(0.1),
+                                  blurRadius: 5.0,
+                                  offset: Offset(0, 15),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'ARCHIVO',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    letterSpacing: 5.0,
+                                    fontWeight: FontWeight.bold,
+                                    decorationThickness: 2.0,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Nombre',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                    ),
+                                    Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth: widthFileFields,
+                                      ),
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          labelText: 'Nombre del archivo',
+                                          labelStyle: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                            fontSize: 12,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                        ),
+                                        onSubmitted: (value) {
+                                          setResource('file_name', value);
+                                        },
+                                        controller: TextEditingController(
+                                          text: _resource.file_name,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'URI',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                    ),
+                                    Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth: widthFileFields,
+                                      ),
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          labelText: 'URI del archivo',
+                                          labelStyle: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                            fontSize: 12,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                        ),
+                                        onSubmitted: (value) {
+                                          setResource('file_uri', value);
+                                        },
+                                        controller: TextEditingController(
+                                          text: _resource.file_uri,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Tamaño',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                    ),
+                                    Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth: widthFileFields,
+                                      ),
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          labelText: 'Tamaño del archivo',
+                                          labelStyle: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                            fontSize: 12,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                        ),
+                                        keyboardType: TextInputType.number,
+                                        onSubmitted: (value) {
+                                          setResource('file_size', value);
+                                        },
+                                        controller: TextEditingController(
+                                          text: _resource.file_size,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'MIME',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                    ),
+                                    Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth: widthFileFields,
+                                      ),
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          labelText: 'MIME del archivo',
+                                          labelStyle: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                            fontSize: 12,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                        ),
+                                        onSubmitted: (value) {
+                                          setResource('file_mime', value);
+                                        },
+                                        controller: TextEditingController(
+                                          text: _resource.file_mime,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Extensión',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                    ),
+                                    Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth: widthFileFields,
+                                      ),
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          labelText: 'Extensión del archivo',
+                                          labelStyle: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                            fontSize: 12,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                        ),
+                                        onSubmitted: (value) {
+                                          setResource('file_extension', value);
+                                        },
+                                        controller: TextEditingController(
+                                          text: _resource.file_extension,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  : Container();
+                    );
             },
           ),
-        ],
-        title: Builder(
-          builder: (context) {
-            if (!_is_loading) {
-              return CustomTextFieldComponent(
-                value: _resource.name,
-                spacing: 10.0,
-                font_size: 16,
-                onConfirm: (value) => setResource('name', value),
-              );
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
         ),
-      ),
-      body: Center(
-        child: CircularProgressIndicator(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      ),
+        const FABEkmajstroComponent(),
+      ],
     );
+  }
+
+  List<ResourceTypeItem> getSelectedResourceType() {
+    return _resource.type_key.isNotEmpty ? [_selected_resource_type] : [];
   }
 }

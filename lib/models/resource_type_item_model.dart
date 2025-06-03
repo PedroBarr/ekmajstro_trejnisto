@@ -34,6 +34,15 @@ class ResourceTypeItem extends ModelItem {
     };
   }
 
+  factory ResourceTypeItem.nullable() {
+    return const ResourceTypeItem(
+      id: '',
+      name: '',
+      icon: '',
+      key: '',
+    );
+  }
+
   @override
   String toString() {
     return '<ResourceType> [$name] ($key)';
