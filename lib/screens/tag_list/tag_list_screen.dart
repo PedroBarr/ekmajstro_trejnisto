@@ -77,119 +77,125 @@ class _TagListScreenState extends State<TagListScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Scaffold(
-          appBar: AppBar(
-            leading: GestureDetector(
-              onTap: () {
-                if (widget.post_id != null) {
-                  Navigator.of(context).pop();
-                } else {
-                  navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
-                }
-              },
-              child: iconNavPostList(
-                Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-            actions: [
-              CreateTagItemComponent(
-                onTagAdded: (Tag tag) {
+        RefreshSwipperComponent(
+          onRefresh: () {
+            loadTags();
+          },
+          refreshing: _is_loading,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: GestureDetector(
+                onTap: () {
                   if (widget.post_id != null) {
-                    tagPost(widget.post_id!, int.parse(tag.id))
-                        .whenComplete(() {
-                      loadTags();
-                    });
+                    Navigator.of(context).pop();
                   } else {
-                    loadTags();
+                    navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
                   }
                 },
+                child: iconNavPostList(
+                  Theme.of(context).colorScheme.onSurface,
+                ),
               ),
-            ],
-            title: const Text(TAG_LIST_TITLE),
-          ),
-          body: Column(
-            children: [
-              SearchBarComponent(
-                  hint_text: HINT_TAG_LIST,
-                  onChanged: (String value) {
-                    if (!mounted) return;
+              actions: [
+                CreateTagItemComponent(
+                  onTagAdded: (Tag tag) {
+                    if (widget.post_id != null) {
+                      tagPost(widget.post_id!, int.parse(tag.id))
+                          .whenComplete(() {
+                        loadTags();
+                      });
+                    } else {
+                      loadTags();
+                    }
+                  },
+                ),
+              ],
+              title: const Text(TAG_LIST_TITLE),
+            ),
+            body: Column(
+              children: [
+                SearchBarComponent(
+                    hint_text: HINT_TAG_LIST,
+                    onChanged: (String value) {
+                      if (!mounted) return;
 
-                    setState(() {
-                      _search_text = value;
-                    });
-                  }),
-              const SizedBox(height: 10.0),
-              (widget.post_id != null && _selected_tags.isNotEmpty)
-                  ? Container(
-                      margin: const EdgeInsets.only(
-                        left: 10.0,
-                        right: 10.0,
-                      ),
-                      padding: const EdgeInsets.only(
-                        left: 8.0,
-                        right: 8.0,
-                        top: 8.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: TagItemListComponent(
-                        tags: getSelectedTags(),
-                        include_add: false,
-                        tag_color: Theme.of(context).colorScheme.onPrimary,
-                        onTapTag: (TagItem tag) {
-                          untagPost(
-                            widget.post_id!,
-                            int.parse(tag.id!),
-                          ).then(
-                            (tags) {
-                              if (!mounted) return;
-
-                              setState(() {
-                                _selected_tags = tags;
-                              });
-                            },
-                          );
-                        },
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Expanded(
-                child: (!_is_loading
-                    ? TagItemListComponent(
-                        tags: getMainTags(),
-                        include_add: widget.post_id != null,
-                        tag_color: Theme.of(context).colorScheme.onSurface,
-                        onTapTag: (TagItem tag) {
-                          if (widget.post_id == null) {
-                            return;
-                          }
-
-                          tagPost(
-                            widget.post_id!,
-                            int.parse(tag.id!),
-                          ).then(
-                            (tags) {
-                              if (!mounted) return;
-
-                              setState(() {
-                                _selected_tags = tags;
-                              });
-                            },
-                          );
-                        },
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(
-                          color: Theme.of(context).colorScheme.primary,
+                      setState(() {
+                        _search_text = value;
+                      });
+                    }),
+                const SizedBox(height: 10.0),
+                (widget.post_id != null && _selected_tags.isNotEmpty)
+                    ? Container(
+                        margin: const EdgeInsets.only(
+                          left: 10.0,
+                          right: 10.0,
                         ),
-                      )),
-              ),
-            ],
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                          right: 8.0,
+                          top: 8.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: TagItemListComponent(
+                          tags: getSelectedTags(),
+                          include_add: false,
+                          tag_color: Theme.of(context).colorScheme.onPrimary,
+                          onTapTag: (TagItem tag) {
+                            untagPost(
+                              widget.post_id!,
+                              int.parse(tag.id!),
+                            ).then(
+                              (tags) {
+                                if (!mounted) return;
+
+                                setState(() {
+                                  _selected_tags = tags;
+                                });
+                              },
+                            );
+                          },
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Expanded(
+                  child: (!_is_loading
+                      ? TagItemListComponent(
+                          tags: getMainTags(),
+                          include_add: widget.post_id != null,
+                          tag_color: Theme.of(context).colorScheme.onSurface,
+                          onTapTag: (TagItem tag) {
+                            if (widget.post_id == null) {
+                              return;
+                            }
+
+                            tagPost(
+                              widget.post_id!,
+                              int.parse(tag.id!),
+                            ).then(
+                              (tags) {
+                                if (!mounted) return;
+
+                                setState(() {
+                                  _selected_tags = tags;
+                                });
+                              },
+                            );
+                          },
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        )),
+                ),
+              ],
+            ),
           ),
         ),
         const FABEkmajstroComponent(),
