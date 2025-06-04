@@ -122,6 +122,15 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
   void onSave() {
     String message = '';
     try {
+      saveResource(_resource).then((value) {
+        if (!mounted) return;
+
+        setState(() {
+          _resource = Resource.fromResource(value);
+          toggleModified(false);
+        });
+      });
+
       message = SAVE_RESOURCE_SUCCESS_MESSAGE;
     } catch (e) {
       Navigator.of(context).pop();
