@@ -737,7 +737,7 @@ Future<Resource> updateResource(Resource resource) async {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(resource.toMap(false)),
+      body: jsonEncode(resource.toMap(true)),
     );
 
     late dynamic body = getBody(response);
