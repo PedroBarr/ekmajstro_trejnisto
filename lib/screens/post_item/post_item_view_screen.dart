@@ -137,6 +137,16 @@ class _PostItemView extends State<PostItemView> {
     }
   }
 
+  navigateToResourceView(ResourceItem resource) {
+    Navigator.of(context).pushNamed(
+      buildSubRoute([
+        buildIdRouteById(ROUTER_POST_VIEW_ROUTE, int.parse(_post.id)),
+        buildIdRouteById(
+            ROUTER_RESOURCE_ITEM_VIEW_SUB_PATH, int.parse(resource.id!)),
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -237,6 +247,9 @@ class _PostItemView extends State<PostItemView> {
                                       include_add: _post.id.isNotEmpty,
                                       resources: _resources,
                                       post_id: _post.id,
+                                      onTap: (ResourceItem resource) {
+                                        navigateToResourceView(resource);
+                                      },
                                     ),
                                   ),
                                   AccordionElement(
