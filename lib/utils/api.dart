@@ -23,6 +23,8 @@ const String SECCION_ENDPOINT = '/seccion/$ROUTE_ID_WILDCARD';
 const String RECURSOS_PUBLICACION_ENDPOINT =
     '/publicacion/$ROUTE_ID_WILDCARD/recursos';
 const String RECURSOS_ENDPOINT = '/recursos';
+const String RECURSO_NUEVO_ENDPOINT = '/recurso';
+const String RECURSO_ENDPOINT = '/recurso/$ROUTE_ID_WILDCARD';
 const String ADJUNTAR_RECURSO_PUBLICACION_ENDPOINT = '/publicacion/recurso';
 const String DESVINCULAR_RECURSO_PUBLICACION_ENDPOINT =
     '/publicacion/recurso/$ROUTE_ID_WILDCARD';
@@ -673,5 +675,34 @@ Future<List<ResourceItem>> detachResourceFromPost(
     return resources;
   } catch (e) {
     throw Exception(ERROR_RESOURCE_ITEM_LIST);
+  }
+}
+
+Future<Resource> saveResource(Resource resource) async {
+  if (resource.id.isEmpty) {
+    return createResource(resource);
+  } else {
+    return Future.value(resource);
+  }
+}
+
+Future<Resource> createResource(Resource resource) async {
+  try {
+    String subPath = RECURSO_NUEVO_ENDPOINT;
+
+    final response = await http.post(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(resource.toMap(true)),
+    );
+
+    late dynamic body = getBody(response);
+    late Resource new_resource = Resource.fromJson(body);
+
+    return new_resource;
+  } catch (e) {
+    throw Exception(ERROR_RESOURCE_ITEM);
   }
 }
