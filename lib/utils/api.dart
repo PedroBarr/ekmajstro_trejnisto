@@ -697,7 +697,9 @@ Future<Resource> getResource(String id) async {
 }
 
 Future<Resource> saveResource(Resource resource) async {
-  if (resource.id.isEmpty) {
+  if (resource.id.isNotEmpty) {
+    return updateResource(resource);
+  } else if (resource.id.isEmpty) {
     return createResource(resource);
   } else {
     return Future.value(resource);
@@ -714,6 +716,28 @@ Future<Resource> createResource(Resource resource) async {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(resource.toMap(true)),
+    );
+
+    late dynamic body = getBody(response);
+    late Resource new_resource = Resource.fromJson(body);
+
+    return new_resource;
+  } catch (e) {
+    throw Exception(ERROR_RESOURCE_ITEM);
+  }
+}
+
+Future<Resource> updateResource(Resource resource) async {
+  try {
+    String subPath =
+        RECURSO_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, resource.id);
+
+    final response = await http.put(
+      Uri.parse(BACKEND_API + subPath),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(resource.toMap(false)),
     );
 
     late dynamic body = getBody(response);
