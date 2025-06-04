@@ -119,6 +119,58 @@ class Resource {
 
   factory Resource.fromJson(Map<String, dynamic> json) {
     return switch (json) {
+      {
+        "rec_id": dynamic id,
+        "rec_nombre": String name,
+        "rec_descripcion": String description,
+        "tp_rec_id": dynamic type_id,
+        "tipos": {
+          "tp_rec_diminutivo": String type_key,
+        },
+        "archivos": {
+          "arch_uri": String file_uri,
+          "arch_mime": String file_mime,
+          "arch_extension": String file_extension,
+          "arch_size": dynamic file_size,
+          "arch_name": String file_name,
+        },
+      } =>
+        Resource(
+          id: id.toString(),
+          name: name,
+          description: description,
+          type: type_id.toString(),
+          type_key: type_key,
+          file_name: file_name,
+          file_uri: file_uri,
+          file_size: file_size.toString(),
+          file_mime: file_mime,
+          file_extension: file_extension,
+        ),
+      {
+        "id": dynamic id,
+        "name": String name,
+        "description": String description,
+        "type": dynamic type_id,
+        "type_key": String type_key,
+        "file_name": String file_name,
+        "file_uri": String file_uri,
+        "file_size": String file_size,
+        "file_mime": String file_mime,
+        "file_extension": String file_extension,
+      } =>
+        Resource(
+          id: id.toString(),
+          name: name,
+          description: description,
+          type: type_id.toString(),
+          type_key: type_key,
+          file_name: file_name,
+          file_uri: file_uri,
+          file_size: file_size,
+          file_mime: file_mime,
+          file_extension: file_extension,
+        ),
       _ => throw const FormatException(ERROR_RESOURCE_ITEM_PARSER),
     };
   }
@@ -145,6 +197,37 @@ class Resource {
   @override
   String toString() {
     return '<Resource> [$name] ($file_name, $type_key)';
+  }
+
+  Map<String, dynamic> toMap(bool? forBack) {
+    forBack ??= false;
+
+    if (forBack) {
+      return {
+        "nombre": name,
+        "descripcion": description,
+        "especificacion": description,
+        "tipo_recurso": type,
+        "archivo_uri": file_uri,
+        "archivo_nombre": file_name,
+        "archivo_extension": file_extension,
+        "archivo_mimetismo": file_mime,
+        "archivo_medida": file_size,
+      };
+    }
+
+    return {
+      "id": id,
+      "name": name,
+      "description": description,
+      "type": type,
+      "type_key": type_key,
+      "file_name": file_name,
+      "file_uri": file_uri,
+      "file_size": file_size,
+      "file_mime": file_mime,
+      "file_extension": file_extension,
+    };
   }
 
   @override
