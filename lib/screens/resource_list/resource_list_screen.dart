@@ -143,77 +143,83 @@ class _ResourceListScreen extends State<ResourceListScreen> {
   build(BuildContext context) {
     return Stack(
       children: [
-        Scaffold(
-          appBar: AppBar(
-            leading: GestureDetector(
-              onTap: () {
-                if (widget.post_id != null) {
-                  Navigator.of(context).pop();
-                } else {
-                  navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
-                }
-              },
-              child: iconNavPostList(
-                Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.add,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                onPressed: () {
+        RefreshSwipperComponent(
+          onRefresh: () {
+            loadResources();
+          },
+          refreshing: _is_loading,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: GestureDetector(
+                onTap: () {
                   if (widget.post_id != null) {
-                    Navigator.of(context).pushNamed(
-                      buildSubRoute([
-                        buildIdRouteById(
-                            ROUTER_POST_VIEW_ROUTE, widget.post_id!),
-                        ROUTER_RESOURCE_ADD_VIEW_SUB_PATH,
-                      ]),
-                    );
+                    Navigator.of(context).pop();
                   } else {
-                    Navigator.of(context).pushNamed(
-                      ROUTER_RESOURCE_ADD_ROUTE,
-                    );
+                    navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
                   }
                 },
+                child: iconNavPostList(
+                  Theme.of(context).colorScheme.onSurface,
+                ),
               ),
-            ],
-            title: const Text(RESOURCE_LIST_TITLE),
-          ),
-          body: SingleChildScrollView(
-            child: Column(children: [
-              SearchBarComponent(
-                  hint_text: HINT_RESOURCE_LIST,
-                  onChanged: (String value) {
-                    setState(() {
-                      _search_text = value;
-                    });
-                  }),
-              SizedBox(height: 5),
-              ResourcesTypeRowComponent(
-                selected_resources_type: _search_resources_type,
-                onSelect: addSelectedResourceType,
-                onUnselect: removeSelectedResourceType,
-              ),
-              (_is_loading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    )
-                  : ResourceItemListComponent(
-                      resources: getFilteredResources(),
-                      selected_resources: _selected_resources,
-                      onTap: (ResourceItem r) {
-                        processResourceSelection(
-                          context,
-                          r,
-                        );
-                      },
-                    )),
-            ]),
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    Icons.add,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  onPressed: () {
+                    if (widget.post_id != null) {
+                      Navigator.of(context).pushNamed(
+                        buildSubRoute([
+                          buildIdRouteById(
+                              ROUTER_POST_VIEW_ROUTE, widget.post_id!),
+                          ROUTER_RESOURCE_ADD_VIEW_SUB_PATH,
+                        ]),
+                      );
+                    } else {
+                      Navigator.of(context).pushNamed(
+                        ROUTER_RESOURCE_ADD_ROUTE,
+                      );
+                    }
+                  },
+                ),
+              ],
+              title: const Text(RESOURCE_LIST_TITLE),
+            ),
+            body: SingleChildScrollView(
+              child: Column(children: [
+                SearchBarComponent(
+                    hint_text: HINT_RESOURCE_LIST,
+                    onChanged: (String value) {
+                      setState(() {
+                        _search_text = value;
+                      });
+                    }),
+                SizedBox(height: 5),
+                ResourcesTypeRowComponent(
+                  selected_resources_type: _search_resources_type,
+                  onSelect: addSelectedResourceType,
+                  onUnselect: removeSelectedResourceType,
+                ),
+                (_is_loading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      )
+                    : ResourceItemListComponent(
+                        resources: getFilteredResources(),
+                        selected_resources: _selected_resources,
+                        onTap: (ResourceItem r) {
+                          processResourceSelection(
+                            context,
+                            r,
+                          );
+                        },
+                      )),
+              ]),
+            ),
           ),
         ),
         const FABEkmajstroComponent(),
