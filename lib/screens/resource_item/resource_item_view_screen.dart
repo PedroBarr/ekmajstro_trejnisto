@@ -25,12 +25,18 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
   Resource _resource = Resource();
   ResourceTypeItem _selected_resource_type = ResourceTypeItem.nullable();
 
+  int? _post_id = null;
+
   bool _is_loading = false;
   bool _is_modified = false;
 
   @override
   void initState() {
     super.initState();
+
+    if (widget.post_id != null && isNumeric(widget.post_id!.toString())) {
+      _post_id = widget.post_id;
+    }
 
     if (widget.resource_id != null &&
         isNumeric(widget.resource_id!.toString())) {
@@ -145,6 +151,8 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
   }
 
   void onSave() {
+    String? id = _resource.id.isNotEmpty ? _resource.id : null;
+
     String message = '';
     try {
       saveResource(_resource).then((value) {
@@ -154,8 +162,30 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
           _resource = Resource.fromResource(value);
           toggleModified(false);
         });
+      }).whenComplete(() {
+        if (_post_id != null &&
+            isNumeric(_post_id!.toString()) &&
+            id == null &&
+            _resource.id.isNotEmpty &&
+            isNumeric(_resource.id)) {
+          ResourceItem resource_item = ResourceItem(
+            id: _resource.id,
+            name: _resource.name,
+            description: _resource.description,
+            type: _resource.type,
+            type_icon: '',
+          );
+          debugPrint(
+            'attachResourceToPost: $_post_id, $resource_item',
+          );
+          attachResourceToPost(_post_id!, resource_item).then((_) {
+            debugPrint(
+              'attachResourceToPost: $_post_id, $resource_item - Success',
+            );
+            showMessage(SAVE_POST_RESOURCE_SUCCESS_MESSAGE, context);
+          });
+        }
       });
-
       message = SAVE_RESOURCE_SUCCESS_MESSAGE;
     } catch (e) {
       Navigator.of(context).pop();
@@ -163,6 +193,25 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
     } finally {
       showMessage(message, context);
     }
+  }
+
+  void detachResourceToPost() {
+    ResourceItem resource = ResourceItem(
+      id: _resource.id,
+      name: _resource.name,
+      description: _resource.description,
+      type: _resource.type,
+      type_icon: '',
+    );
+
+    detachResourceFromPost(_post_id!, resource).then((_) {
+      showMessage(
+        DETACH_RESOURCE_SUCCESS_MESSAGE,
+        context,
+      );
+
+      Navigator.of(context).pop();
+    });
   }
 
   @override
@@ -202,6 +251,22 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                       : Container();
                 },
               ),
+              (_post_id != null &&
+                      isNumeric(_post_id!.toString()) &&
+                      _resource.id.isNotEmpty &&
+                      isNumeric(_resource.id))
+                  ? Builder(
+                      builder: (context) {
+                        return GestureDetector(
+                          onTap: detachResourceToPost,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Icon(Icons.remove_circle),
+                          ),
+                        );
+                      },
+                    )
+                  : Container(),
             ],
             title: Builder(
               builder: (context) {
@@ -210,6 +275,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                     value: _resource.name,
                     spacing: 10.0,
                     font_size: 16,
+                    max_length: 20,
                     onConfirm: (value) => setResource('name', value),
                   );
                 } else {
