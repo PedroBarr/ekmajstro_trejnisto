@@ -112,7 +112,7 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                 context,
                 resource,
                 widget.post_id!,
-                toggleLoading,
+                () => toggleLoading(true),
                 loadResources,
               ),
             );
@@ -127,7 +127,7 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                 context,
                 resource,
                 widget.post_id!,
-                toggleLoading,
+                () => toggleLoading(true),
                 loadResources,
               ),
             );
