@@ -42,7 +42,32 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
   void loadData() {
     toggleLoading(true);
 
-    toggleLoading(false);
+    getResource(widget.resource_id!.toString()).then((value) {
+      if (!mounted) return;
+
+      setState(() {
+        _resource = Resource.fromResource(value);
+      });
+    }).whenComplete(() {
+      if (!mounted) return;
+
+      getResourceTypes().then((List<ResourceTypeItem> types) {
+        if (!mounted) return;
+
+        setState(() {
+          if (types.isNotEmpty) {
+            _selected_resource_type = types.firstWhere(
+              (type) => type.id.toString() == _resource.type,
+              orElse: () => ResourceTypeItem.nullable(),
+            );
+          } else {
+            _selected_resource_type = ResourceTypeItem.nullable();
+          }
+        });
+      }).whenComplete(() {
+        toggleLoading(false);
+      });
+    });
   }
 
   void setResource(String attr, dynamic value) {

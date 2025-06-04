@@ -678,6 +678,24 @@ Future<List<ResourceItem>> detachResourceFromPost(
   }
 }
 
+Future<Resource> getResource(String id) async {
+  try {
+    String subPath =
+        RECURSO_ENDPOINT.replaceAll(ROUTE_ID_WILDCARD, id.toString());
+
+    final response = await http.get(
+      Uri.parse(BACKEND_API + subPath),
+    );
+
+    late dynamic body = getBody(response);
+    late Resource resource = Resource.fromJson(body);
+
+    return resource;
+  } catch (e) {
+    throw Exception(ERROR_RESOURCE_ITEM);
+  }
+}
+
 Future<Resource> saveResource(Resource resource) async {
   if (resource.id.isEmpty) {
     return createResource(resource);
