@@ -34,20 +34,31 @@ class _ResourceItemFileModeBoxComponentState
   }
 
   Widget _buildCreateMode() {
-    return AccordionComponent(
-      elements: [
-        AccordionElement(
-          name: RESOURCE_FILE_FORM_TITLE.toUpperCase(),
-          content: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: ResourceFileFormComponent(
-              resource: widget.resource,
-              onResourceChanged: widget.onResourceChanged,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 35.0),
+      child: AccordionComponent(
+        elements: [
+          AccordionElement(
+            name: RESOURCE_FILE_FORM_TITLE.toUpperCase(),
+            content: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ResourceFileFormComponent(
+                resource: widget.resource,
+                onResourceChanged: widget.onResourceChanged,
+              ),
             ),
           ),
-          is_expanded: true,
-        ),
-      ],
+          AccordionElement(
+            name: RESOURCE_FILE_SHARED_FB_TITLE.toUpperCase(),
+            content: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ResourceFileSharedFormComponent(
+                onSharedResourceChanged: widget.onResourceChanged,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 

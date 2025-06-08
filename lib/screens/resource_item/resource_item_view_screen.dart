@@ -120,6 +120,17 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
         case 'file_extension':
           _resource.file_extension = value;
           break;
+        case 'file':
+          if (value == null) {
+            _resource.copyFileData(file: File());
+          } else {
+            _resource.copyFileData(
+              file: value is File
+                  ? value
+                  : File.fromJson(value as Map<String, dynamic>),
+            );
+          }
+          break;
         default:
           break;
       }

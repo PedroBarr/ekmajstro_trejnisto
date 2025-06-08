@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'resource_file_box_constants.dart';
 
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
+
 class ResourceFileSharedFormComponent extends StatefulWidget {
   final Function(String, dynamic) onSharedResourceChanged;
 
@@ -18,6 +20,18 @@ class ResourceFileSharedFormComponent extends StatefulWidget {
 class _ResourceFileSharedFormComponentState
     extends State<ResourceFileSharedFormComponent> {
   final TextEditingController _sharedIdController = TextEditingController();
+
+  void confirmSharedId(String value) {
+    if (value.isEmpty) {
+      widget.onSharedResourceChanged('file', null);
+    } else {
+      getResourceFromFB(value).then((file) {
+        widget.onSharedResourceChanged('file', file);
+      }).catchError((error) {
+        showMessage(error.toString(), context);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +77,7 @@ class _ResourceFileSharedFormComponentState
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onSubmitted: (value) {},
+                onSubmitted: confirmSharedId,
                 controller: _sharedIdController,
                 onChanged: (value) => _sharedIdController.text = value,
               ),
