@@ -39,6 +39,7 @@ dependencies:
   drop_shadow: ^0.1.0
   http: ^1.2.2
   collection: ^1.19.1
+  file_picker: ^10.1.9
 
 dev_dependencies:
   flutter_test:
