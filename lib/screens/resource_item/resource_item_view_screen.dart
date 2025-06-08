@@ -89,6 +89,9 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
         case 'description':
           _resource.description = value;
           break;
+        case 'specification':
+          _resource.specification = value;
+          break;
         case 'type':
           if (value is ResourceTypeItem) {
             _resource.type = value.id.toString();
@@ -316,6 +319,38 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                             },
                             controller: TextEditingController(
                               text: _resource.description,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text(
+                            RESOURCE_SPECIFICATION_LABEL,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: RESOURCE_SPECIFICATION_LABEL,
+                              labelStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: 12,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
+                              ),
+                            ),
+                            onSubmitted: (value) {
+                              setResource('specification', value);
+                            },
+                            controller: TextEditingController(
+                              text: _resource.getParseSpecification(),
                             ),
                           ),
                           SizedBox(
