@@ -331,7 +331,8 @@ class File {
           name: name,
           uri: json['uri'] ?? '',
           size: size.toString(),
-          extension: extension.startsWith('.') ? extension : '.$extension',
+          extension:
+              extension.startsWith('.') ? extension.substring(1) : extension,
           mime_type: type,
         ),
       _ => throw const FormatException(ERROR_FILE_ITEM_PARSER),
