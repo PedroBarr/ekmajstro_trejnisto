@@ -3,6 +3,8 @@ import 'package:ekmajstro_trejnisto/utils/app.dart';
 
 import 'models.dart';
 
+int MAX_LENGTH_RESOURCE_SPECIFICATION = 80;
+
 class ResourceItem extends ModelItem {
   final String name;
   final String description;
@@ -96,6 +98,7 @@ class Resource {
   String id;
   String name;
   String description;
+  String specification;
   String type;
   String type_key;
   String file_name;
@@ -108,6 +111,7 @@ class Resource {
     this.id = '',
     this.name = '',
     this.description = '',
+    this.specification = '',
     this.type = '',
     this.type_key = '',
     this.file_name = '',
@@ -124,6 +128,9 @@ class Resource {
         "rec_nombre": String name,
         "rec_descripcion": String description,
         "tp_rec_id": dynamic type_id,
+        "especificaciones": {
+          "espc_descripcin": String specification,
+        },
         "tipos": {
           "tp_rec_diminutivo": String type_key,
         },
@@ -139,6 +146,7 @@ class Resource {
           id: id.toString(),
           name: name,
           description: description,
+          specification: specification,
           type: type_id.toString(),
           type_key: type_key,
           file_name: file_name,
@@ -151,6 +159,7 @@ class Resource {
         "id": dynamic id,
         "name": String name,
         "description": String description,
+        "specification": String specification,
         "type": dynamic type_id,
         "type_key": String type_key,
         "file_name": String file_name,
@@ -163,6 +172,7 @@ class Resource {
           id: id.toString(),
           name: name,
           description: description,
+          specification: specification,
           type: type_id.toString(),
           type_key: type_key,
           file_name: file_name,
@@ -185,6 +195,7 @@ class Resource {
     id = resource.id;
     name = resource.name;
     description = resource.description;
+    specification = resource.specification;
     type = resource.type;
     type_key = resource.type_key;
     file_name = resource.file_name;
@@ -199,6 +210,18 @@ class Resource {
     return '<Resource> [$name] ($file_name, $type_key)';
   }
 
+  String getParseSpecification() {
+    if (specification.isEmpty) {
+      return '';
+    }
+
+    if (specification.length > MAX_LENGTH_RESOURCE_SPECIFICATION) {
+      return '${specification.substring(0, MAX_LENGTH_RESOURCE_SPECIFICATION - 3)}...';
+    }
+
+    return specification;
+  }
+
   Map<String, dynamic> toMap(bool? forBack) {
     forBack ??= false;
 
@@ -206,7 +229,7 @@ class Resource {
       return {
         "nombre": name,
         "descripcion": description,
-        "especificacion": description,
+        "especificacion": getParseSpecification(),
         "tipo_recurso": type,
         "archivo_uri": file_uri,
         "archivo_nombre": file_name,
@@ -220,6 +243,7 @@ class Resource {
       "id": id,
       "name": name,
       "description": description,
+      "specification": specification,
       "type": type,
       "type_key": type_key,
       "file_name": file_name,
@@ -237,6 +261,7 @@ class Resource {
             (id == other.id &&
                 name == other.name &&
                 description == other.description &&
+                specification == other.specification &&
                 type == other.type &&
                 type_key == other.type_key &&
                 file_name == other.file_name &&
