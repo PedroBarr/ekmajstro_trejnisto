@@ -175,13 +175,8 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
             type: _resource.type,
             type_icon: '',
           );
-          debugPrint(
-            'attachResourceToPost: $_post_id, $resource_item',
-          );
+
           attachResourceToPost(_post_id!, resource_item).then((_) {
-            debugPrint(
-              'attachResourceToPost: $_post_id, $resource_item - Success',
-            );
             showMessage(SAVE_POST_RESOURCE_SUCCESS_MESSAGE, context);
           });
         }
