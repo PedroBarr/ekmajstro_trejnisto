@@ -21,6 +21,18 @@ dynamic getBody(http.Response response) {
   }
 }
 
+String getRawText(http.Response response) {
+  try {
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response.body;
+    }
+
+    throw Exception(ERROR_BODY);
+  } catch (e) {
+    throw Exception(ERROR_BODY);
+  }
+}
+
 String buildIdRoute(String routeBase, ModelItem item) {
   return routeBase.replaceAll(ROUTE_ID_WILDCARD, item.id!.toString());
 }
