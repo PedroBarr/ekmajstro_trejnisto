@@ -27,6 +27,8 @@ const String ERROR_RESOURCE_ITEM = 'Fallo al recuperar el recurso';
 // Filebrowser
 const String ERROR_FILEBROWSER_LOGIN_FAILED =
     'Fallo al iniciar sesión en Filebrowser';
+const String ERROR_FILEBROWSER_GET_SHARED_FILE =
+    'Fallo al recuperar el archivo compartido desde Filebrowser';
 
 // MODELS
 const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación';

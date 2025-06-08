@@ -34,3 +34,19 @@ Future<String> getFBAToken(String username, String password) async {
     throw Exception(ERROR_FILEBROWSER_LOGIN_FAILED);
   }
 }
+
+Future<String> getMymeTypeFromFB(String shared_id) async {
+  try {
+    final response = await http.get(
+      Uri.parse("${buildStorageSharedFilePublicUrl(shared_id)}true"),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
+
+    return response.headers['content-type'] ?? '';
+  } catch (e) {
+    throw Exception(ERROR_FILEBROWSER_GET_SHARED_FILE);
+  }
+}
