@@ -4,3 +4,4 @@ export 'resource_item/resource_item.dart';
 export 'tag_item/tag_item.dart';
 export 'preview_item/preview_item.dart';
 export 'resources_type_row/resources_type_row.dart';
+export 'resource_file_box_item/resource_file_box_item.dart';
