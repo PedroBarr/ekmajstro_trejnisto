@@ -290,7 +290,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                             height: 10.0,
                           ),
                           Text(
-                            'Descripción',
+                            RESOURCE_DESCRIPTION_LABEL,
                             style: TextStyle(
                               fontSize: 18.0,
                               color: Theme.of(context).colorScheme.onSurface,
@@ -298,7 +298,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                           ),
                           TextField(
                             decoration: InputDecoration(
-                              labelText: 'Descripción',
+                              labelText: RESOURCE_DESCRIPTION_LABEL,
                               labelStyle: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface,
                                 fontSize: 12,
@@ -322,7 +322,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                             height: 10.0,
                           ),
                           Text(
-                            'Tipo',
+                            RESOURCE_TYPE_LABEL,
                             style: TextStyle(
                               fontSize: 18.0,
                               color: Theme.of(context).colorScheme.onSurface,
@@ -365,7 +365,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'ARCHIVO',
+                                  RESOURCE_FILE_FORM_TITLE.toUpperCase(),
                                   style: TextStyle(
                                     fontSize: 20.0,
                                     color:
@@ -383,7 +383,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Nombre',
+                                      FILE_NAME_LABEL,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Theme.of(context)
@@ -397,7 +397,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       ),
                                       child: TextField(
                                         decoration: InputDecoration(
-                                          labelText: 'Nombre del archivo',
+                                          labelText: FILE_NAME_HINT,
                                           labelStyle: TextStyle(
                                             color: Theme.of(context)
                                                 .colorScheme
@@ -446,7 +446,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'URI',
+                                      FILE_URI_LABEL,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Theme.of(context)
@@ -460,7 +460,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       ),
                                       child: TextField(
                                         decoration: InputDecoration(
-                                          labelText: 'URI del archivo',
+                                          labelText: FILE_URI_HINT,
                                           labelStyle: TextStyle(
                                             color: Theme.of(context)
                                                 .colorScheme
@@ -509,7 +509,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Tamaño',
+                                      FILE_SIZE_LABEL,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Theme.of(context)
@@ -523,7 +523,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       ),
                                       child: TextField(
                                         decoration: InputDecoration(
-                                          labelText: 'Tamaño del archivo',
+                                          labelText: FILE_SIZE_HINT,
                                           labelStyle: TextStyle(
                                             color: Theme.of(context)
                                                 .colorScheme
@@ -543,6 +543,14 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
                                             borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary,
+                                            ),
+                                          ),
+                                          suffix: Text(
+                                            FILE_SIZE_UNIT_LABEL,
+                                            style: TextStyle(
                                               color: Theme.of(context)
                                                   .colorScheme
                                                   .onPrimary,
@@ -573,7 +581,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'MIME',
+                                      FILE_MIME_LABEL,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Theme.of(context)
@@ -587,7 +595,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       ),
                                       child: TextField(
                                         decoration: InputDecoration(
-                                          labelText: 'MIME del archivo',
+                                          labelText: FILE_MIME_HINT,
                                           labelStyle: TextStyle(
                                             color: Theme.of(context)
                                                 .colorScheme
@@ -636,7 +644,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Extensión',
+                                      FILE_EXTENSION_LABEL,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         color: Theme.of(context)
@@ -650,7 +658,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                       ),
                                       child: TextField(
                                         decoration: InputDecoration(
-                                          labelText: 'Extensión del archivo',
+                                          labelText: FILE_EXTENSION_HINT,
                                           labelStyle: TextStyle(
                                             color: Theme.of(context)
                                                 .colorScheme
