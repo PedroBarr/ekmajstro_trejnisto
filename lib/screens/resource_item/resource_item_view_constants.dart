@@ -3,6 +3,7 @@ enum ResourceFileBoxMode {
   create,
   edit,
   view,
+  reload,
 }
 
 // messages

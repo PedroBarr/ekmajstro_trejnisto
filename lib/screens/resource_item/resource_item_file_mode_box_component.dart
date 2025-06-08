@@ -29,6 +29,14 @@ class _ResourceItemFileModeBoxComponentState
     return switch (widget.mode) {
       ResourceFileBoxMode.create => _buildCreateMode(),
       ResourceFileBoxMode.edit => _buildEditMode(),
+      ResourceFileBoxMode.reload => Center(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+        ),
       _ => SizedBox.shrink()
     };
   }
