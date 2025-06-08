@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'resource_item_view_constants.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
+import 'package:ekmajstro_trejnisto/components/components.dart';
 
 class ResourceItemFileModeBoxComponent extends StatefulWidget {
   final Resource resource;
-  final Function(Resource) onResourceChanged;
+  final Function(String, dynamic) onResourceChanged;
   final ResourceFileBoxMode mode;
 
   const ResourceItemFileModeBoxComponent({
@@ -33,10 +34,16 @@ class _ResourceItemFileModeBoxComponentState
   }
 
   Widget _buildCreateMode() {
-    return Text('Create Mode');
+    return ResourceFileFormComponent(
+      resource: widget.resource,
+      onResourceChanged: widget.onResourceChanged,
+    );
   }
 
   Widget _buildEditMode() {
-    return Text('Edit Mode');
+    return ResourceFileFormComponent(
+      resource: widget.resource,
+      onResourceChanged: widget.onResourceChanged,
+    );
   }
 }
