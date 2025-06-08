@@ -64,7 +64,13 @@ class _ResourceItemFileModeBoxComponentState
                 onSharedResourceChanged: widget.onResourceChanged,
               ),
             ),
-          )
+          ),
+          AccordionElement(
+            name: RESOURCE_FILE_UPLOAD_TITLE.toUpperCase(),
+            content: ResourceFileUploadFormComponent(
+              onResourceChanged: widget.onResourceChanged,
+            ),
+          ),
         ],
       ),
     );
