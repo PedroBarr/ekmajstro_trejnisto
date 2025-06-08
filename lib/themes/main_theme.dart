@@ -9,7 +9,10 @@ final ThemeData main_theme = ThemeData(
       color: Color(0xFF1F1D2A),
       fontFamily: 'Roboto',
     ),
-    headlineLarge: TextStyle(inherit: true, color: Color(0xFF1F1D2A)),
+    headlineLarge: TextStyle(
+      inherit: true,
+      color: Color(0xFF1F1D2A),
+    ),
   ),
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
@@ -26,5 +29,12 @@ final ThemeData main_theme = ThemeData(
     centerTitle: true,
   ),
   useMaterial3: true,
-  dialogTheme: const DialogThemeData(backgroundColor: Color(0x99545A70)),
+  dialogTheme: const DialogThemeData(
+    backgroundColor: Color(0x99545A70),
+  ),
+  pageTransitionsTheme: const PageTransitionsTheme(
+    builders: {
+      TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+    },
+  ),
 );
