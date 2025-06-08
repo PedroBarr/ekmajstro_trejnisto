@@ -337,4 +337,9 @@ class File {
       _ => throw const FormatException(ERROR_FILE_ITEM_PARSER),
     };
   }
+
+  @override
+  String toString() {
+    return '<File> [$name] ($uri, $mime_type)';
+  }
 }
