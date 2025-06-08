@@ -9,3 +9,6 @@ const String FILE_MIME_LABEL = 'MIME';
 const String FILE_MIME_HINT = 'Tipo MIME del archivo';
 const String FILE_EXTENSION_LABEL = 'Extensión';
 const String FILE_EXTENSION_HINT = 'Extensión del archivo';
+
+const String SHARED_KEY_LABEL = 'ID Filebrowser';
+const String SHARED_KEY_HINT = 'Clave para acceder al recurso compartido';
