@@ -203,9 +203,12 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                   onUnselect: removeSelectedResourceType,
                 ),
                 (_is_loading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: Theme.of(context).colorScheme.primary,
+                    ? Padding(
+                        padding: EdgeInsets.only(top: 20.0),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       )
                     : ResourceItemListComponent(
