@@ -12,3 +12,5 @@ const String FILE_EXTENSION_HINT = 'Extensión del archivo';
 
 const String SHARED_KEY_LABEL = 'ID Filebrowser';
 const String SHARED_KEY_HINT = 'Clave para acceder al recurso compartido';
+
+const String UPLOAD_FILE_BUTTON_TEXT = 'Cargar archivo';
