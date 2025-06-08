@@ -30,6 +30,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
 
   bool _is_loading = false;
   bool _is_modified = false;
+  bool _force_reload_file_box = false;
 
   @override
   void initState() {
@@ -129,6 +130,8 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                   ? value
                   : File.fromJson(value as Map<String, dynamic>),
             );
+
+            forceReloadFileBox();
           }
           break;
         default:
@@ -138,6 +141,13 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
       if (!(resource == _resource)) {
         toggleModified(true);
       }
+    });
+  }
+
+  void forceReloadFileBox() {
+    toggleForceReloadFileBox(true);
+    Future.delayed(const Duration(milliseconds: 500), () {
+      toggleForceReloadFileBox(false);
     });
   }
 
@@ -161,6 +171,18 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
         _is_modified = value;
       } else {
         _is_modified = !_is_modified;
+      }
+    });
+  }
+
+  void toggleForceReloadFileBox(dynamic value) {
+    if (!mounted) return;
+
+    setState(() {
+      if ([true, false].contains(value)) {
+        _force_reload_file_box = value;
+      } else {
+        _force_reload_file_box = !_force_reload_file_box;
       }
     });
   }
@@ -388,10 +410,12 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                           ResourceItemFileModeBoxComponent(
                             resource: _resource,
                             onResourceChanged: setResource,
-                            mode: (_resource.id.isEmpty ||
-                                    !isNumeric(_resource.id))
-                                ? ResourceFileBoxMode.create
-                                : ResourceFileBoxMode.edit,
+                            mode: (_force_reload_file_box
+                                ? ResourceFileBoxMode.reload
+                                : (_resource.id.isEmpty ||
+                                        !isNumeric(_resource.id))
+                                    ? ResourceFileBoxMode.create
+                                    : ResourceFileBoxMode.edit),
                           ),
                         ],
                       ),
