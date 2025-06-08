@@ -374,55 +374,14 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                           SizedBox(
                             height: 10.0,
                           ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10.0),
-                            padding: EdgeInsets.all(15.0),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(15.0),
-                              border: Border.all(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                width: 1.0,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimary
-                                      .withOpacity(0.1),
-                                  blurRadius: 5.0,
-                                  offset: Offset(0, 15),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  RESOURCE_FILE_FORM_TITLE.toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                    letterSpacing: 5.0,
-                                    fontWeight: FontWeight.bold,
-                                    decorationThickness: 2.0,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                ResourceItemFileModeBoxComponent(
-                                  resource: _resource,
-                                  onResourceChanged: setResource,
-                                  mode: (_resource.id.isEmpty ||
-                                          !isNumeric(_resource.id))
-                                      ? ResourceFileBoxMode.create
-                                      : ResourceFileBoxMode.edit,
-                                ),
-                              ],
-                            ),
-                          )
+                          ResourceItemFileModeBoxComponent(
+                            resource: _resource,
+                            onResourceChanged: setResource,
+                            mode: (_resource.id.isEmpty ||
+                                    !isNumeric(_resource.id))
+                                ? ResourceFileBoxMode.create
+                                : ResourceFileBoxMode.edit,
+                          ),
                         ],
                       ),
                     );

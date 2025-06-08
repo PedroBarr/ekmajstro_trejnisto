@@ -34,16 +34,64 @@ class _ResourceItemFileModeBoxComponentState
   }
 
   Widget _buildCreateMode() {
-    return ResourceFileFormComponent(
-      resource: widget.resource,
-      onResourceChanged: widget.onResourceChanged,
+    return AccordionComponent(
+      elements: [
+        AccordionElement(
+          name: RESOURCE_FILE_FORM_TITLE.toUpperCase(),
+          content: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: ResourceFileFormComponent(
+              resource: widget.resource,
+              onResourceChanged: widget.onResourceChanged,
+            ),
+          ),
+          is_expanded: true,
+        ),
+      ],
     );
   }
 
   Widget _buildEditMode() {
-    return ResourceFileFormComponent(
-      resource: widget.resource,
-      onResourceChanged: widget.onResourceChanged,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.all(15.0),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.circular(15.0),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.onPrimary,
+          width: 1.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.1),
+            blurRadius: 5.0,
+            offset: Offset(0, 15),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            RESOURCE_FILE_FORM_TITLE.toUpperCase(),
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Theme.of(context).colorScheme.onPrimary,
+              letterSpacing: 5.0,
+              fontWeight: FontWeight.bold,
+              decorationThickness: 2.0,
+            ),
+          ),
+          SizedBox(
+            height: 15.0,
+          ),
+          ResourceFileFormComponent(
+            resource: widget.resource,
+            onResourceChanged: widget.onResourceChanged,
+          ),
+        ],
+      ),
     );
   }
 }
