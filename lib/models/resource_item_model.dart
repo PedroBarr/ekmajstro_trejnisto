@@ -205,6 +205,38 @@ class Resource {
     file_extension = resource.file_extension;
   }
 
+  void copyFileData({
+    Resource? resource,
+    String? file_name,
+    String? file_uri,
+    String? file_size,
+    String? file_mime,
+    String? file_extension,
+    File? file,
+  }) {
+    if (resource != null) {
+      file_name = resource.file_name;
+      file_uri = resource.file_uri;
+      file_size = resource.file_size;
+      file_mime = resource.file_mime;
+      file_extension = resource.file_extension;
+    }
+
+    if (file != null) {
+      file_name = file.name;
+      file_uri = file.uri;
+      file_size = file.size;
+      file_mime = file.mime_type;
+      file_extension = file.extension;
+    }
+
+    this.file_name = file_name ?? '';
+    this.file_uri = file_uri ?? '';
+    this.file_size = file_size ?? '';
+    this.file_mime = file_mime ?? '';
+    this.file_extension = file_extension ?? '';
+  }
+
   @override
   String toString() {
     return '<Resource> [$name] ($file_name, $type_key)';
