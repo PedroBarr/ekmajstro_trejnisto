@@ -271,3 +271,38 @@ class Resource {
                 file_extension == other.file_extension)));
   }
 }
+
+class File {
+  String name;
+  String uri;
+  String size;
+  String extension;
+  String mime_type;
+
+  File({
+    this.name = '',
+    this.uri = '',
+    this.size = '',
+    this.extension = '',
+    this.mime_type = '',
+  });
+
+  factory File.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        "name": String name,
+        "size": int size,
+        "extension": String extension, // with dot
+        "type": String type, // most of the case mime/*
+      } =>
+        File(
+          name: name,
+          uri: json['uri'] ?? '',
+          size: size.toString(),
+          extension: extension.startsWith('.') ? extension : '.$extension',
+          mime_type: type,
+        ),
+      _ => throw const FormatException(ERROR_FILE_ITEM_PARSER),
+    };
+  }
+}
