@@ -41,3 +41,11 @@ Widget iconNavResourceList(
     );
 
 IconData iconSectionMarkOne = Icons.stars;
+
+Widget iconNavCredentials(
+  Color color,
+) =>
+    Icon(
+      Icons.card_membership_rounded,
+      color: color,
+    );
