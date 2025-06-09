@@ -204,7 +204,7 @@ class _ResourceListScreen extends State<ResourceListScreen> {
                 ),
                 (_is_loading
                     ? Padding(
-                        padding: EdgeInsets.only(top: 20.0),
+                        padding: EdgeInsets.only(top: 25.0),
                         child: Center(
                           child: CircularProgressIndicator(
                             color: Theme.of(context).colorScheme.primary,
