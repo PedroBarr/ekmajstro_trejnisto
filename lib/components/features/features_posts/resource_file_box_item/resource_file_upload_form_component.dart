@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'resource_file_box_constants.dart';
 
-import 'package:ekmajstro_trejnisto/models/resource_item_model.dart';
+import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/components/core/core.dart';
 
 class ResourceFileUploadFormComponent extends StatefulWidget {
@@ -28,15 +28,13 @@ class _ResourceFileUploadFormComponentState
 
   void loadFile() {
     if (_file != null) {
-      File file = File(
-        name: _file!.path.split('/').last,
-        uri: '',
-        size: '',
-        mime_type: '',
-        extension: _file!.path.split('.').last,
-      );
-
-      widget.onResourceChanged('file', file);
+      uploadFileToFB(_file!, widget.post_id).then((file_path) {
+        shareFBResource(file_path).then((shared_key) {
+          getResourceFromFB(shared_key).then((file) {
+            widget.onResourceChanged('file', file);
+          });
+        });
+      });
     }
   }
 
