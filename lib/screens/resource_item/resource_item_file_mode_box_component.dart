@@ -67,8 +67,11 @@ class _ResourceItemFileModeBoxComponentState
           ),
           AccordionElement(
             name: RESOURCE_FILE_UPLOAD_TITLE.toUpperCase(),
-            content: ResourceFileUploadFormComponent(
-              onResourceChanged: widget.onResourceChanged,
+            content: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ResourceFileUploadFormComponent(
+                onResourceChanged: widget.onResourceChanged,
+              ),
             ),
           ),
         ],
