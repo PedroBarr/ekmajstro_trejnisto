@@ -16,12 +16,15 @@ const String LOGIN_ENDPOINT = '/login';
 const String RECURSO_PUBLICO_ENDPOINT = '/public/share/';
 const String ARCHIVO_NUEVO_ENDPOINT = '/resources';
 const String BUSQUEDA_ENDPOINT = '/search';
+const String COMPARTIR_ENDPOINT = '/share/';
 
 const String RUTA_ALMACENAMIENTO = '/Almacenamiento/Publicaciones/';
 
 const Map<String, String> UPLOAD_QUERY_PARAMS = {
   'override': 'false',
 };
+
+const Map<String, dynamic> SHARE_FILE_SETTINGS = {};
 
 String buildPath({String? post_folder = '', String? file_name = ''}) {
   String path = RUTA_ALMACENAMIENTO;
@@ -212,5 +215,31 @@ Future<String> uploadFileToFB(io.File file, int? post_id) async {
     return Future.value(full_path);
   } catch (e) {
     throw Exception(ERROR_FILEBROWSER_UPLOAD_FILE);
+  }
+}
+
+Future<String> shareFBResource(String file_path) async {
+  try {
+    final token = await getFBAToken();
+
+    final response = await http.post(
+      Uri.parse('$STORAGE_API$COMPARTIR_ENDPOINT$file_path'),
+      headers: {
+        'X-Auth': token,
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(SHARE_FILE_SETTINGS),
+    );
+
+    late dynamic body = getBody(response);
+    late String shared_id = body['hash'] as String;
+
+    if (shared_id.isEmpty) {
+      throw Exception(ERROR_FILEBROWSER_GET_SHARED_FILE);
+    }
+
+    return shared_id;
+  } catch (e) {
+    throw Exception(ERROR_FILEBROWSER_GET_SHARED_FILE);
   }
 }
