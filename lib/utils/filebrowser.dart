@@ -12,6 +12,7 @@ import 'package:ekmajstro_trejnisto/config/config.dart';
 
 const String LOGIN_ENDPOINT = '/login';
 const String RECURSO_PUBLICO_ENDPOINT = '/public/share/';
+const String BUSQUEDA_ENDPOINT = '/search';
 
 Future<String> getFBAToken() async {
   try {
@@ -76,5 +77,27 @@ Future<String> getMymeTypeFromFB(String shared_id) async {
     return response.headers['content-type'] ?? '';
   } catch (e) {
     throw Exception(ERROR_FILEBROWSER_GET_SHARED_FILE);
+  }
+}
+
+Future<List<String>> getPathsFromFB(String token) async {
+  try {
+    final response = await http.get(
+      Uri.parse('$STORAGE_API$BUSQUEDA_ENDPOINT'),
+      headers: {
+        'X-Auth': token,
+      },
+    );
+
+    List<dynamic> body = getBody(response);
+    final List<String> paths = [];
+
+    for (var item in body) {
+      paths.add(item['path'] as String);
+    }
+
+    return paths;
+  } catch (e) {
+    throw Exception(ERROR_FILEBROWSER_GET_RESOURCE_LIST);
   }
 }
