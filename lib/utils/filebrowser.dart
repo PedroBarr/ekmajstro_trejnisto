@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' as io;
 
 import 'package:http/http.dart' as http;
 
 import 'app.dart';
 import 'misc.dart';
+import 'api.dart';
 import 'auth.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
@@ -15,9 +17,25 @@ const String RECURSO_PUBLICO_ENDPOINT = '/public/share/';
 const String ARCHIVO_NUEVO_ENDPOINT = '/resources';
 const String BUSQUEDA_ENDPOINT = '/search';
 
+const String RUTA_ALMACENAMIENTO = '/Almacenamiento/Publicaciones/';
+
 const Map<String, String> UPLOAD_QUERY_PARAMS = {
   'override': 'false',
 };
+
+String buildPath({String? post_folder = '', String? file_name = ''}) {
+  String path = RUTA_ALMACENAMIENTO;
+
+  if (post_folder != null && post_folder.isNotEmpty) {
+    path += post_folder + '/';
+  }
+
+  if (file_name != null && file_name.isNotEmpty) {
+    path += file_name;
+  }
+
+  return path;
+}
 
 Future<String> getFBAToken() async {
   try {
@@ -154,5 +172,45 @@ Future<String> createPath(String path, String? token) async {
     return path;
   } catch (e) {
     throw Exception(ERROR_FILEBROWSER_GET_RESOURCE_LIST);
+  }
+}
+
+Future<String> uploadFileToFB(io.File file, int? post_id) async {
+  try {
+    late String folder_name = '';
+
+    if (post_id != null) {
+      folder_name = await getPost(post_id.toString()).then((post) {
+        return post.title;
+      });
+    } else {
+      folder_name = '';
+    }
+
+    String token = await getFBAToken();
+
+    String path = buildPath(post_folder: folder_name);
+
+    await createFolderIfNotExists(path, token);
+
+    String file_name = file.path.split('/').last;
+    String full_path =
+        buildPath(post_folder: folder_name, file_name: file_name);
+
+    List<int> file_bytes = await file.readAsBytes();
+
+    await http.post(
+      Uri.parse('$STORAGE_API$ARCHIVO_NUEVO_ENDPOINT$full_path')
+          .replace(queryParameters: UPLOAD_QUERY_PARAMS),
+      headers: {
+        'Content-Type': 'application/octet-stream',
+        'X-Auth': token,
+      },
+      body: file_bytes,
+    );
+
+    return Future.value(full_path);
+  } catch (e) {
+    throw Exception(ERROR_FILEBROWSER_UPLOAD_FILE);
   }
 }
