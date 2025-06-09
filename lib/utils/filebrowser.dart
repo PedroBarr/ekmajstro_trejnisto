@@ -12,7 +12,12 @@ import 'package:ekmajstro_trejnisto/config/config.dart';
 
 const String LOGIN_ENDPOINT = '/login';
 const String RECURSO_PUBLICO_ENDPOINT = '/public/share/';
+const String ARCHIVO_NUEVO_ENDPOINT = '/resources';
 const String BUSQUEDA_ENDPOINT = '/search';
+
+const Map<String, String> UPLOAD_QUERY_PARAMS = {
+  'override': 'false',
+};
 
 Future<String> getFBAToken() async {
   try {
@@ -97,6 +102,30 @@ Future<List<String>> getPathsFromFB(String token) async {
     }
 
     return paths;
+  } catch (e) {
+    throw Exception(ERROR_FILEBROWSER_GET_RESOURCE_LIST);
+  }
+}
+
+Future<String> createPath(String path, String? token) async {
+  try {
+    if (path.isEmpty) {
+      return '';
+    }
+
+    if (token == null || token.isEmpty) {
+      token = await getFBAToken();
+    }
+
+    await http.post(
+      Uri.parse('$STORAGE_API$ARCHIVO_NUEVO_ENDPOINT$path')
+          .replace(queryParameters: UPLOAD_QUERY_PARAMS),
+      headers: {
+        'X-Auth': token,
+      },
+    );
+
+    return path;
   } catch (e) {
     throw Exception(ERROR_FILEBROWSER_GET_RESOURCE_LIST);
   }
