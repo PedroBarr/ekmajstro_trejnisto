@@ -9,10 +9,12 @@ import 'package:ekmajstro_trejnisto/components/core/core.dart';
 
 class ResourceFileUploadFormComponent extends StatefulWidget {
   final Function(String, dynamic) onResourceChanged;
+  final int? post_id;
 
   const ResourceFileUploadFormComponent({
     super.key,
     required this.onResourceChanged,
+    this.post_id,
   });
 
   @override

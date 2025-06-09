@@ -416,6 +416,7 @@ class _ResourceItemViewScreen extends State<ResourceItemViewScreen> {
                                         !isNumeric(_resource.id))
                                     ? ResourceFileBoxMode.create
                                     : ResourceFileBoxMode.edit),
+                            post_id: _post_id,
                           ),
                         ],
                       ),

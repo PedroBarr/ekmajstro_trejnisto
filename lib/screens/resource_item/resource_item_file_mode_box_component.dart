@@ -9,12 +9,14 @@ class ResourceItemFileModeBoxComponent extends StatefulWidget {
   final Resource resource;
   final Function(String, dynamic) onResourceChanged;
   final ResourceFileBoxMode mode;
+  final int? post_id;
 
   const ResourceItemFileModeBoxComponent({
     super.key,
     required this.resource,
     required this.onResourceChanged,
     required this.mode,
+    this.post_id,
   });
 
   @override
@@ -71,6 +73,7 @@ class _ResourceItemFileModeBoxComponentState
               padding: EdgeInsets.all(15.0),
               child: ResourceFileUploadFormComponent(
                 onResourceChanged: widget.onResourceChanged,
+                post_id: widget.post_id,
               ),
             ),
           ),
