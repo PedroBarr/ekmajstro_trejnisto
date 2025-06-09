@@ -107,6 +107,32 @@ Future<List<String>> getPathsFromFB(String token) async {
   }
 }
 
+Future<void> createFolderIfNotExists(String path, String? token) async {
+  try {
+    if (path.isEmpty) {
+      return;
+    }
+
+    if (token == null || token.isEmpty) {
+      token = await getFBAToken();
+    }
+
+    List<String> paths = await getPathsFromFB(token);
+
+    List<String> sub_paths = path.split('/');
+    for (int i = 0; i < sub_paths.length; i++) {
+      String sub_path = sub_paths.sublist(0, i + 1).join('/');
+      if (!paths.contains(sub_path)) {
+        await createPath('$sub_path/', token).then((created_path) {
+          paths.add(created_path);
+        });
+      }
+    }
+  } catch (e) {
+    throw Exception(ERROR_FILEBROWSER_GET_RESOURCE_LIST);
+  }
+}
+
 Future<String> createPath(String path, String? token) async {
   try {
     if (path.isEmpty) {
