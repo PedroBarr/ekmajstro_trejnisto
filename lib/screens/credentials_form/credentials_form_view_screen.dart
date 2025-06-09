@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'credentials_form_constants.dart';
 
+import 'package:ekmajstro_trejnisto/config/config.dart';
 import 'package:ekmajstro_trejnisto/utils/utils.dart';
 import 'package:ekmajstro_trejnisto/components/components.dart';
 
@@ -51,6 +52,17 @@ class _CredentialsFormViewScreenState extends State<CredentialsFormViewScreen> {
     return Stack(
       children: [
         Scaffold(
+          appBar: AppBar(
+            leading: GestureDetector(
+              onTap: () {
+                navigateToLocation(context, ROUTER_POST_LIST_ROUTE);
+              },
+              child: iconNavPostList(
+                Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            title: const Text(CREDENTIALS_FORM_TITLE),
+          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -89,8 +101,7 @@ class _CredentialsFormViewScreenState extends State<CredentialsFormViewScreen> {
                                   },
                                   decoration: InputDecoration(
                                     border: const OutlineInputBorder(),
-                                    hintText:
-                                        "Ingrese ${getCredentialLabel(key)}",
+                                    hintText: getCredentialLabel(key),
                                   ),
                                 ),
                               ),
