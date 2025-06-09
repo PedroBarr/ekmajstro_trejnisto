@@ -6,6 +6,8 @@ const String SAVE_CREDENTIALS_SUCCESS_MESSAGE =
 const String SAVE_CREDENTIALS_ERROR_MESSAGE =
     'Error al guardar las credenciales: ';
 
+const String CREDENTIALS_FORM_TITLE = 'Formulario de credenciales';
+
 CredentialsFields getCredentialField(String key) {
   return CredentialsFields.values.firstWhere((field) => field.getKey() == key);
 }
