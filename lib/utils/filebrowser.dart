@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'app.dart';
 import 'misc.dart';
+import 'auth.dart';
 
 import 'package:ekmajstro_trejnisto/models/models.dart';
 import 'package:ekmajstro_trejnisto/config/config.dart';
@@ -12,15 +13,17 @@ import 'package:ekmajstro_trejnisto/config/config.dart';
 const String LOGIN_ENDPOINT = '/login';
 const String RECURSO_PUBLICO_ENDPOINT = '/public/share/';
 
-Future<String> getFBAToken(String username, String password) async {
+Future<String> getFBAToken() async {
   try {
     final response = await http.post(
       Uri.parse('$STORAGE_API$LOGIN_ENDPOINT'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(
         {
-          'username': username,
-          'password': password,
+          'username':
+              CredentialsFields.username.getValue(await getCredentials()),
+          'password':
+              CredentialsFields.password.getValue(await getCredentials()),
         },
       ),
     );
