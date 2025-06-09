@@ -68,6 +68,8 @@ const String ROUTER_POST_RESOURCE_ADD_SUB_ROUTE =
 const String ROUTER_POST_RESOURCE_VIEW_SUB_ROUTE =
     '$ROUTER_POST_VIEW_ROUTE$ROUTER_RESOURCE_ITEM_VIEW_SUB_PATH';
 
+const String ROUTER_CREDENTIALS_ROUTE = "$ROUTER_MAIN_ROUTE/credentials";
+
 Route<dynamic> mainRouter(RouteSettings settings) {
   if (settings.name == ROUTER_MAIN_ROUTE) {
     return mainRouter(const RouteSettings(
@@ -315,6 +317,14 @@ Route<dynamic> mainRouter(RouteSettings settings) {
         );
       }
     }
+  }
+
+  if (settings.name == ROUTER_CREDENTIALS_ROUTE) {
+    return MaterialPageRoute(
+      builder: (_) => const SafeArea(
+        child: CredentialsFormViewScreen(),
+      ),
+    );
   }
 
   return MaterialPageRoute(
