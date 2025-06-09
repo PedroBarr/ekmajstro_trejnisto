@@ -29,6 +29,10 @@ const String ERROR_FILEBROWSER_LOGIN_FAILED =
     'Fallo al iniciar sesión en Filebrowser';
 const String ERROR_FILEBROWSER_GET_SHARED_FILE =
     'Fallo al recuperar el archivo compartido desde Filebrowser';
+const String ERROR_FILEBROWSER_UPLOAD_FILE =
+    'Fallo al subir el archivo a Filebrowser';
+const String ERROR_FILEBROWSER_GET_RESOURCE_LIST =
+    'Fallo al recuperar la lista de recursos desde Filebrowser';
 
 // MODELS
 const String ERROR_POST_ITEM_PARSER = 'Fallo al cargar el elemento publicación';
