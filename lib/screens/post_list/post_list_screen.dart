@@ -75,51 +75,45 @@ class _PostListScreen extends State<PostListScreen> {
                   const SizedBox(
                     height: 10.0,
                   ),
-                  Flexible(
-                    child: FutureBuilder(
-                      future: _posts,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<PostItem>> snapshot) {
-                        if (_is_loading) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
+                  FutureBuilder(
+                    future: _posts,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<PostItem>> snapshot) {
+                      if (_is_loading) {
+                        return const Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
 
-                        if (snapshot.hasData) {
-                          return Expanded(
-                            child: Column(children: [
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Wrap(
-                                    direction: Axis.vertical,
-                                    spacing: 10.0,
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.center,
-                                    children: [
-                                      snapshot.data!
-                                          .where((post) => post.title
-                                              .toLowerCase()
-                                              .contains(
-                                                  _search_text.toLowerCase()))
-                                          .map((post) =>
-                                              PostItemComponent(post: post))
-                                          .toList(),
-                                      [
-                                        const AddPostItemComponent(),
-                                      ]
-                                    ].expand((x) => x).toList(),
-                                  ),
-                                ),
-                              ),
-                            ]),
-                          );
-                        } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                      },
-                    ),
+                      if (snapshot.hasData) {
+                        return Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Wrap(
+                              direction: Axis.vertical,
+                              spacing: 10.0,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                snapshot.data!
+                                    .where((post) => post.title
+                                        .toLowerCase()
+                                        .contains(_search_text.toLowerCase()))
+                                    .map(
+                                        (post) => PostItemComponent(post: post))
+                                    .toList(),
+                                [
+                                  const AddPostItemComponent(),
+                                ]
+                              ].expand((x) => x).toList(),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
                   ),
                 ],
               ),
